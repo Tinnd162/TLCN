@@ -1,5 +1,5 @@
 # Tiểu luận chuyên ngành Kỹ thuật dữ liệu (khoa CNTT)
-## Tên đề tài: Xây dựng website bán hàng dựa trên mô hình Microservices
+## Tên đề tài: Tìm hiểu về Microservices để xây dựng website bán hàng
 ### GVHD: TS. Huỳnh Xuân Phụng
 ### Nhóm SVTH:
   - Nguyễn Đăng Phước Tín   18133056
