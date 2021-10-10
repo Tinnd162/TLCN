@@ -1,0 +1,10 @@
+Product
+{
+	Id string,
+	ProductName string,
+	Summary string,
+	Description string,
+	Image string,
+	CategoryId string,
+	CategoryName string,
+};
