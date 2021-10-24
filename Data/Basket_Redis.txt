@@ -1,0 +1,14 @@
+ItemCart
+(
+	ProductId string,
+	ProductName string
+	Quantity int,
+	Price decimal,
+);
+
+Cart
+(
+	Username string,
+	Item[{ItemCart}],
+	TotalPrice decimal,
+);
