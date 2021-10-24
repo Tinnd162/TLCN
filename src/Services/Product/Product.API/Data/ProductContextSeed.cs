@@ -14,7 +14,7 @@ namespace Product.API.Data
             {
                 itemCollection.InsertManyAsync(GetPreconfiguredProducts());
             }
-            //
+
             bool existBrand = brandCollection.Find(p => true).Any();
             if (!existBrand)
             {
@@ -46,6 +46,34 @@ namespace Product.API.Data
                     BrandId="BrandId",
                     BrandName="BrandName"
                 },
+                new Item()
+                {
+                    Id = "602d2149e773f2a3990b47f6",
+                    Name = "Sony",
+                    Color ="Color",
+                    Summary = "Summary",
+                    Description = "Description",
+                    Images = "Images",
+                    Price = 950.00M,
+                    CategoryId="CatelogId",
+                    CategotyName = "Smart Phone",
+                    BrandId="BrandId",
+                    BrandName="BrandName"
+                },
+                new Item()
+                {
+                    Id = "602d2149e773f2a3990b47f7",
+                    Name = "Samsung",
+                    Color ="Color",
+                    Summary = "Summary",
+                    Description = "Description",
+                    Images = "Images",
+                    Price = 950.00M,
+                    CategoryId="CatelogId",
+                    CategotyName = "Smart Phone",
+                    BrandId="BrandId",
+                    BrandName="BrandName"
+                },
             };
         }
 
@@ -55,18 +83,18 @@ namespace Product.API.Data
             {
                 new Brand()
                 {
-                    Id = "1",
+                    Id = "602d2149e773f2a3990b47f5",
                     BrandName = "Dell"
                 },
                 new Brand()
                 {
-                    Id = "2",
+                    Id = "602d2149e773f2a3990b47f6",
                     BrandName = "Apple"
                 },
                 new Brand()
                 {
-                    Id = "3",
-                    BrandName = "Apple"
+                    Id = "602d2149e773f2a3990b47f7",
+                    BrandName = "Samsung"
                 },
             };
         }
@@ -77,7 +105,17 @@ namespace Product.API.Data
                 new Category()
                 {
                     Id = "602d2149e773f2a3990b47f5",
-                    CategoryName = "IPhone X"
+                    CategoryName = "SmartPhone"
+                },
+                new Category()
+                {
+                    Id = "602d2149e773f2a3990b47f6",
+                    CategoryName = "Máy tính bảng"
+                },
+                new Category()
+                {
+                    Id = "602d2149e773f2a3990b47f7",
+                    CategoryName = "Laptop"
                 },
             };
         }
