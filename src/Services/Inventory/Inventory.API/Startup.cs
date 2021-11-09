@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Inventory.API.Data;
+using Inventory.API.Helpers;
+using Inventory.API.Repositories;
+using Inventory.API.Repositories.Impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,6 +42,10 @@ namespace Inventory.API
             {
                 options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddScoped<IInventoryRepository, InventoryRepository>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

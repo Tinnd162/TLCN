@@ -13,16 +13,17 @@ namespace Inventory.API.Entities
         public string LinkImage { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.Now;
         public DateTime UpdateDate { get; set; }
         public DateTime DeleteDate { get; set; }
-        public int IsStatus { get; set; }
-        public int IsDiscontinued { get; set; }
-        public int IsDelete { get; set; }
+        public bool IsUpdate { get; set; } = false;
+        public bool IsStatus { get; set; } = false;
+        public bool IsDiscontinued { get; set; } = false;
+        public bool IsDelete { get; set; } = false;
         public string SupplierId { get; set; }
         public string CategoryId { get; set; }
         public string BrandId { get; set; }
         public string CongigurationId { get; set; }
-        public string PriceId { get; set; }
         public Brand Brand { get; set; }
         public Category Category { get; set; }
         public Configuration Configuration { get; set; }

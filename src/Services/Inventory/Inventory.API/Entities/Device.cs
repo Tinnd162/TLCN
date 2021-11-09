@@ -9,10 +9,11 @@ namespace Inventory.API.Entities
     {
         public string Id { get; set; }
         public string SerialNumber { get; set; }
-        public DateTime ImportDate { get; set; }
-        public DateTime ActivateDate { get; set; }
-        public int IsActivate { get; set; }
+        public DateTime ImportDate { get; set; } = DateTime.Now;
+        public DateTime? ActivateDate { get; set; } = null;
+        public bool IsActivate { get; set; } = false;
         public string ImportUser { get; set; }
+        public string ExportUser { get; set; }
         public string ProductId { get; set; }
         public Product Product { get; set; }
     }
