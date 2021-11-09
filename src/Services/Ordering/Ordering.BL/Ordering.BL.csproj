@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ordering.BO\Ordering.BO.csproj" />
+    <ProjectReference Include="..\Ordering.DA\Ordering.DA.csproj" />
+  </ItemGroup>
+
+</Project>
