@@ -14,8 +14,8 @@ namespace Inventory.API.Entities
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.Now;
-        public DateTime UpdateDate { get; set; }
-        public DateTime DeleteDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public DateTime? DeleteDate { get; set; }
         public bool IsUpdate { get; set; } = false;
         public bool IsStatus { get; set; } = false;
         public bool IsDiscontinued { get; set; } = false;
