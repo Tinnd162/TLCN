@@ -8,6 +8,6 @@ namespace Inventory.API.Entities
     {
         public string Id { get; set; }
         public string SupplierName { get; set; }
-        public IList<ProductSupplier> ProductSuppliers { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

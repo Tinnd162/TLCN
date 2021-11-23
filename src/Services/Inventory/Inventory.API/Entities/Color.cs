@@ -8,6 +8,7 @@ namespace Inventory.API.Entities
     {
         public string Id { get; set; }
         public string ColorName { get; set; }
-        public IList<ProductColor> ProductColors { get; set; }
+        public string ProductId { get; set; }
+        public Product Product { get; set; }
     }
 }

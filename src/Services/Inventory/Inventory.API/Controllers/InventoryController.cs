@@ -31,17 +31,17 @@ namespace Inventory.API.Controllers
         }
         [HttpPut]
         [Route("RemoveProduct")]
-        public async Task<ActionResult<IEnumerable<ProductDetailDTO>>> RemoveProduct(string strProductId)
+        public async Task<ActionResult<bool>> RemoveProduct(string strProductId)
         {
-            var product = await _inventoryRepository.RemoveProduct(strProductId);
-            return Ok(product);
+            bool bolIsRemoveProduct = await _inventoryRepository.RemoveProduct(strProductId);
+            return Ok(bolIsRemoveProduct);
         }
         [HttpPost]
         [Route("AddProduct")]
-        public async Task<ActionResult<IEnumerable<ProductDetailDTO>>> AddProduct(AddProductDTO objAddProductDTO)
+        public async Task<ActionResult<bool>> AddProduct(AddProductDTO objAddProductDTO)
         {
-            var product = await _inventoryRepository.AddDetailProduct(objAddProductDTO);
-            return Ok(product);
+            bool bolIsAddProduct = await _inventoryRepository.AddDetailProduct(objAddProductDTO);
+            return Ok(bolIsAddProduct);
         }
     }
 }

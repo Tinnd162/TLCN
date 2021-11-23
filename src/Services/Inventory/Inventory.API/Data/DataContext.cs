@@ -11,9 +11,7 @@ namespace Inventory.API.Data
         //
         public DbSet<Product> Products { get; set; }
         public DbSet<Color> Colors { get; set; }
-        public DbSet<ProductColor> ProductColors { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<ProductSupplier> ProductSuppliers { get; set; }
         public DbSet<Device> Devices { get; set; }
         public DbSet<PriceLog> PriceLogs { get; set; }
         public DbSet<Configuration> Configurations { get; set; }
@@ -22,36 +20,7 @@ namespace Inventory.API.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            //
-            builder.Entity<ProductColor>()
-                .HasKey(x => new { x.ProductId, x.ColorId });
 
-            builder.Entity<ProductColor>()
-                .HasOne(x => x.Product)
-                .WithMany(y => y.ProductColors)
-                .HasForeignKey(z => z.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<ProductColor>()
-                .HasOne(x => x.Color)
-                .WithMany(y => y.ProductColors)
-                .HasForeignKey(z => z.ColorId)
-                .OnDelete(DeleteBehavior.Cascade);
-            //
-            builder.Entity<ProductSupplier>()
-                .HasKey(x => new { x.ProductId, x.SupplierId });
-
-            builder.Entity<ProductSupplier>()
-                .HasOne(x => x.Supplier)
-                .WithMany(y => y.ProductSuppliers)
-                .HasForeignKey(z => z.SupplierId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<ProductSupplier>()
-                .HasOne(x => x.Product)
-                .WithMany(y => y.ProductSuppliers)
-                .HasForeignKey(z => z.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
             //
             builder.Entity<Device>()
                 .HasOne(x => x.Product)
@@ -73,6 +42,11 @@ namespace Inventory.API.Data
                 .WithMany(y => y.Products)
                 .HasForeignKey(z => z.CategoryId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+                Entity.HasOne(x => x.Supplier)
+                .WithMany(y => y.Products)
+                .HasForeignKey(z => z.SupplierId)
+                .OnDelete(DeleteBehavior.NoAction);
             });
             //
             builder.Entity<Brand>()
@@ -91,6 +65,12 @@ namespace Inventory.API.Data
                 .HasForeignKey(z => z.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
+            //
+            builder.Entity<Color>()
+                .HasOne(x => x.Product)
+                .WithMany(y => y.Colors)
+                .HasForeignKey(z => z.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
             //
             builder.Entity<Configuration>()
                 .HasOne(x => x.Product)

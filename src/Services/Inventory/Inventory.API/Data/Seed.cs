@@ -52,16 +52,6 @@ namespace Inventory.API.Data
             var pricelogs = JsonSerializer.Deserialize<List<PriceLog>>(pricelogData);
             context.PriceLogs.AddRange(pricelogs);
 
-            if (await context.ProductColors.AnyAsync()) return;
-            var productcolorData = await System.IO.File.ReadAllTextAsync("Data/ProductColorSeedData.json");
-            var productColors = JsonSerializer.Deserialize<List<ProductColor>>(productcolorData);
-            context.ProductColors.AddRange(productColors);
-
-            if (await context.ProductSuppliers.AnyAsync()) return;
-            var productsupplierData = await System.IO.File.ReadAllTextAsync("Data/ProductSupplierSeedData.json");
-            var productSuppliers = JsonSerializer.Deserialize<List<ProductSupplier>>(productsupplierData);
-            context.ProductSuppliers.AddRange(productSuppliers);
-
             await context.SaveChangesAsync();
             #endregion
         }

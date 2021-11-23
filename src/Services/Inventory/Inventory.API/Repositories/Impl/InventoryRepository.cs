@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -7,6 +8,7 @@ using Inventory.API.Data;
 using Inventory.API.DTOs;
 using Inventory.API.Entities;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Inventory.API.Repositories.Impl
 {
@@ -83,10 +85,10 @@ namespace Inventory.API.Repositories.Impl
                                                         IsStatus = s1.IsStatus,
                                                         IsDiscontinued = s1.IsDiscontinued,
                                                         IsDelete = s1.IsDelete,
-                                                        lstColorDTO = s1.ProductColors.Select(s2 => new InfoDTO
+                                                        lstColorDTO = s1.Colors.Select(s2 => new InfoDTO
                                                         {
-                                                            Id = s2.Color.Id,
-                                                            Name = s2.Color.ColorName
+                                                            Id = s2.Id,
+                                                            Name = s2.ColorName
                                                         }).ToList()
                                                     }).FirstOrDefaultAsync();
 
@@ -119,64 +121,72 @@ namespace Inventory.API.Repositories.Impl
             return false;
         }
 
-        public async Task<bool> AddDetailProduct(List<Dictionary<string, object>> dicAddProduct)
+        public async Task<bool> AddDetailProduct(AddProductDTO objAddProductDTO)
         {
-            
-            // objAddProductDTO.BrandDTO.Id = Convert.ToString(Guid.NewGuid());
-            // objAddProductDTO.CategoryDTO.Id = Convert.ToString(Guid.NewGuid());
-            // objAddProductDTO.Id = Convert.ToString(Guid.NewGuid());
+            objAddProductDTO.Id = Convert.ToString(Guid.NewGuid());
+            objAddProductDTO.BrandDTO.Id = Convert.ToString(Guid.NewGuid());
+            objAddProductDTO.CategoryDTO.Id = Convert.ToString(Guid.NewGuid());
+            objAddProductDTO.ConfigurationProductDTO.Id = Convert.ToString(Guid.NewGuid());
+            objAddProductDTO.SupplierDTO.Id = Convert.ToString(Guid.NewGuid());
 
-            // Product objProduct = new Product()
-            // {
-            //     Id = Convert.ToString(Guid.NewGuid()),
-            //     ProductName = objAddProductDTO.Name,
-            //     Description = objAddProductDTO.Description,
-            //     UnitPrice = objAddProductDTO.UnitPrice,
-            //     Quantity = objAddProductDTO.Quantity,
-            //     CreateDate = DateTime.Now,
-            //     UpdateDate = DateTime.Now,
-            //     DeleteDate = DateTime.Now,
-            //     IsUpdate = false,
-            //     IsStatus = false,
-            //     IsDiscontinued = false,
-            //     IsDelete = false,
-            //     Brand = new Brand
-            //     {
-            //         Id = objAddProductDTO.BrandDTO.Id,
-            //         BrandName = objAddProductDTO.BrandDTO.Name,
-            //         CategoryId = objAddProductDTO.CategoryDTO.Id
-            //     },
-            //     Category = new Category
-            //     {
-            //         Id = objAddProductDTO.CategoryDTO.Id,
-            //         CategoryName = objAddProductDTO.CategoryDTO.Name
-            //     },
-            // };
-
-            // objProduct.PriceLogs = new List<PriceLog>{
-            //     new PriceLog {
-
-            //     }
-            // }
-
-            // await _context.Products.AddAsync(objProduct);
-            // await _context.SaveChangesAsync();
-            return true;
+            Product objProduct = new Product()
+            {
+                Id = Convert.ToString(Guid.NewGuid()),
+                ProductName = objAddProductDTO.Name,
+                Description = objAddProductDTO.Description,
+                UnitPrice = objAddProductDTO.UnitPrice,
+                Quantity = objAddProductDTO.Quantity,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                DeleteDate = DateTime.Now,
+                IsUpdate = false,
+                IsStatus = false,
+                IsDiscontinued = false,
+                IsDelete = false,
+                Supplier = new Supplier
+                {
+                    Id = objAddProductDTO.SupplierDTO.Id,
+                    SupplierName = objAddProductDTO.SupplierDTO.Name
+                },
+                Brand = new Brand
+                {
+                    Id = objAddProductDTO.BrandDTO.Id,
+                    BrandName = objAddProductDTO.BrandDTO.Name,
+                    CategoryId = objAddProductDTO.CategoryDTO.Id
+                },
+                Category = new Category
+                {
+                    Id = objAddProductDTO.CategoryDTO.Id,
+                    CategoryName = objAddProductDTO.CategoryDTO.Name
+                },
+                Configuration = new Configuration
+                {
+                    Id = objAddProductDTO.ConfigurationProductDTO.Id,
+                    OperatingSystem = objAddProductDTO.ConfigurationProductDTO.OperatingSystem,
+                    RearCamera = objAddProductDTO.ConfigurationProductDTO.RearCamera,
+                    FrontCamera = objAddProductDTO.ConfigurationProductDTO.FrontCamera,
+                    Chips = objAddProductDTO.ConfigurationProductDTO.Chips,
+                    RAM = objAddProductDTO.ConfigurationProductDTO.RAM,
+                    InternalMemory = objAddProductDTO.ConfigurationProductDTO.InternalMemory,
+                    SIM = objAddProductDTO.ConfigurationProductDTO.SIM,
+                    Batteries = objAddProductDTO.ConfigurationProductDTO.Batteries
+                },
+                PriceLogs = new Collection<PriceLog>(){
+                    new PriceLog(){
+                        Id=Convert.ToString(Guid.NewGuid()),
+                        Price=objAddProductDTO.PriceLogDTO.Price,
+                        UserUpdate=null,
+                        ProductId=objAddProductDTO.Id,
+                        IsUpdate=false,
+                        CreateDate=DateTime.Now,
+                        UpdateDate=DateTime.Now,
+                    }
+                },
+            };
+            await _context.Products.AddAsync(objProduct);
+            return await _context.SaveChangesAsync() > 0;
         }
-        public Task<bool> AddConfigurationProduct(ConfigurationProductDTO objConfigurationProductDTO)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public Task<bool> UpdateProduct(ParamsUpdateProduct objParamsUpdateProduct)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> UpdateConfigurationProduct()
-        {
-            throw new System.NotImplementedException();
-        }
         #endregion
 
         #region Kiểm tra tồn kho.

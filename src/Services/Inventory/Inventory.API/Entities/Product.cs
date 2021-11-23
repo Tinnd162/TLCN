@@ -26,10 +26,10 @@ namespace Inventory.API.Entities
         public string CongigurationId { get; set; }
         public Brand Brand { get; set; }
         public Category Category { get; set; }
+        public Supplier Supplier { get; set; }
         public Configuration Configuration { get; set; }
         public ICollection<Device> Devices { get; set; }
         public ICollection<PriceLog> PriceLogs { get; set; }
-        public IList<ProductColor> ProductColors { get; set; }
-        public IList<ProductSupplier> ProductSuppliers { get; set; }
+        public ICollection<Color> Colors { get; set; }
     }
 }

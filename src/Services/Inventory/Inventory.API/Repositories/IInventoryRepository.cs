@@ -13,10 +13,7 @@ namespace Inventory.API.Repositories
         Task<IEnumerable<ProductDTO>> GetProductsByBrand(string strBrandId);
         Task<ProductDetailDTO> GetProductDetailById(string strProductId);
         Task<bool> AddDetailProduct(AddProductDTO objDetailProductDTO);
-        Task<bool> AddConfigurationProduct(ConfigurationProductDTO objConfigurationProductDTO);
         Task<bool> RemoveProduct(string strProductId);
-        Task<bool> UpdateProduct(ParamsUpdateProduct objParamsUpdateProduct);
-        Task<bool> UpdateConfigurationProduct();
         Task<bool> CheckEnoughQuantity(string strProductId);
     }
 }
