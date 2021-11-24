@@ -1,0 +1,13 @@
+[
+    {
+        "Id": "19e23051-a4c6-405c-8a65-684f9e16371c",
+        "ProductName": "IPhone 12 mini",
+        "Description": "Okla",
+        "UnitPrice": 16200000,
+        "Quantity": 100,
+        "SupplierId": "f130e113-321e-446e-a153-63d5833d0a4b",
+        "CategoryId": "1ec84e3a-e3da-4fd0-8d3b-d82fc51499d5",
+        "BrandId": "316a83cf-aa77-44f6-9b35-75b0ef335cbd",
+        "CongigurationId": "c6eb36d3-a691-4024-ba5f-666dc6272d94"
+    }
+]

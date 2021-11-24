@@ -1,0 +1,17 @@
+[
+    {
+        "Id": "b14a8f81-491e-456e-a7e7-ccc73f0a03ff",
+        "ColorName": "Xanh",
+        "ProductId": "19e23051-a4c6-405c-8a65-684f9e16371c"
+    },
+    {
+        "Id": "8c339f5a-c23b-4473-b577-a0e5f7eece71",
+        "ColorName": "Đỏ",
+        "ProductId": "19e23051-a4c6-405c-8a65-684f9e16371c"
+    },
+    {
+        "Id": "d3aed180-1991-416d-8262-09c8fb02a2f9",
+        "ColorName": "Tím",
+        "ProductId": "19e23051-a4c6-405c-8a65-684f9e16371c"
+    }
+]
