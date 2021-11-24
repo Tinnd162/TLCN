@@ -9,6 +9,6 @@ namespace Ordering.BL.Interfaces
 {
     public interface IOrderBL
     {
-        Task<OrderBO> GetOrderByID(string customerID, string OrderID);
+        Task<OrderBO> GetOrderByID(string strCustomerID, string strSaleOrderID);
     }
 }

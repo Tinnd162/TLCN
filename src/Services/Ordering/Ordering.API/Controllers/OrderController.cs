@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Ordering.BL.Interfaces;
 using Ordering.BO;
 using System;
@@ -20,9 +21,31 @@ namespace Ordering.API.Controllers
 
         [Route("GetOrderByID")]
         [HttpGet]
-        public ActionResult<OrderBO> GetOrderByID(string OrderID)
+        public ActionResult<OrderBO> GetOrderByID(string strCustomerID, string strSaleOrderID)
         {
-            return Ok(_orderBL.GetOrderByID("lhv", OrderID));
+            try
+            {
+                return Ok(_orderBL.GetOrderByID(strCustomerID, strSaleOrderID));
+            }
+            catch
+            {
+                return NotFound();
+            }    
         }
+
+        //[Route("InsertSaleOrder")]
+        //[HttpPost]
+        //public ActionResult<string> InsertSaleOrder([FromBody] object objRequest)
+        //{
+        //    try
+        //    {
+        //        var objRequestParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(objRequest.ToString());
+
+        //    }
+        //    catch
+        //    {
+
+        //    }
+        //}
     }
 }

@@ -23,7 +23,7 @@ namespace Ordering.DA.EF
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
 
-            modelBuilder.Seed();
+            //modelBuilder.Seed();
         }
 
         public DbSet<Order> Orders { get; set; }

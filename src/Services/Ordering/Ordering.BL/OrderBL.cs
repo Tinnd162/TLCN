@@ -16,16 +16,18 @@ namespace Ordering.BL
         {
             _orderDA = orderDA;
         }
-        public async Task<OrderBO> GetOrderByID(string customerID, string OrderID)
+        public async Task<OrderBO> GetOrderByID(string strCustomerID, string strSaleOrderID)
         {
             try
             {
-                return await _orderDA.GetOrderByID(OrderID);
+                var objSaleOrderBO = await _orderDA.GetOrderByID(strSaleOrderID);
+                return objSaleOrderBO;
             }
             catch(Exception objEx)
             {
                 throw objEx;
             }
+            return null;
         }
     }
 }

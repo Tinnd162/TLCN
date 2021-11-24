@@ -13,6 +13,7 @@ namespace Ordering.BO
         public DateTime? ConfirmDate { get; set; }
         public double TotalAmount { get; set; }
         public int? Status { get; set; }
+        public double SalePrice { get; set; }
         public List<OrderDetailBO> OrderDetails { get; set; }
         public OrderBO()
         {

@@ -28,25 +28,41 @@ namespace Ordering.DA
             throw new NotImplementedException();
         }
 
-        public Task<OrderBO> GetOrderByID(string OrderID)
+        public async Task<OrderBO> GetOrderByID(string strSaleOrderID)
         {
-            var order =  _context.Orders.Where(x => x.OrderID.ToString() == OrderID).FirstOrDefault();
-            if(order != null)
+            try
             {
-                var orderBO = new OrderBO()
+                var objSaleOrder = _context.Orders.Where(x => x.OrderID.ToString() == strSaleOrderID).FirstOrDefault();
+                if (objSaleOrder != null)
                 {
-                    OrderID = order.OrderID,
-                    TotalAmount = order.TotalAmount
-                };
-                //foreach (var orderDetail in order.OrderDetails.ToList())
-                //{
-                //    orderBO.OrderDetails.Add(new OrderDetailBO
-                //    {
-                //        OrderDetailID = orderDetail.OrderDetailID,
-                //        ProductName = orderDetail.ProductName
-                //    });
-                //}
-                return Task.FromResult(orderBO);
+                    var objSaleOrderBO = new OrderBO()
+                    {
+                        OrderID = objSaleOrder.OrderID,
+                        OrderDate = objSaleOrder.OrderDate,
+                        ConfirmDate = objSaleOrder.ConfirmDate,
+                        Status = objSaleOrder.Status,
+                        TotalAmount = objSaleOrder.TotalAmount
+                    };
+                    var objSaleOrderDetail = _context.OrderDetails.Where(x => x.OrderID.ToString() == strSaleOrderID)
+                                                                  .Select(x => new OrderDetailBO
+                                                                  {
+                                                                      OrderDetailID = x.OrderDetailID,
+                                                                      ProductName = x.ProductName,
+                                                                      IMEI = x.IMEI,
+                                                                      Quantity = x.Quantity,
+                                                                      VAT = x.VAT,
+                                                                      SalePrice = x.SalePrice
+                                                                  }).ToList();
+                    if (objSaleOrderDetail != null && objSaleOrderDetail.Count > 0)
+                    {
+                        objSaleOrderBO.OrderDetails = objSaleOrderDetail;
+                    }
+                    return await Task.FromResult(objSaleOrderBO);
+                }
+            }
+            catch(Exception objEx)
+            {
+                throw objEx;
             }
             return null;
         }
