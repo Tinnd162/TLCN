@@ -1,0 +1,14 @@
+[
+    {
+        "Id": "e0f439f7-adfe-4e79-84ae-653a10314d35",
+        "CategoryName": "Tablet"
+    },
+    {
+        "Id": "1ec84e3a-e3da-4fd0-8d3b-d82fc51499d5",
+        "CategoryName": "SmartPhone"
+    },
+    {
+        "Id": "4b3b5648-573b-41d1-8016-d780a3c93cee",
+        "CategoryName": "Laptop"
+    }
+]

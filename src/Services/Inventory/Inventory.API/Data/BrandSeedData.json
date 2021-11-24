@@ -1,0 +1,47 @@
+[
+    {
+        "Id": "f6ac9fa8-3bd6-4e16-997a-f41b434a0987",
+        "BrandName": "Dell",
+        "CategoryId": "4b3b5648-573b-41d1-8016-d780a3c93cee"
+    },
+    {
+        "Id": "a70a9b34-46ab-4e96-b8f9-d95805aa5e27",
+        "BrandName": "Macbook",
+        "CategoryId": "4b3b5648-573b-41d1-8016-d780a3c93cee"
+    },
+    {
+        "Id": "61eb2165-9edb-4941-adcd-cea34eca8006",
+        "BrandName": "MSI",
+        "CategoryId": "4b3b5648-573b-41d1-8016-d780a3c93cee"
+    },
+    {
+        "Id": "d2795b2b-837e-491f-82b2-fc7c81f1ef22",
+        "BrandName": "IPad",
+        "CategoryId": "e0f439f7-adfe-4e79-84ae-653a10314d35"
+    },
+    {
+        "Id": "1203fad3-009a-40e9-93a8-c334bcfeaedc",
+        "BrandName": "Huawei",
+        "CategoryId": "e0f439f7-adfe-4e79-84ae-653a10314d35"
+    },
+    {
+        "Id": "4f9cf823-328e-498c-81e7-7617eac043f7",
+        "BrandName": "Samsung",
+        "CategoryId": "e0f439f7-adfe-4e79-84ae-653a10314d35"
+    },
+    {
+        "Id": "316a83cf-aa77-44f6-9b35-75b0ef335cbd",
+        "BrandName": "Iphone",
+        "CategoryId": "1ec84e3a-e3da-4fd0-8d3b-d82fc51499d5"
+    },
+    {
+        "Id": "df6f0c7c-d682-4a58-b7bc-52fdba878169",
+        "BrandName": "Nokia",
+        "CategoryId": "1ec84e3a-e3da-4fd0-8d3b-d82fc51499d5"
+    },
+    {
+        "Id": "07d2cfc3-8ced-493b-8512-477ac4590f34",
+        "BrandName": "Sony",
+        "CategoryId": "1ec84e3a-e3da-4fd0-8d3b-d82fc51499d5"
+    }
+]
