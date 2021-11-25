@@ -5,7 +5,7 @@ namespace Product.API.Data
 {
     public interface IProductContext
     {
-        IMongoCollection<Item> Items { get; }
+        IMongoCollection<ProductDTO> Products { get; }
 
         IMongoCollection<Brand> Brands { get; }
 

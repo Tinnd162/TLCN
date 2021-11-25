@@ -23,7 +23,7 @@ namespace Ordering.BL
                 var objSaleOrderBO = await _orderDA.GetOrderByID(strSaleOrderID);
                 return objSaleOrderBO;
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 throw objEx;
             }
