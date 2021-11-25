@@ -10,7 +10,7 @@ namespace Ordering.BO
     {
         public Guid OrderDetailID { get; set; }
         public string ProductName { get; set; }
-        public string? IMEI { get; set; }
+        public string IMEI { get; set; }
         public int Quantity { get; set; }
         public double VAT { get; set; }
         public double SalePrice { get; set; }

@@ -36,10 +36,7 @@ namespace Product.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product.API", Version = "v1" });
             });
             services.AddScoped<IProductContext, ProductContext>();
-            services.AddScoped<IItemRepository, ItemRepository>();
-            services.AddScoped<IBrandRepository, BrandRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-
+            services.AddScoped<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
