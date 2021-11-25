@@ -6,7 +6,7 @@ namespace Product.API.Data
 {
     public class ProductContextSeed
     {
-        public static void SeedData(IMongoCollection<Item> itemCollection, IMongoCollection<Brand> brandCollection, IMongoCollection<Category> categoryCollection)
+        public static void SeedData(IMongoCollection<ProductDTO> itemCollection, IMongoCollection<Brand> brandCollection, IMongoCollection<Category> categoryCollection)
         {
             //
             bool existItem = itemCollection.Find(p => true).Any();
@@ -28,11 +28,11 @@ namespace Product.API.Data
             }
         }
 
-        private static IEnumerable<Item> GetPreconfiguredProducts()
+        private static IEnumerable<ProductDTO> GetPreconfiguredProducts()
         {
-            return new List<Item>()
+            return new List<ProductDTO>()
             {
-                new Item()
+                new ProductDTO()
                 {
                     Id = "602d2149e773f2a3990b47f5",
                     Name = "IPhone X",
@@ -46,7 +46,7 @@ namespace Product.API.Data
                     BrandId="BrandId",
                     BrandName="BrandName"
                 },
-                new Item()
+                new ProductDTO()
                 {
                     Id = "602d2149e773f2a3990b47f6",
                     Name = "Sony",
@@ -60,7 +60,7 @@ namespace Product.API.Data
                     BrandId="BrandId",
                     BrandName="BrandName"
                 },
-                new Item()
+                new ProductDTO()
                 {
                     Id = "602d2149e773f2a3990b47f7",
                     Name = "Samsung",
