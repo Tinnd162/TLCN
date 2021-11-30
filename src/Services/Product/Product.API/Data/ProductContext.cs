@@ -13,15 +13,10 @@ namespace Product.API.Data
             var client = new MongoClient(_config.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(_config.GetValue<string>("DatabaseSettings:DatabaseName"));
 
-            Products = database.GetCollection<ProductDTO>(_config.GetValue<string>("DatabaseSettings:ItemCollection"));
-            Brands = database.GetCollection<Brand>(_config.GetValue<string>("DatabaseSettings:BrandCollection"));
-            Categories = database.GetCollection<Category>(_config.GetValue<string>("DatabaseSettings:CategoryCollection"));
-
-            ProductContextSeed.SeedData(Products, Brands, Categories);
+            Products = database.GetCollection<ProductDTO>(_config.GetValue<string>("DatabaseSettings:ProductsCollection"));
+            ProductContextSeed.SeedData(Products);
         }
 
         public IMongoCollection<ProductDTO> Products { get; }
-        public IMongoCollection<Brand> Brands { get; }
-        public IMongoCollection<Category> Categories { get; }
     }
 }

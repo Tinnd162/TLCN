@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Common;
 using Inventory.API.Data;
 using Inventory.API.DTOs;
 using Inventory.API.Entities;
@@ -123,7 +124,6 @@ namespace Inventory.API.Repositories.Impl
 
         public async Task<bool> AddDetailProduct(AddProductDTO objAddProductDTO)
         {
-            objAddProductDTO.Id = Convert.ToString(Guid.NewGuid());
             objAddProductDTO.BrandDTO.Id = Convert.ToString(Guid.NewGuid());
             objAddProductDTO.CategoryDTO.Id = Convert.ToString(Guid.NewGuid());
             objAddProductDTO.ConfigurationProductDTO.Id = Convert.ToString(Guid.NewGuid());
@@ -131,7 +131,7 @@ namespace Inventory.API.Repositories.Impl
 
             Product objProduct = new Product()
             {
-                Id = Convert.ToString(Guid.NewGuid()),
+                Id = objAddProductDTO.Id,
                 ProductName = objAddProductDTO.Name,
                 Description = objAddProductDTO.Description,
                 UnitPrice = objAddProductDTO.UnitPrice,
@@ -187,12 +187,9 @@ namespace Inventory.API.Repositories.Impl
             return await _context.SaveChangesAsync() > 0;
         }
 
-        #endregion
-
-        #region Kiểm tra tồn kho.
-        public Task<bool> CheckEnoughQuantity(string strProductId)
+        public ProductEventBO MapperEventRabbitMQ(AddProductDTO objAddProductDTO)
         {
-            throw new System.NotImplementedException();
+            return _mapper.Map<ProductEventBO>(objAddProductDTO);
         }
         #endregion
     }

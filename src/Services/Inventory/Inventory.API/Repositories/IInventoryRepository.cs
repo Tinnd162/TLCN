@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Common;
 using Inventory.API.DTOs;
 using Inventory.API.Entities;
 
@@ -14,6 +15,6 @@ namespace Inventory.API.Repositories
         Task<ProductDetailDTO> GetProductDetailById(string strProductId);
         Task<bool> AddDetailProduct(AddProductDTO objDetailProductDTO);
         Task<bool> RemoveProduct(string strProductId);
-        Task<bool> CheckEnoughQuantity(string strProductId);
+        ProductEventBO MapperEventRabbitMQ(AddProductDTO objAddProductDTO);
     }
 }
