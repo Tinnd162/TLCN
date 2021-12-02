@@ -16,10 +16,10 @@ namespace Inventory.API.Entities
         public DateTime CreateDate { get; set; } = DateTime.Now;
         public DateTime? UpdateDate { get; set; }
         public DateTime? DeleteDate { get; set; }
-        public bool IsUpdate { get; set; } = false;
-        public bool IsStatus { get; set; } = false;
-        public bool IsDiscontinued { get; set; } = false;
-        public bool IsDelete { get; set; } = false;
+        public bool IsUpdate { get; set; }
+        public bool IsStatus { get; set; }
+        public bool IsDiscontinued { get; set; }
+        public bool IsDelete { get; set; }
         public string SupplierId { get; set; }
         public string CategoryId { get; set; }
         public string BrandId { get; set; }

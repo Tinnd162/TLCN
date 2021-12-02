@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Common;
 using MongoDB.Driver;
 using Product.API.Data;
 using Product.API.Entities;
@@ -14,36 +15,6 @@ namespace Product.API.Repositories.Impl
             _productContext = productContext;
         }
 
-        public async Task<Brand> GetBrand(string strbrandName)
-        {
-            return await _productContext
-                            .Brands
-                            .Find(b => b.Id == strbrandName)
-                            .FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<Brand>> GetBrands()
-        {
-            return await _productContext
-                            .Brands
-                            .Find(p => true)
-                            .ToListAsync();
-        }
-        public async Task<Category> GetCategory(string strCategoryName)
-        {
-            return await _productContext
-                            .Categories
-                            .Find(b => b.Id == strCategoryName)
-                            .FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<Category>> GetCategories()
-        {
-            return await _productContext
-                            .Categories
-                            .Find(p => true)
-                            .ToListAsync();
-        }
         public async Task<IEnumerable<ProductDTO>> GetProducts()
         {
             return await _productContext
@@ -59,9 +30,9 @@ namespace Product.API.Repositories.Impl
                            .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetProductByBrand(string strbrandName)
+        public async Task<IEnumerable<ProductDTO>> GetProductByBrand(string strBrand)
         {
-            FilterDefinition<ProductDTO> filter = Builders<ProductDTO>.Filter.Eq(p => p.BrandName, strbrandName);
+            FilterDefinition<ProductDTO> filter = Builders<ProductDTO>.Filter.Eq(p => p.Brand, strBrand);
 
             return await _productContext
                             .Products
@@ -69,9 +40,9 @@ namespace Product.API.Repositories.Impl
                             .ToListAsync();
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetProductByCategory(string categoryName)
+        public async Task<IEnumerable<ProductDTO>> GetProductByCategory(string strCategory)
         {
-            FilterDefinition<ProductDTO> filter = Builders<ProductDTO>.Filter.Eq(p => p.CategotyName, categoryName);
+            FilterDefinition<ProductDTO> filter = Builders<ProductDTO>.Filter.Eq(p => p.Category, strCategory);
 
             return await _productContext
                             .Products
@@ -79,9 +50,19 @@ namespace Product.API.Repositories.Impl
                             .ToListAsync();
         }
 
-        public Task<IEnumerable<ProductDTO>> GetProductByName(string strProductname)
+        public async Task CreateProduct(ProductDTO objProduct)
         {
-            throw new System.NotImplementedException();
+            await _productContext.Products.InsertOneAsync(objProduct);
+        }
+
+        public async Task RemoveProduct(string strProductId)
+        {
+            await _productContext.Products.DeleteOneAsync(x => x.Id == strProductId);
+        }
+
+        public async Task UpdateProduct(ProductDTO objProduct)
+        {
+            await _productContext.Products.ReplaceOneAsync(x => x.Id == objProduct.Id, objProduct);
         }
     }
 }

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Common;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Product.API.Entities;
@@ -61,46 +63,6 @@ namespace Product.API.Controllers
                 return NotFound();
             }
             return Ok(items);
-        }
-        [HttpGet]
-        [Route("GetBrands")]
-        public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
-        {
-            var brands = await _productRepository.GetBrands();
-            return Ok(brands);
-        }
-
-        [HttpGet]
-        [Route("GetBrand")]
-        public async Task<ActionResult<Brand>> GetBrand(string brandName)
-        {
-            var brand = await _productRepository.GetBrand(brandName);
-            if (brand == null)
-            {
-                _logger.LogError($"Item with id: {brand}, not found.");
-                return NotFound();
-            }
-            return Ok(brand);
-        }
-        [HttpGet]
-        [Route("GetCategories")]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
-        {
-            var categories = await _productRepository.GetCategories();
-            return Ok(categories);
-        }
-
-        [HttpGet]
-        [Route("GetCategory")]
-        public async Task<ActionResult<Category>> GetCategory(string categoryName)
-        {
-            var category = await _productRepository.GetCategory(categoryName);
-            if (category == null)
-            {
-                _logger.LogError($"Item with id: {category}, not found.");
-                return NotFound();
-            }
-            return Ok(category);
         }
     }
 }

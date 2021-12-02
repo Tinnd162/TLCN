@@ -6,25 +6,12 @@ namespace Product.API.Data
 {
     public class ProductContextSeed
     {
-        public static void SeedData(IMongoCollection<ProductDTO> itemCollection, IMongoCollection<Brand> brandCollection, IMongoCollection<Category> categoryCollection)
+        public static void SeedData(IMongoCollection<ProductDTO> itemCollection)
         {
-            //
             bool existItem = itemCollection.Find(p => true).Any();
             if (!existItem)
             {
                 itemCollection.InsertManyAsync(GetPreconfiguredProducts());
-            }
-
-            bool existBrand = brandCollection.Find(p => true).Any();
-            if (!existBrand)
-            {
-                brandCollection.InsertManyAsync(GetPreconfiguredBrands());
-            }
-            //
-            bool existCategory = categoryCollection.Find(p => true).Any();
-            if (!existCategory)
-            {
-                categoryCollection.InsertManyAsync(GetPreconfiguredCategories());
             }
         }
 
@@ -36,87 +23,62 @@ namespace Product.API.Data
                 {
                     Id = "602d2149e773f2a3990b47f5",
                     Name = "IPhone X",
-                    Color ="Color",
-                    Summary = "Summary",
-                    Description = "Description",
-                    Images = "Images",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
+                    Image = "product-1.png",
                     Price = 950.00M,
-                    CategoryId="CatelogId",
-                    CategotyName = "Smart Phone",
-                    BrandId="BrandId",
-                    BrandName="BrandName"
+                    Category = "Smart Phone",
+                    Brand="BrandName"
                 },
                 new ProductDTO()
                 {
                     Id = "602d2149e773f2a3990b47f6",
-                    Name = "Sony",
-                    Color ="Color",
-                    Summary = "Summary",
-                    Description = "Description",
-                    Images = "Images",
-                    Price = 950.00M,
-                    CategoryId="CatelogId",
-                    CategotyName = "Smart Phone",
-                    BrandId="BrandId",
-                    BrandName="BrandName"
+                    Name = "Samsung 10",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
+                    Image = "product-2.png",
+                    Price = 840.00M,
+                    Category = "Smart Phone",
+                    Brand="BrandName"
                 },
                 new ProductDTO()
                 {
                     Id = "602d2149e773f2a3990b47f7",
-                    Name = "Samsung",
-                    Color ="Color",
-                    Summary = "Summary",
-                    Description = "Description",
-                    Images = "Images",
-                    Price = 950.00M,
-                    CategoryId="CatelogId",
-                    CategotyName = "Smart Phone",
-                    BrandId="BrandId",
-                    BrandName="BrandName"
+                    Name = "Huawei Plus",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
+                    Image = "product-3.png",
+                    Price = 650.00M,
+                    Category = "White Appliances",
+                    Brand="BrandName"
                 },
-            };
-        }
-
-        private static IEnumerable<Brand> GetPreconfiguredBrands()
-        {
-            return new List<Brand>()
-            {
-                new Brand()
+                new ProductDTO()
                 {
-                    Id = "602d2149e773f2a3990b47f5",
-                    BrandName = "Dell"
+                    Id = "602d2149e773f2a3990b47f8",
+                    Name = "Xiaomi Mi 9",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
+                    Image = "product-4.png",
+                    Price = 470.00M,
+                    Category = "White Appliances",
+                    Brand="BrandName"
                 },
-                new Brand()
+                new ProductDTO()
                 {
-                    Id = "602d2149e773f2a3990b47f6",
-                    BrandName = "Apple"
+                    Id = "602d2149e773f2a3990b47f9",
+                    Name = "HTC U11+ Plus",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
+                    Image = "product-5.png",
+                    Price = 380.00M,
+                    Category = "Smart Phone",
+                    Brand="BrandName"
                 },
-                new Brand()
-                {
-                    Id = "602d2149e773f2a3990b47f7",
-                    BrandName = "Samsung"
-                },
-            };
-        }
-        private static IEnumerable<Category> GetPreconfiguredCategories()
-        {
-            return new List<Category>()
-            {
-                new Category()
-                {
-                    Id = "602d2149e773f2a3990b47f5",
-                    CategoryName = "SmartPhone"
-                },
-                new Category()
-                {
-                    Id = "602d2149e773f2a3990b47f6",
-                    CategoryName = "Máy tính bảng"
-                },
-                new Category()
-                {
-                    Id = "602d2149e773f2a3990b47f7",
-                    CategoryName = "Laptop"
-                },
+                // new ProductDTO()
+                // {
+                //     Id = "602d2149e773f2a3990b47fa",
+                //     Name = "LG G7 ThinQ",
+                //     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
+                //     Image = "product-6.png",
+                //     Price = 240.00M,
+                //     Category = "Home Kitchen",
+                //     Brand="BrandName"
+                // }
             };
         }
     }
