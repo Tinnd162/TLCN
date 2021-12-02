@@ -16,5 +16,6 @@ namespace Inventory.API.Repositories
         Task<bool> AddDetailProduct(AddProductDTO objDetailProductDTO);
         Task<bool> RemoveProduct(string strProductId);
         ProductEventBO MapperEventRabbitMQ(AddProductDTO objAddProductDTO);
+        Task<bool> UpdateDetailProduct(UpdateProductDTO objUpdateProductDTO);
     }
 }

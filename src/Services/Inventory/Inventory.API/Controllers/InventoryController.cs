@@ -36,7 +36,7 @@ namespace Inventory.API.Controllers
             var product = await _inventoryRepository.GetProductDetailById(strProductId);
             return Ok(product);
         }
-        [HttpPut]
+        [HttpDelete]
         [Route("RemoveProduct")]
         public async Task<ActionResult<bool>> RemoveProduct(string strProductId)
         {
@@ -47,6 +47,31 @@ namespace Inventory.API.Controllers
                 IsDelete = true
             };
             if (bolIsRemoveProduct)
+            {
+                Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
+                var endPoint = await _bus.GetSendEndpoint(uri);
+                await endPoint.Send(objProductEventBO);
+                return Ok("Success");
+            }
+            return BadRequest("Fail!");
+        }
+        [HttpPut]
+        [Route("UpdateProduct")]
+        public async Task<ActionResult<bool>> UpdateProduct(UpdateProductDTO objUpdateProductDTO)
+        {
+            bool bolIsUpdateProduct = await _inventoryRepository.UpdateDetailProduct(objUpdateProductDTO);
+            ProductEventBO objProductEventBO = new ProductEventBO()
+            {
+                Id = objUpdateProductDTO.Id,
+                Name = objUpdateProductDTO.Name,
+                Description = objUpdateProductDTO.Description,
+                Image = objUpdateProductDTO.LinkImage,
+                Category = objUpdateProductDTO.CategoryDTO.Name,
+                Brand = objUpdateProductDTO.BrandDTO.Name,
+                Price = objUpdateProductDTO.PriceLogDTO.Price,
+                IsUpdate = true,
+            };
+            if (bolIsUpdateProduct)
             {
                 Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
                 var endPoint = await _bus.GetSendEndpoint(uri);
