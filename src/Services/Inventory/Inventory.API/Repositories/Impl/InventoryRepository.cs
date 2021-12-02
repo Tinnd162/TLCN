@@ -4,10 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Common;
 using Inventory.API.Data;
 using Inventory.API.DTOs;
 using Inventory.API.Entities;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 
 namespace Inventory.API.Repositories.Impl
@@ -123,22 +125,19 @@ namespace Inventory.API.Repositories.Impl
 
         public async Task<bool> AddDetailProduct(AddProductDTO objAddProductDTO)
         {
-            objAddProductDTO.Id = Convert.ToString(Guid.NewGuid());
-            objAddProductDTO.BrandDTO.Id = Convert.ToString(Guid.NewGuid());
-            objAddProductDTO.CategoryDTO.Id = Convert.ToString(Guid.NewGuid());
-            objAddProductDTO.ConfigurationProductDTO.Id = Convert.ToString(Guid.NewGuid());
-            objAddProductDTO.SupplierDTO.Id = Convert.ToString(Guid.NewGuid());
+            objAddProductDTO.BrandDTO.Id = ObjectId.GenerateNewId().ToString();
+            objAddProductDTO.CategoryDTO.Id = ObjectId.GenerateNewId().ToString();
+            objAddProductDTO.ConfigurationProductDTO.Id = ObjectId.GenerateNewId().ToString();
+            objAddProductDTO.SupplierDTO.Id = ObjectId.GenerateNewId().ToString();
 
             Product objProduct = new Product()
             {
-                Id = Convert.ToString(Guid.NewGuid()),
+                Id = objAddProductDTO.Id,
                 ProductName = objAddProductDTO.Name,
                 Description = objAddProductDTO.Description,
                 UnitPrice = objAddProductDTO.UnitPrice,
                 Quantity = objAddProductDTO.Quantity,
                 CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now,
-                DeleteDate = DateTime.Now,
                 IsUpdate = false,
                 IsStatus = false,
                 IsDiscontinued = false,
@@ -173,26 +172,76 @@ namespace Inventory.API.Repositories.Impl
                 },
                 PriceLogs = new Collection<PriceLog>(){
                     new PriceLog(){
-                        Id=Convert.ToString(Guid.NewGuid()),
+                        Id=ObjectId.GenerateNewId().ToString(),
                         Price=objAddProductDTO.PriceLogDTO.Price,
-                        UserUpdate=null,
                         ProductId=objAddProductDTO.Id,
                         IsUpdate=false,
                         CreateDate=DateTime.Now,
-                        UpdateDate=DateTime.Now,
                     }
                 },
             };
             await _context.Products.AddAsync(objProduct);
             return await _context.SaveChangesAsync() > 0;
         }
-
-        #endregion
-
-        #region Kiểm tra tồn kho.
-        public Task<bool> CheckEnoughQuantity(string strProductId)
+        public async Task<bool> UpdateDetailProduct(UpdateProductDTO objUpdateProductDTO)
         {
-            throw new System.NotImplementedException();
+
+            Product objProduct = _context.Products.FirstOrDefault(x => x.Id == objUpdateProductDTO.Id);
+            if (objProduct != null)
+            {
+                objProduct.Id = objUpdateProductDTO.Id;
+                objProduct.ProductName = objUpdateProductDTO.Name;
+                objProduct.Description = objUpdateProductDTO.Description;
+                objProduct.LinkImage = objUpdateProductDTO.LinkImage;
+                objProduct.Quantity = objUpdateProductDTO.Quantity;
+                objProduct.IsDiscontinued = objUpdateProductDTO.IsDiscontinued;
+                objProduct.IsStatus = objUpdateProductDTO.IsStatus;
+                objProduct.IsUpdate = true;
+                objProduct.IsDelete = false;
+                objProduct.Supplier = new Supplier
+                {
+                    Id = objUpdateProductDTO.SupplierDTO.Id,
+                    SupplierName = objUpdateProductDTO.SupplierDTO.Name
+                };
+                objProduct.Brand = new Brand
+                {
+                    Id = objUpdateProductDTO.BrandDTO.Id,
+                    BrandName = objUpdateProductDTO.BrandDTO.Name,
+                    CategoryId = objUpdateProductDTO.CategoryDTO.Id
+                };
+                objProduct.Category = new Category
+                {
+                    Id = objUpdateProductDTO.CategoryDTO.Id,
+                    CategoryName = objUpdateProductDTO.CategoryDTO.Name
+                };
+                objProduct.Configuration = new Configuration
+                {
+                    Id = objUpdateProductDTO.ConfigurationProductDTO.Id,
+                    OperatingSystem = objUpdateProductDTO.ConfigurationProductDTO.OperatingSystem,
+                    RearCamera = objUpdateProductDTO.ConfigurationProductDTO.RearCamera,
+                    FrontCamera = objUpdateProductDTO.ConfigurationProductDTO.FrontCamera,
+                    Chips = objUpdateProductDTO.ConfigurationProductDTO.Chips,
+                    RAM = objUpdateProductDTO.ConfigurationProductDTO.RAM,
+                    InternalMemory = objUpdateProductDTO.ConfigurationProductDTO.InternalMemory,
+                    SIM = objUpdateProductDTO.ConfigurationProductDTO.SIM,
+                    Batteries = objUpdateProductDTO.ConfigurationProductDTO.Batteries
+                };
+                objProduct.PriceLogs = new Collection<PriceLog>(){
+                    new PriceLog(){
+                        Id=ObjectId.GenerateNewId().ToString(),
+                        Price=objUpdateProductDTO.PriceLogDTO.Price,
+                        IsUpdate=true,
+                        UpdateDate=DateTime.Now,
+                    }
+                };
+                _context.Update<Product>(objProduct);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            return false;
+        }
+        public ProductEventBO MapperEventRabbitMQ(AddProductDTO objAddProductDTO)
+        {
+            return _mapper.Map<ProductEventBO>(objAddProductDTO);
         }
         #endregion
     }

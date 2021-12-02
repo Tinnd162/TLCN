@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common;
+using GreenPipes;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Product.API.Consumer;
+using Product.API.Controllers;
 using Product.API.Data;
 using Product.API.Repositories;
 using Product.API.Repositories.Impl;
@@ -29,7 +34,25 @@ namespace Product.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<AddProductConsumer>();
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
+                    {
+                        h.Username(RabbitMQConstants.UserName);
+                        h.Password(RabbitMQConstants.Password);
+                    });
+                    cfg.ReceiveEndpoint("productQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<AddProductConsumer>(provider);
+                    });
+                }));
+            });
+            services.AddMassTransitHostedService();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
