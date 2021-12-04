@@ -13,14 +13,13 @@ namespace Ordering.DA.Configurations
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.ToTable("Order").HasKey(x => x.OrderID);
+            builder.ToTable("SaleOrder").HasKey(x => x.OrderID);
             builder.Property(x => x.OrderDate).IsRequired();
             builder.Property(x => x.TotalAmount).IsRequired();
-            builder.Property(x => x.StaffID).IsRequired(); 
             builder.Property(x => x.CustomerID).IsRequired(); 
             builder.Property(x => x.PaymentID).IsRequired();
             builder.Property(x => x.DeliveryID).IsRequired();
-
+            builder.Property(x => x.CustomerName).IsRequired();
             builder.HasOne(x => x.Payment)
                    .WithMany(x => x.Orders)
                    .HasForeignKey(x => x.PaymentID);

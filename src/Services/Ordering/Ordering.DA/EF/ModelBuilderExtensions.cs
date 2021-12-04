@@ -12,10 +12,10 @@ namespace Ordering.DA.EF
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            Guid paymentID = Guid.NewGuid();
-            Guid deliveryID = Guid.NewGuid();
-            Guid customerID = Guid.NewGuid();
-            Guid orderID = Guid.NewGuid();
+            string paymentID = Guid.NewGuid().ToString();
+            string deliveryID = Guid.NewGuid().ToString();
+            string customerID = Guid.NewGuid().ToString();
+            string orderID = Guid.NewGuid().ToString();
             modelBuilder.Entity<Payment>().HasData(
                 new Payment
                 {
@@ -50,18 +50,19 @@ namespace Ordering.DA.EF
                        ConfirmDate = null,
                        TotalAmount = 100000,
                        Status = null,
-                       StaffID = new Guid(),
+                       StaffID = null,
                        CustomerID = customerID,
                        PaymentID = paymentID,
                        DeliveryID = deliveryID,
-                       IsDelete = false
+                       IsDelete = false,
+                       CustomerName = "Viet"
                     }
                 );
 
             modelBuilder.Entity<OrderDetail>().HasData(
                   new OrderDetail
                   {
-                      OrderDetailID = Guid.NewGuid(),
+                      OrderDetailID = Guid.NewGuid().ToString(),
                       OrderID = orderID,
                       Quantity = 1,
                       VAT = 0.1,
@@ -71,7 +72,7 @@ namespace Ordering.DA.EF
                   },
                    new OrderDetail
                    {
-                       OrderDetailID = Guid.NewGuid(),
+                       OrderDetailID = Guid.NewGuid().ToString(),
                        OrderID = orderID,
                        Quantity = 1,
                        VAT = 0.1,

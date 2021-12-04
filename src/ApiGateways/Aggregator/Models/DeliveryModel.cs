@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordering.DA.Entities
+namespace Aggregator.Models
 {
-    public class Delivery
+    public class DeliveryModel
     {
         public string DeliveryID { get; set; }
         public string FirstNameReceiver { get; set; }
@@ -15,7 +15,7 @@ namespace Ordering.DA.Entities
         public string PhoneNo { get; set; }
         public string Email { get; set; }
         public string CustomerID { get; set; }
-        
-        public List<Order> Orders { get; set; }
+        [JsonProperty(PropertyName = "IsExist")]
+        public bool cus_IsExist { get; set; }
     }
 }
