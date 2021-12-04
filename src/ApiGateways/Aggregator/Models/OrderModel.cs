@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordering.BO
+namespace Aggregator.Models
 {
-    public class OrderBO
+    public class OrderModel
     {
         public string OrderID { get; set; }
         public DateTime? OrderDate { get; set; }
@@ -19,12 +18,8 @@ namespace Ordering.BO
         public string CustomerAddress { get; set; }
         public int Gender { get; set; }//0: nữ, 1: nam
         public string CustomerPhone { get; set; }
-        public List<OrderDetailBO> OrderDetails { get; set; }
-        public PaymentInfo PaymentInfo { get; set; }
-        public DeliveryInfo DeliveryInfo { get; set; }
-        public OrderBO()
-        {
-            OrderDetails = new List<OrderDetailBO>();
-        }
+        public List<OrderDetailModel> OrderDetails { get; set; }
+        public PaymentModel PaymentInfo { get; set; }
+        public DeliveryModel DeliveryInfo { get; set; }
     }
 }

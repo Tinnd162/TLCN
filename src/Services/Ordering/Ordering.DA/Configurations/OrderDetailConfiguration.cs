@@ -13,7 +13,7 @@ namespace Ordering.DA.Configurations
     {
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
-            builder.ToTable("OrderDetail").HasKey(x => x.OrderDetailID);
+            builder.ToTable("SaleOrderDetail").HasKey(x => x.OrderDetailID);
             builder.Property(x => x.VAT).IsRequired();
             builder.Property(x => x.Quantity).IsRequired();
             builder.Property(x => x.SalePrice).IsRequired();

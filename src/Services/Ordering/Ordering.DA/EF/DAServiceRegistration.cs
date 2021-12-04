@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Ordering.DA.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +15,6 @@ namespace Ordering.DA.EF
         {
             services.AddDbContext<OrderDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("OrderingConnectionString")));
-
-            services.AddScoped<IOrderDA, OrderDA>();
             return services;
         }
     }

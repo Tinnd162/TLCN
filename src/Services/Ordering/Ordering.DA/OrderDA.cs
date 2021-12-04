@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ordering.BO;
 using Ordering.DA.EF;
-using Ordering.DA.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ordering.DA
 {
-    public class OrderDA : IOrderDA
+    public class OrderDA
     {
 
         public readonly OrderDbContext _context;
@@ -18,9 +17,118 @@ namespace Ordering.DA
         {
             _context = context;
         }
-        public Task CreateOrder(ref OrderBO Order)
+        public bool InsertSaleOrder(string strSaleOrderID, string strCustomerID, string strPaymentID, string strDeliveryID, double douTotalAmount, 
+            string strCustomerName, string strCustomerAddress, int intGender, string strCustomerPhone, ref string strErrorMessage)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Orders.Add(new Entities.Order
+                {
+                    OrderID = strSaleOrderID,
+                    OrderDate = DateTime.Now,
+                    TotalAmount = douTotalAmount,
+                    CustomerID = strCustomerID,
+                    PaymentID = strPaymentID,
+                    DeliveryID = strDeliveryID,
+                    CustomerName = strCustomerName,
+                    CustomerAddress = strCustomerAddress,
+                    Gender = intGender,
+                    CustomerPhone = strCustomerPhone
+                });
+                _context.SaveChanges();
+            }
+            catch (Exception objEx)
+            {
+                strErrorMessage = "Lỗi tạo đơn hàng!";
+                Console.WriteLine(strErrorMessage + ", Message detail: " + objEx.ToString());
+                strSaleOrderID = string.Empty;
+                return false;
+            }
+            return true;
+        }
+
+        public bool InsertSaleOrderDetail(string strSaleOrderID, List<OrderDetailBO> lstSaleOrderDetailBO, ref string strErrorMessage)
+        {
+            try
+            {
+                string strSaleOrderDetailID = string.Empty;
+                foreach(var objSODetail in lstSaleOrderDetailBO)
+                {
+                    strSaleOrderDetailID = Guid.NewGuid().ToString();
+                    _context.OrderDetails.Add(new Entities.OrderDetail
+                    {
+                        OrderID = strSaleOrderID,
+                        OrderDetailID  = strSaleOrderDetailID,
+                        ProductID = objSODetail.ProductID,
+                        ProductName = objSODetail.ProductName,
+                        IMEI = objSODetail.IMEI,
+                        Quantity = objSODetail.Quantity,
+                        SalePrice = objSODetail.SalePrice,
+                        VAT = objSODetail.VAT
+                    });
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception objEx)
+            {
+                strErrorMessage = "Lỗi tạo chi tiết đơn hàng!";
+                Console.WriteLine(strErrorMessage + ", Message detail: " + objEx.ToString());
+                return false;
+            }
+            return true;
+        }
+
+        public bool InsertPaymentInfo(PaymentInfo objPaymentInfo, ref string strErrorMessage)
+        {
+            try
+            {
+                string strPaymentID = Guid.NewGuid().ToString();
+                _context.Payments.Add(new Entities.Payment
+                {
+                    PaymentID = strPaymentID,
+                    PaymentMethod = objPaymentInfo.PaymentMethod,
+                    CardName = objPaymentInfo.CardName,
+                    CardNo = objPaymentInfo.CardNo,
+                    Expiration = objPaymentInfo.Expiration,
+                    CVV = objPaymentInfo.CardNo
+                });
+                objPaymentInfo.PaymentID = strPaymentID;
+                _context.SaveChanges();
+            }
+            catch (Exception objEx)
+            {
+                strErrorMessage = $"Lỗi thêm thông tin thanh toán cho đơn hàng!";
+                Console.WriteLine(strErrorMessage + ", Message detail: " + objEx.ToString());
+                return false;
+            }
+            return true;
+        }
+
+        public bool InsertDeliveryInfo(DeliveryInfo objDeliveryInfo, ref string strErrorMessage)
+        {
+            try
+            {
+                string strDeliveryID = Guid.NewGuid().ToString();
+                _context.Deliveries.Add(new Entities.Delivery
+                {
+                    DeliveryID = strDeliveryID,
+                    FirstNameReceiver = objDeliveryInfo.FirstNameReceiver,
+                    LastNameReceiver = objDeliveryInfo.LastNameReceiver,
+                    Address = objDeliveryInfo.Address,
+                    PhoneNo = objDeliveryInfo.PhoneNo,
+                    Email = objDeliveryInfo.Email,
+                    CustomerID = objDeliveryInfo.CustomerID
+                });
+                objDeliveryInfo.DeliveryID = strDeliveryID;
+                _context.SaveChanges();
+            }
+            catch (Exception objEx)
+            {
+                strErrorMessage = $"Lỗi thêm thông tin giao hàng cho đơn hàng!";
+                Console.WriteLine(strErrorMessage + ", Message detail: " + objEx.ToString());
+                return false;
+            }
+            return true;
         }
 
         public Task<bool> DeleteOrder(string OrderID)
@@ -28,14 +136,15 @@ namespace Ordering.DA
             throw new NotImplementedException();
         }
 
-        public async Task<OrderBO> GetOrderByID(string strSaleOrderID)
+        public OrderBO GetOrderByID(string strSaleOrderID, ref string strErrorMessage)
         {
             try
             {
-                var objSaleOrder = _context.Orders.Where(x => x.OrderID.ToString() == strSaleOrderID).FirstOrDefault();
+                OrderBO objSaleOrderBO = null;
+                var objSaleOrder = _context.Orders.Where(x => x.OrderID == strSaleOrderID).FirstOrDefault();
                 if (objSaleOrder != null)
                 {
-                    var objSaleOrderBO = new OrderBO()
+                    objSaleOrderBO = new OrderBO()
                     {
                         OrderID = objSaleOrder.OrderID,
                         OrderDate = objSaleOrder.OrderDate,
@@ -43,7 +152,7 @@ namespace Ordering.DA
                         Status = objSaleOrder.Status,
                         TotalAmount = objSaleOrder.TotalAmount
                     };
-                    var objSaleOrderDetail = _context.OrderDetails.Where(x => x.OrderID.ToString() == strSaleOrderID)
+                    var objSaleOrderDetail = _context.OrderDetails.Where(x => x.OrderID == strSaleOrderID)
                                                                   .Select(x => new OrderDetailBO
                                                                   {
                                                                       OrderDetailID = x.OrderDetailID,
@@ -57,14 +166,15 @@ namespace Ordering.DA
                     {
                         objSaleOrderBO.OrderDetails = objSaleOrderDetail;
                     }
-                    return await Task.FromResult(objSaleOrderBO);
                 }
+                return objSaleOrderBO;
             }
             catch(Exception objEx)
             {
-                throw objEx;
+                strErrorMessage = $"Lỗi lấy thông tin của đơn hàng {strSaleOrderID}!";
+                Console.WriteLine(strErrorMessage + ", Message detail: " + objEx.ToString());
+                return null;
             }
-            return null;
         }
 
         public Task<OrderBO> GetOrders()

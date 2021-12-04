@@ -1,6 +1,7 @@
 ﻿using Ordering.BL.Interfaces;
 using Ordering.BO;
-using Ordering.DA.Interfaces;
+using Ordering.DA;
+using Ordering.DA.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +12,74 @@ namespace Ordering.BL
 {
     public class OrderBL : IOrderBL
     {
-        public IOrderDA _orderDA;
-        public OrderBL(IOrderDA orderDA)
+        public readonly OrderDbContext _context;
+        public OrderBL(OrderDbContext context)
         {
-            _orderDA = orderDA;
+            this._context = context;
         }
-        public async Task<OrderBO> GetOrderByID(string strCustomerID, string strSaleOrderID)
+        public OrderBO GetOrderByID(string strCustomerID, string strSaleOrderID, ref string strErrorMessage)
         {
             try
             {
-                var objSaleOrderBO = await _orderDA.GetOrderByID(strSaleOrderID);
+                OrderDA objSalOrderDA = new OrderDA(_context);
+                var objSaleOrderBO =  objSalOrderDA.GetOrderByID(strSaleOrderID, ref strErrorMessage);
                 return objSaleOrderBO;
             }
             catch (Exception objEx)
             {
-                throw objEx;
+                return null;
             }
-            return null;
+        }
+        public bool InsertSaleOrder(OrderBO objSaleOrderBO, ref string strErrorMessage)
+        {
+            var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                OrderDA objOrderDA = new OrderDA(_context);
+                if (objSaleOrderBO.PaymentInfo != null && !objSaleOrderBO.PaymentInfo.cus_IsExist)
+                {
+                    if (!objOrderDA.InsertPaymentInfo(objSaleOrderBO.PaymentInfo, ref strErrorMessage))
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+
+                if (objSaleOrderBO.DeliveryInfo != null && !objSaleOrderBO.DeliveryInfo.cus_IsExist)
+                {
+                    if (!objOrderDA.InsertDeliveryInfo(objSaleOrderBO.DeliveryInfo, ref strErrorMessage))
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+
+                string strSaleOrderID = Guid.NewGuid().ToString();
+                if (!objOrderDA.InsertSaleOrder(strSaleOrderID, objSaleOrderBO.CustomerID, objSaleOrderBO.PaymentInfo.PaymentID, objSaleOrderBO.DeliveryInfo.DeliveryID
+                    , objSaleOrderBO.TotalAmount, objSaleOrderBO.CustomerName, objSaleOrderBO.CustomerAddress, objSaleOrderBO.Gender, objSaleOrderBO.CustomerName, ref strErrorMessage))
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+
+                if(objSaleOrderBO.OrderDetails !=null && objSaleOrderBO.OrderDetails.Count > 0)
+                {
+                    if(!objOrderDA.InsertSaleOrderDetail(strSaleOrderID, objSaleOrderBO.OrderDetails, ref strErrorMessage))
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+
+                objSaleOrderBO.OrderID = strSaleOrderID;
+                transaction.Commit();
+                return true;
+            }
+            catch(Exception objEx)
+            {
+                transaction.Rollback();
+                return false;
+            }
         }
     }
 }

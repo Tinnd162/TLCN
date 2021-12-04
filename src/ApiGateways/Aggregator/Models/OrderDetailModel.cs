@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordering.BO
+namespace Aggregator.Models
 {
-    public class OrderDetailBO
+    public class OrderDetailModel
     {
         public string OrderDetailID { get; set; }
         public string ProductName { get; set; }
