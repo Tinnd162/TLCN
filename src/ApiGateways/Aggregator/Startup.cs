@@ -1,16 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Aggregator.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Polly;
+using Polly.Extensions.Http;
+using Serilog;
+using System;
+using System.Net.Http;
 
 namespace Aggregator
 {
@@ -26,6 +25,13 @@ namespace Aggregator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddHttpClient<IBasketService, BasketService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiSettings:Url"]));
+            //services.AddHttpClient<IInventoryService, InventoryService>(c =>
+            //    c.BaseAddress = new Uri(Configuration["ApiSettings:Url"]));
+            //services.AddHttpClient<IBasketService, BasketService>(c =>
+            //    c.BaseAddress = new Uri(Configuration["ApiSettings:Url"]));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

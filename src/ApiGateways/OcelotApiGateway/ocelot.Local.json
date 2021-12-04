@@ -1,0 +1,84 @@
+{
+  "Routes": [
+    //Basket API
+    {
+      "DownstreamPathTemplate": "/api/v1/Basket/GetBasket/{UserName}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Basket/{UserName}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Basket/DeleteBasket/{UserName}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Basket/{UserName}",
+      "UpstreamHttpMethod": [ "Delete" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Basket/UpdateBasket",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Basket",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+
+    //Ordering API
+    {
+      "DownstreamPathTemplate": "/api/v1/Order/InsertSaleOrder",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5004"
+        }
+      ],
+      "UpstreamPathTemplate": "/Order/Insert",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Order/GetOrderByID/{CustomerID}/{SaleOrderID}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5004"
+        }
+      ],
+      "UpstreamPathTemplate": "/Order/GetSO/{CustomerID}/{SaleOrderID}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+
+    //Inventory API
+    {
+      "DownstreamPathTemplate": "/api/v1/Inventory/GetProductDetailById",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/GetProductDetailById",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5010"
+  }
+}

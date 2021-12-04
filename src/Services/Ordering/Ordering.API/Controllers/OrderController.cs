@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Ordering.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class OrderController : ControllerBase
     {
         public IOrderBL _orderBL;
@@ -19,13 +19,20 @@ namespace Ordering.API.Controllers
             _orderBL = orderBL;
         }
 
-        [Route("GetOrderByID")]
         [HttpGet]
-        public ActionResult<OrderBO> GetOrderByID(string strCustomerID, string strSaleOrderID)
+        [Route("GetOrderByID/{CustomerID}/{SaleOrderID}")]
+        public ActionResult<OrderBO> GetOrderByID(string CustomerID, string SaleOrderID)
         {
+            string strErrorMessage = string.Empty;
+            OrderBO objSaleOrderBO = null;
             try
             {
-                return Ok(_orderBL.GetOrderByID(strCustomerID, strSaleOrderID));
+                objSaleOrderBO = _orderBL.GetOrderByID(CustomerID, SaleOrderID, ref strErrorMessage);
+                if(objSaleOrderBO == null)
+                {
+                    return Ok(new { error = true, content = strErrorMessage });
+                }
+                return Ok(new { error = false, data = objSaleOrderBO});
             }
             catch
             {
@@ -33,19 +40,36 @@ namespace Ordering.API.Controllers
             }    
         }
 
-        //[Route("InsertSaleOrder")]
-        //[HttpPost]
-        //public ActionResult<string> InsertSaleOrder([FromBody] object objRequest)
-        //{
-        //    try
-        //    {
-        //        var objRequestParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(objRequest.ToString());
-
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //}
+        [HttpPost]
+        [Route("InsertSaleOrder")]
+        public ActionResult<string> InsertSaleOrder([FromBody] object objRequest)
+        {
+            OrderBO objSaleOrderBO = null;
+            string strErrorMessage = string.Empty;
+            try
+            {
+                var objRequestParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(objRequest.ToString());
+                foreach (var objParam in objRequestParams)
+                {
+                    switch (objParam.Key.ToString().Trim().ToUpper())
+                    {
+                        case "SALEORDER":
+                            objSaleOrderBO = JsonConvert.DeserializeObject<OrderBO>(objParam.Value.ToString());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if (!_orderBL.InsertSaleOrder(objSaleOrderBO, ref strErrorMessage))
+                {
+                    return Ok(new { error = true, content = strErrorMessage });
+                }
+            }
+            catch(Exception objEx)
+            {
+                return NotFound();
+            }
+            return Ok(new { error = false, data = objSaleOrderBO.OrderID});
+        }
     }
 }

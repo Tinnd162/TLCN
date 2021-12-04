@@ -77,6 +77,8 @@ namespace Inventory.API.Data
                 .WithOne(y => y.Configuration)
                 .HasForeignKey<Product>(z => z.CongigurationId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            
         }
     }
 }

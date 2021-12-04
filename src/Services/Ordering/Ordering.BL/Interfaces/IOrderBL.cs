@@ -9,6 +9,10 @@ namespace Ordering.BL.Interfaces
 {
     public interface IOrderBL
     {
-        Task<OrderBO> GetOrderByID(string strCustomerID, string strSaleOrderID);
+        public OrderBO GetOrderByID(string strCustomerID, string strSaleOrderID, ref string strErrorMessage);
+
+        public bool InsertSaleOrder(OrderBO objSaleOrderBO, ref string strErrorMessage);
+
+
     }
 }
