@@ -196,38 +196,55 @@ namespace Inventory.API.Repositories.Impl
                 objProduct.Quantity = objUpdateProductDTO.Quantity;
                 objProduct.IsDiscontinued = objUpdateProductDTO.IsDiscontinued;
                 objProduct.IsStatus = objUpdateProductDTO.IsStatus;
+                objProduct.UpdateDate = DateTime.Now;
                 objProduct.IsUpdate = true;
+                objProduct.IsDiscontinued = false;
+                objProduct.IsStatus = false;
                 objProduct.IsDelete = false;
-                objProduct.Supplier = new Supplier
+                if (objProduct.SupplierId != objUpdateProductDTO.SupplierDTO.Id)
                 {
-                    Id = objUpdateProductDTO.SupplierDTO.Id,
-                    SupplierName = objUpdateProductDTO.SupplierDTO.Name
-                };
-                objProduct.Brand = new Brand
+                    objProduct.Supplier = new Supplier
+                    {
+                        Id = objUpdateProductDTO.SupplierDTO.Id,
+                        SupplierName = objUpdateProductDTO.SupplierDTO.Name
+                    };
+                }
+                if (objProduct.BrandId != objUpdateProductDTO.BrandDTO.Id)
                 {
-                    Id = objUpdateProductDTO.BrandDTO.Id,
-                    BrandName = objUpdateProductDTO.BrandDTO.Name,
-                    CategoryId = objUpdateProductDTO.CategoryDTO.Id
-                };
-                objProduct.Category = new Category
+                    objProduct.Brand = new Brand
+                    {
+                        Id = objUpdateProductDTO.BrandDTO.Id,
+                        BrandName = objUpdateProductDTO.BrandDTO.Name,
+                        CategoryId = objUpdateProductDTO.CategoryDTO.Id
+                    };
+                }
+                if (objProduct.CategoryId != objUpdateProductDTO.CategoryDTO.Id)
                 {
-                    Id = objUpdateProductDTO.CategoryDTO.Id,
-                    CategoryName = objUpdateProductDTO.CategoryDTO.Name
-                };
-                objProduct.Configuration = new Configuration
+                    objProduct.Category = new Category
+                    {
+                        Id = objUpdateProductDTO.CategoryDTO.Id,
+                        CategoryName = objUpdateProductDTO.CategoryDTO.Name
+                    };
+                }
+                if (objProduct.CongigurationId != objUpdateProductDTO.ConfigurationProductDTO.Id)
                 {
-                    Id = objUpdateProductDTO.ConfigurationProductDTO.Id,
-                    OperatingSystem = objUpdateProductDTO.ConfigurationProductDTO.OperatingSystem,
-                    RearCamera = objUpdateProductDTO.ConfigurationProductDTO.RearCamera,
-                    FrontCamera = objUpdateProductDTO.ConfigurationProductDTO.FrontCamera,
-                    Chips = objUpdateProductDTO.ConfigurationProductDTO.Chips,
-                    RAM = objUpdateProductDTO.ConfigurationProductDTO.RAM,
-                    InternalMemory = objUpdateProductDTO.ConfigurationProductDTO.InternalMemory,
-                    SIM = objUpdateProductDTO.ConfigurationProductDTO.SIM,
-                    Batteries = objUpdateProductDTO.ConfigurationProductDTO.Batteries
-                };
-                objProduct.PriceLogs = new Collection<PriceLog>(){
-                    new PriceLog(){
+                    objProduct.Configuration = new Configuration
+                    {
+                        Id = objUpdateProductDTO.ConfigurationProductDTO.Id,
+                        OperatingSystem = objUpdateProductDTO.ConfigurationProductDTO.OperatingSystem,
+                        RearCamera = objUpdateProductDTO.ConfigurationProductDTO.RearCamera,
+                        FrontCamera = objUpdateProductDTO.ConfigurationProductDTO.FrontCamera,
+                        Chips = objUpdateProductDTO.ConfigurationProductDTO.Chips,
+                        RAM = objUpdateProductDTO.ConfigurationProductDTO.RAM,
+                        InternalMemory = objUpdateProductDTO.ConfigurationProductDTO.InternalMemory,
+                        SIM = objUpdateProductDTO.ConfigurationProductDTO.SIM,
+                        Batteries = objUpdateProductDTO.ConfigurationProductDTO.Batteries
+                    };
+                }
+                objProduct.PriceLogs = new Collection<PriceLog>()
+                {
+                    new PriceLog()
+                    {
                         Id=ObjectId.GenerateNewId().ToString(),
                         Price=objUpdateProductDTO.PriceLogDTO.Price,
                         IsUpdate=true,
@@ -239,6 +256,7 @@ namespace Inventory.API.Repositories.Impl
             }
             return false;
         }
+
         public ProductEventBO MapperEventRabbitMQ(AddProductDTO objAddProductDTO)
         {
             return _mapper.Map<ProductEventBO>(objAddProductDTO);
