@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Aggregator.Services
 {
-    interface IOrderService
+    public interface IOrderService
     {
+        public Task<string> InsertSaleOrder(object objRequest);
     }
 }
