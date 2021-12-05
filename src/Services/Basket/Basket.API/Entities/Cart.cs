@@ -13,7 +13,7 @@ namespace Basket.API.Entities
         }
         public string UserName { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
-        public decimal TotalPrrice { 
+        public decimal TotalPrice { 
             get
             {
                 decimal totalPrice = 0;
