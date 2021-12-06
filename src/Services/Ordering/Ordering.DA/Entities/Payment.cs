@@ -9,6 +9,7 @@ namespace Ordering.DA.Entities
     public class Payment
     {
         public string PaymentID { get; set; }
+        public string CustomerID { get; set; }
         public string PaymentMethod { get; set; }
         public string CardName { get; set; }
         public string CardNo { get; set; }
