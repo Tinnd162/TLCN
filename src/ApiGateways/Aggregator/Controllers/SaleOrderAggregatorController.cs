@@ -61,6 +61,10 @@ namespace Aggregator.Controllers
                     }
                 }
                 string strSaleOrderID =  await objIOrderService.InsertSaleOrder(objRequest);
+                if(strSaleOrderID != null)
+                {
+                    await objIBasketService.DeleteBasket(objSaleOrderBO.CustomerID);
+                }
                 return Ok(new { error = false, data = strSaleOrderID });
             }
             catch{

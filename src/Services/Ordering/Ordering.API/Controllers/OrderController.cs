@@ -71,5 +71,77 @@ namespace Ordering.API.Controllers
             }
             return Ok(new { error = false, data = objSaleOrderBO.OrderID});
         }
+
+        [HttpGet]
+        [Route("GetPaymentInfos/{CustomerID}")]
+        public ActionResult<List<PaymentInfo>> GetPaymentInfos(string CustomerID)
+        {
+            string strErrorMessage = null;
+            try
+            {
+                if (CustomerID != null)
+                {
+                    var lstobjSO = _orderBL.GetPaymentInfos(CustomerID, ref strErrorMessage);
+                    if (strErrorMessage != null)
+                    {
+                        return Ok(new { error = true, data = strErrorMessage });
+                    }
+                    return lstobjSO;
+                }
+                return Ok(new { error = true, data = "Chưa nhập mã khách hàng!" });
+            }
+            catch (Exception objEx)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        [Route("GetDeliveryInfos/{CustomerID}")]
+        public ActionResult<List<DeliveryInfo>> GetDeliveryInfos(string CustomerID)
+        {
+            string strErrorMessage = null;
+            try
+            {
+                if (CustomerID != null)
+                {
+                    var lstobjSO = _orderBL.GetDeliveryInfos(CustomerID, ref strErrorMessage);
+                    if (strErrorMessage != null)
+                    {
+                        return Ok(new { error = true, data = strErrorMessage });
+                    }
+                    return lstobjSO;
+                }
+                return Ok(new { error = true, data = "Chưa nhập mã khách hàng!" });
+            }
+            catch (Exception objEx)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        [Route("GetSaleOrderList/{CustomerID}")]
+        public ActionResult<List<OrderBO>> GetSaleOrderList(string CustomerID)
+        {
+            string strErrorMessage = null;
+            try
+            {
+                if(CustomerID != null)
+                {
+                    var lstobjSO = _orderBL.GetSaleOrderList(CustomerID, ref strErrorMessage);
+                    if(strErrorMessage != null)
+                    {
+                        return Ok(new { error = true, data = strErrorMessage });
+                    }
+                    return lstobjSO;
+                }
+                return Ok(new { error = true, data = "Chưa nhập mã khách hàng!" });
+            }
+            catch (Exception objEx)
+            {
+                return NotFound();
+            }
+        }
     }
 }

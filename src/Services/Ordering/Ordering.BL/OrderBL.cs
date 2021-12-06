@@ -17,12 +17,27 @@ namespace Ordering.BL
         {
             this._context = context;
         }
+
+        public List<DeliveryInfo> GetDeliveryInfos(string strCustomerID, ref string strErrorMessage)
+        {
+            try
+            {
+                OrderDA objSalOrderDA = new OrderDA(_context);
+                var lstObjSaleOrderBO = objSalOrderDA.GetDeliveryInfos(strCustomerID, ref strErrorMessage);
+                return lstObjSaleOrderBO;
+            }
+            catch (Exception objEx)
+            {
+                return null;
+            }
+        }
+
         public OrderBO GetOrderByID(string strCustomerID, string strSaleOrderID, ref string strErrorMessage)
         {
             try
             {
                 OrderDA objSalOrderDA = new OrderDA(_context);
-                var objSaleOrderBO =  objSalOrderDA.GetOrderByID(strSaleOrderID, ref strErrorMessage);
+                var objSaleOrderBO = objSalOrderDA.GetOrderByID(strCustomerID, strSaleOrderID, ref strErrorMessage);
                 return objSaleOrderBO;
             }
             catch (Exception objEx)
@@ -30,6 +45,35 @@ namespace Ordering.BL
                 return null;
             }
         }
+
+        public List<PaymentInfo> GetPaymentInfos(string strCustomerID, ref string strErrorMessage)
+        {
+            try
+            {
+                OrderDA objSalOrderDA = new OrderDA(_context);
+                var lstObjSaleOrderBO = objSalOrderDA.GetPaymentInfos(strCustomerID, ref strErrorMessage);
+                return lstObjSaleOrderBO;
+            }
+            catch (Exception objEx)
+            {
+                return null;
+            }
+        }
+
+        public List<OrderBO> GetSaleOrderList(string strCustomerID, ref string strErrorMessage)
+        {
+            try
+            {
+                OrderDA objSalOrderDA = new OrderDA(_context);
+                var objSaleOrderBO = objSalOrderDA.GetSaleOrderList(strCustomerID, ref strErrorMessage);
+                return objSaleOrderBO;
+            }
+            catch (Exception objEx)
+            {
+                return null;
+            }
+        }
+
         public bool InsertSaleOrder(OrderBO objSaleOrderBO, ref string strErrorMessage)
         {
             var transaction = _context.Database.BeginTransaction();
