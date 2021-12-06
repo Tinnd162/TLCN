@@ -19,6 +19,7 @@ namespace Ordering.DA.Configurations
             builder.Property(x => x.CardNo).IsRequired();
             builder.Property(x => x.CVV).IsRequired();
             builder.Property(x => x.Expiration).IsRequired();
+            builder.Property(x => x.CustomerID).IsRequired();
         }
     }
 }
