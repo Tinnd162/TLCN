@@ -12,6 +12,9 @@ namespace Ordering.DA.EF
 {
     public class OrderDbContext : DbContext
     {
+        public OrderDbContext()
+        {
+        }
         public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options)
         {
         }

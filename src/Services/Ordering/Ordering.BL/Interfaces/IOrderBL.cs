@@ -13,6 +13,8 @@ namespace Ordering.BL.Interfaces
 
         public bool InsertSaleOrder(OrderBO objSaleOrderBO, ref string strErrorMessage);
 
-
+        public List<OrderBO> GetSaleOrderList(string strCustomerID, ref string strErrorMessage);
+        public List<PaymentInfo> GetPaymentInfos(string strCustomerID, ref string strErrorMessage);
+        public List<DeliveryInfo> GetDeliveryInfos(string strCustomerID, ref string strErrorMessage);
     }
 }

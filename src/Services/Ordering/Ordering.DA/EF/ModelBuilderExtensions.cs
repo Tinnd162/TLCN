@@ -24,7 +24,8 @@ namespace Ordering.DA.EF
                     CardName = "ABC",
                     CardNo = "1221313",
                     Expiration = new DateTime(2022, 2, 2),
-                    CVV = "123"
+                    CVV = "123",
+                    CustomerID = customerID
                 }
             ) ;
 

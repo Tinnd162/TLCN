@@ -15,6 +15,12 @@ namespace Aggregator.Services
         {
             _client = client;
         }
+
+        public async Task DeleteBasket(string UserName)
+        {
+            await _client.DeleteAsync($"/Basket/{UserName}");
+        }
+
         public async Task<BasketModel> GetBasket(string UserName)
         {
             var response = await _client.GetAsync($"/Basket/{UserName}");
