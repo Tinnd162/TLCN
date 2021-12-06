@@ -8,6 +8,7 @@ using Inventory.API.DTOs;
 using Inventory.API.Entities;
 using Inventory.API.Repositories;
 using MassTransit;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
@@ -82,9 +83,14 @@ namespace Inventory.API.Controllers
         }
         [HttpPost]
         [Route("AddProduct")]
-        public async Task<ActionResult<bool>> AddProduct(AddProductDTO objAddProductDTO)
+        public async Task<ActionResult<bool>> AddProduct([FromForm] AddProductDTO objAddProductDTO)
         {
+            var result = await _inventoryRepository.AddPhotoAsync(objAddProductDTO.Image);
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
             objAddProductDTO.Id = ObjectId.GenerateNewId().ToString();
+            objAddProductDTO.LinkImage = result.SecureUrl.AbsoluteUri;
+            
             bool bolIsAddProduct = await _inventoryRepository.AddDetailProduct(objAddProductDTO);
             ProductEventBO objProductEventBO = _inventoryRepository.MapperEventRabbitMQ(objAddProductDTO);
             if (bolIsAddProduct)

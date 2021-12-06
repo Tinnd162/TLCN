@@ -1,7 +1,6 @@
 ﻿@page "/Product/GetProduct/{productId}"
 @model AspnetRunBasics.ProductDetailModel
 @{
-
     ViewData["Title"] = "ProductDetail";
 }
 
@@ -26,7 +25,7 @@
             <div class="card bg-light mb-3">
                 <div class="card-body">
                     <a href="" data-toggle="modal" data-target="#productModal">
-                        @*<img class="img-fluid" src="~/images/product/@Model.Product.ImageFile.Replace('-','x')" />*@
+                        <img class="img-fluid" src="@Model.Product.ImageFile" />
                         <p class="text-center">@Model.Product.Name</p>
                     </a>
                 </div>
@@ -38,7 +37,7 @@
             <div class="card bg-light mb-3">
                 <div class="card-body">
                     <p class="price">@Model.Product.Price $</p>
-                    <p class="price_discounted">@(Model.Product.Price + 120) $</p>
+                    @* <p class="price_discounted">@(Model.Product.Price + 120) $</p> *@
                     <form asp-page-handler="AddToCart" method="post" name="addToCartForm" id="add_cart_form">
                         <div class="form-group">
                             <label for="colors">Color</label>

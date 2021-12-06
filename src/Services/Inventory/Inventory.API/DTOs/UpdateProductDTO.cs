@@ -12,7 +12,7 @@ namespace Inventory.API.DTOs
         public InfoDTO BrandDTO { get; set; }
         public InfoDTO CategoryDTO { get; set; }
         public PriceLogDTO PriceLogDTO { get; set; }
-        public ConfigurationProductDTO ConfigurationProductDTO { get; set; }
-        public InfoDTO SupplierDTO { get; set; }
+        // public ConfigurationProductDTO ConfigurationProductDTO { get; set; }
+        // public InfoDTO SupplierDTO { get; set; }
     }
 }

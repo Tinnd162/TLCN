@@ -24,7 +24,7 @@ namespace Product.API.Consumer
                 Id = objProductEventBO.Id,
                 Name = objProductEventBO.Name,
                 Description = objProductEventBO.Description,
-                Image = objProductEventBO.Image,
+                ImageFile = objProductEventBO.Image,
                 Category = objProductEventBO.Category,
                 Brand = objProductEventBO.Brand,
                 Price = objProductEventBO.Price,

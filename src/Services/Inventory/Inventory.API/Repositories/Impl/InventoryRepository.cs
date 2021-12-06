@@ -4,11 +4,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Common;
 using Inventory.API.Data;
 using Inventory.API.DTOs;
 using Inventory.API.Entities;
+using Inventory.API.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using Newtonsoft.Json;
 
@@ -18,10 +23,18 @@ namespace Inventory.API.Repositories.Impl
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public InventoryRepository(DataContext context, IMapper mapper)
+        private readonly Cloudinary _cloudinary;
+        public InventoryRepository(DataContext context, IMapper mapper, IOptions<CloudinarySettings> config)
         {
             _mapper = mapper;
             _context = context;
+            var acc = new Account
+            (
+                config.Value.CloudName,
+                config.Value.ApiKey,
+                config.Value.ApiSecret
+            );
+            _cloudinary = new Cloudinary(acc);
         }
 
         #region Lấy thông tin sản phẩm, nhãn hàng, nhà cung cấp
@@ -127,8 +140,6 @@ namespace Inventory.API.Repositories.Impl
         {
             objAddProductDTO.BrandDTO.Id = ObjectId.GenerateNewId().ToString();
             objAddProductDTO.CategoryDTO.Id = ObjectId.GenerateNewId().ToString();
-            objAddProductDTO.ConfigurationProductDTO.Id = ObjectId.GenerateNewId().ToString();
-            objAddProductDTO.SupplierDTO.Id = ObjectId.GenerateNewId().ToString();
 
             Product objProduct = new Product()
             {
@@ -137,16 +148,12 @@ namespace Inventory.API.Repositories.Impl
                 Description = objAddProductDTO.Description,
                 UnitPrice = objAddProductDTO.UnitPrice,
                 Quantity = objAddProductDTO.Quantity,
+                LinkImage = objAddProductDTO.LinkImage,
                 CreateDate = DateTime.Now,
                 IsUpdate = false,
                 IsStatus = false,
                 IsDiscontinued = false,
                 IsDelete = false,
-                Supplier = new Supplier
-                {
-                    Id = objAddProductDTO.SupplierDTO.Id,
-                    SupplierName = objAddProductDTO.SupplierDTO.Name
-                },
                 Brand = new Brand
                 {
                     Id = objAddProductDTO.BrandDTO.Id,
@@ -158,18 +165,6 @@ namespace Inventory.API.Repositories.Impl
                     Id = objAddProductDTO.CategoryDTO.Id,
                     CategoryName = objAddProductDTO.CategoryDTO.Name
                 },
-                Configuration = new Configuration
-                {
-                    Id = objAddProductDTO.ConfigurationProductDTO.Id,
-                    OperatingSystem = objAddProductDTO.ConfigurationProductDTO.OperatingSystem,
-                    RearCamera = objAddProductDTO.ConfigurationProductDTO.RearCamera,
-                    FrontCamera = objAddProductDTO.ConfigurationProductDTO.FrontCamera,
-                    Chips = objAddProductDTO.ConfigurationProductDTO.Chips,
-                    RAM = objAddProductDTO.ConfigurationProductDTO.RAM,
-                    InternalMemory = objAddProductDTO.ConfigurationProductDTO.InternalMemory,
-                    SIM = objAddProductDTO.ConfigurationProductDTO.SIM,
-                    Batteries = objAddProductDTO.ConfigurationProductDTO.Batteries
-                },
                 PriceLogs = new Collection<PriceLog>(){
                     new PriceLog(){
                         Id=ObjectId.GenerateNewId().ToString(),
@@ -177,6 +172,7 @@ namespace Inventory.API.Repositories.Impl
                         ProductId=objAddProductDTO.Id,
                         IsUpdate=false,
                         CreateDate=DateTime.Now,
+                        UserUpdate="Tinnd"
                     }
                 },
             };
@@ -198,17 +194,7 @@ namespace Inventory.API.Repositories.Impl
                 objProduct.IsStatus = objUpdateProductDTO.IsStatus;
                 objProduct.UpdateDate = DateTime.Now;
                 objProduct.IsUpdate = true;
-                objProduct.IsDiscontinued = false;
-                objProduct.IsStatus = false;
                 objProduct.IsDelete = false;
-                if (objProduct.SupplierId != objUpdateProductDTO.SupplierDTO.Id)
-                {
-                    objProduct.Supplier = new Supplier
-                    {
-                        Id = objUpdateProductDTO.SupplierDTO.Id,
-                        SupplierName = objUpdateProductDTO.SupplierDTO.Name
-                    };
-                }
                 if (objProduct.BrandId != objUpdateProductDTO.BrandDTO.Id)
                 {
                     objProduct.Brand = new Brand
@@ -226,21 +212,6 @@ namespace Inventory.API.Repositories.Impl
                         CategoryName = objUpdateProductDTO.CategoryDTO.Name
                     };
                 }
-                if (objProduct.CongigurationId != objUpdateProductDTO.ConfigurationProductDTO.Id)
-                {
-                    objProduct.Configuration = new Configuration
-                    {
-                        Id = objUpdateProductDTO.ConfigurationProductDTO.Id,
-                        OperatingSystem = objUpdateProductDTO.ConfigurationProductDTO.OperatingSystem,
-                        RearCamera = objUpdateProductDTO.ConfigurationProductDTO.RearCamera,
-                        FrontCamera = objUpdateProductDTO.ConfigurationProductDTO.FrontCamera,
-                        Chips = objUpdateProductDTO.ConfigurationProductDTO.Chips,
-                        RAM = objUpdateProductDTO.ConfigurationProductDTO.RAM,
-                        InternalMemory = objUpdateProductDTO.ConfigurationProductDTO.InternalMemory,
-                        SIM = objUpdateProductDTO.ConfigurationProductDTO.SIM,
-                        Batteries = objUpdateProductDTO.ConfigurationProductDTO.Batteries
-                    };
-                }
                 objProduct.PriceLogs = new Collection<PriceLog>()
                 {
                     new PriceLog()
@@ -249,6 +220,7 @@ namespace Inventory.API.Repositories.Impl
                         Price=objUpdateProductDTO.PriceLogDTO.Price,
                         IsUpdate=true,
                         UpdateDate=DateTime.Now,
+                        UserUpdate="Tinnd"
                     }
                 };
                 _context.Update<Product>(objProduct);
@@ -256,7 +228,29 @@ namespace Inventory.API.Repositories.Impl
             }
             return false;
         }
+        #endregion
 
+        #region Image
+        public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
+        {
+            var uploadResult = new ImageUploadResult();
+
+            if (file.Length > 0)
+            {
+                using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
+                };
+                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+            }
+
+            return uploadResult;
+        }
+        #endregion
+
+        #region Mapping
         public ProductEventBO MapperEventRabbitMQ(AddProductDTO objAddProductDTO)
         {
             return _mapper.Map<ProductEventBO>(objAddProductDTO);

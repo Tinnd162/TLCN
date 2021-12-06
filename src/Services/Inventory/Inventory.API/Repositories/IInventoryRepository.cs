@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CloudinaryDotNet.Actions;
 using Common;
 using Inventory.API.DTOs;
 using Inventory.API.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Inventory.API.Repositories
 {
@@ -17,5 +19,6 @@ namespace Inventory.API.Repositories
         Task<bool> RemoveProduct(string strProductId);
         ProductEventBO MapperEventRabbitMQ(AddProductDTO objAddProductDTO);
         Task<bool> UpdateDetailProduct(UpdateProductDTO objUpdateProductDTO);
+        Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
     }
 }
