@@ -29,7 +29,10 @@ namespace Product.API.Consumer
                 Brand = objProductEventBO.Brand,
                 Price = objProductEventBO.Price,
                 IsDelete = objProductEventBO.IsDelete,
-                IsUpdate = objProductEventBO.IsUpdate
+                IsUpdate = objProductEventBO.IsUpdate,
+                NumberOfSale = objProductEventBO.NumberOfSale,
+                IsUpdateQuantityAfterSO = objProductEventBO.IsUpdateQuantityAfterSO,
+                PurchaseDate = objProductEventBO.PurchaseDate
             };
             if (objResult.IsDelete)
                 _productRepository.RemoveProduct(objResult.Id);

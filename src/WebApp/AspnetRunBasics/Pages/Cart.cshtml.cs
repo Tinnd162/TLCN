@@ -27,12 +27,12 @@ namespace AspnetRunBasics
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRemoveToCartAsync(string productId)
+        public async Task<IActionResult> OnPostRemoveToCartAsync(string productId, string color)
         {
             var userName = "swn";
             var basket = await _basketService.GetBasket(userName);
 
-            var item = basket.Items.Single(x => x.ProductId == productId);
+            var item = basket.Items.Single(x => x.ProductId == productId && x.Color==color);
             basket.Items.Remove(item);
 
             var basketUpdated = await _basketService.UpdateBasket(basket);

@@ -58,7 +58,12 @@ namespace Inventory.API.Migrations
                     b.Property<string>("ColorName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Color");
                 });
@@ -108,7 +113,7 @@ namespace Inventory.API.Migrations
                     b.Property<string>("ExportUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ImportDate")
+                    b.Property<DateTime?>("ImportDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImportUser")
@@ -177,7 +182,7 @@ namespace Inventory.API.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeleteDate")
+                    b.Property<DateTime?>("DeleteDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -198,19 +203,25 @@ namespace Inventory.API.Migrations
                     b.Property<string>("LinkImage")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("NumberOfSale")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PurchaseDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("SupplierId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<DateTime>("UpdateDate")
+                    b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -223,37 +234,9 @@ namespace Inventory.API.Migrations
                         .IsUnique()
                         .HasFilter("[CongigurationId] IS NOT NULL");
 
-                    b.ToTable("Product");
-                });
-
-            modelBuilder.Entity("Inventory.API.Entities.ProductColor", b =>
-                {
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ColorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ProductId", "ColorId");
-
-                    b.HasIndex("ColorId");
-
-                    b.ToTable("ProductColors");
-                });
-
-            modelBuilder.Entity("Inventory.API.Entities.ProductSupplier", b =>
-                {
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SupplierId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ProductId", "SupplierId");
-
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("ProductSuppliers");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Inventory.API.Entities.Supplier", b =>
@@ -277,6 +260,16 @@ namespace Inventory.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Inventory.API.Entities.Color", b =>
+                {
+                    b.HasOne("Inventory.API.Entities.Product", "Product")
+                        .WithMany("Colors")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Inventory.API.Entities.Device", b =>
@@ -316,47 +309,16 @@ namespace Inventory.API.Migrations
                         .HasForeignKey("Inventory.API.Entities.Product", "CongigurationId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Inventory.API.Entities.Supplier", "Supplier")
+                        .WithMany("Products")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
 
                     b.Navigation("Configuration");
-                });
-
-            modelBuilder.Entity("Inventory.API.Entities.ProductColor", b =>
-                {
-                    b.HasOne("Inventory.API.Entities.Color", "Color")
-                        .WithMany("ProductColors")
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.API.Entities.Product", "Product")
-                        .WithMany("ProductColors")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Inventory.API.Entities.ProductSupplier", b =>
-                {
-                    b.HasOne("Inventory.API.Entities.Product", "Product")
-                        .WithMany("ProductSuppliers")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.API.Entities.Supplier", "Supplier")
-                        .WithMany("ProductSuppliers")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
 
                     b.Navigation("Supplier");
                 });
@@ -373,11 +335,6 @@ namespace Inventory.API.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Inventory.API.Entities.Color", b =>
-                {
-                    b.Navigation("ProductColors");
-                });
-
             modelBuilder.Entity("Inventory.API.Entities.Configuration", b =>
                 {
                     b.Navigation("Product");
@@ -385,18 +342,16 @@ namespace Inventory.API.Migrations
 
             modelBuilder.Entity("Inventory.API.Entities.Product", b =>
                 {
+                    b.Navigation("Colors");
+
                     b.Navigation("Devices");
 
                     b.Navigation("PriceLogs");
-
-                    b.Navigation("ProductColors");
-
-                    b.Navigation("ProductSuppliers");
                 });
 
             modelBuilder.Entity("Inventory.API.Entities.Supplier", b =>
                 {
-                    b.Navigation("ProductSuppliers");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

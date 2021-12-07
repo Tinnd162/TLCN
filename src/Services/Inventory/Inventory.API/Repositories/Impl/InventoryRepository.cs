@@ -68,7 +68,7 @@ namespace Inventory.API.Repositories.Impl
         {
             List<ProductDTO> lstProduct = await _context.Products
                                                         .Where(x => x.BrandId == strBrandId && x.IsDelete == false
-                                                                && x.IsDiscontinued == false)
+                                                                && x.IsDiscontinued == false && x.IsStatus == false)
                                                         .Select(s => new ProductDTO
                                                         {
                                                             Id = s.Id,
@@ -85,7 +85,7 @@ namespace Inventory.API.Repositories.Impl
         {
             ProductDetailDTO objProductDetailDTO = await _context.Products
                                                     .Where(x => x.Id == strProductId && x.IsDelete == false
-                                                            && x.IsDiscontinued == false)
+                                                            && x.IsDiscontinued == false && x.IsStatus == false)
                                                     .Select(s1 => new ProductDetailDTO
                                                     {
                                                         Id = s1.Id,
@@ -100,11 +100,6 @@ namespace Inventory.API.Repositories.Impl
                                                         IsStatus = s1.IsStatus,
                                                         IsDiscontinued = s1.IsDiscontinued,
                                                         IsDelete = s1.IsDelete,
-                                                        lstColorDTO = s1.Colors.Select(s2 => new InfoDTO
-                                                        {
-                                                            Id = s2.Id,
-                                                            Name = s2.ColorName
-                                                        }).ToList()
                                                     }).FirstOrDefaultAsync();
 
             return objProductDetailDTO;
@@ -228,7 +223,19 @@ namespace Inventory.API.Repositories.Impl
             }
             return false;
         }
-        #endregion
+        public async Task<bool> UpdateNumberOfSaleAfterSO(string strProductID, int intNumberOfSale)
+        {
+            Product objProduct = _context.Products.FirstOrDefault(x => x.Id == strProductID);
+            if (objProduct != null)
+            {
+                objProduct.NumberOfSale = intNumberOfSale;
+                objProduct.PurchaseDate = DateTime.Now;
+                _context.Update<Product>(objProduct);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            return false;
+        }
+        #endregion        
 
         #region Image
         public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)

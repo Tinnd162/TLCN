@@ -40,5 +40,14 @@ namespace AspnetRunBasics.Services
                 throw new Exception("Something went wrong when calling api.");
             }
         }
+
+        public async Task DeleteBasket(string userName)
+        {
+            var response = await _client.DeleteAsync($"/Basket/{userName}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Something went wrong when calling api.");
+            }
+        }
     }
 }

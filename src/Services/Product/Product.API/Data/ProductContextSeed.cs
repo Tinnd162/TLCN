@@ -27,7 +27,9 @@ namespace Product.API.Data
                     ImageFile = "https://res.cloudinary.com/tinnd/image/upload/v1627224460/jrqdbberc90yi70yuhul.jpg",
                     Price = 950.00M,
                     Category = "Smart Phone",
-                    Brand="BrandName"
+                    Brand="BrandName",
+                    PurchaseDate=null,
+                    NumberOfSale=0
                 },
                 new ProductDTO()
                 {
@@ -37,7 +39,9 @@ namespace Product.API.Data
                     ImageFile = "https://res.cloudinary.com/tinnd/image/upload/v1627224460/jrqdbberc90yi70yuhul.jpg",
                     Price = 840.00M,
                     Category = "Smart Phone",
-                    Brand="BrandName"
+                    Brand="BrandName",
+                    PurchaseDate=null,
+                    NumberOfSale=0
                 },
                 new ProductDTO()
                 {
@@ -47,7 +51,9 @@ namespace Product.API.Data
                     ImageFile = "https://res.cloudinary.com/tinnd/image/upload/v1627224460/jrqdbberc90yi70yuhul.jpg",
                     Price = 650.00M,
                     Category = "White Appliances",
-                    Brand="BrandName"
+                    Brand="BrandName",
+                    PurchaseDate=null,
+                    NumberOfSale=0
                 },
                 new ProductDTO()
                 {
@@ -57,7 +63,9 @@ namespace Product.API.Data
                     ImageFile = "https://res.cloudinary.com/tinnd/image/upload/v1627224460/jrqdbberc90yi70yuhul.jpg",
                     Price = 470.00M,
                     Category = "White Appliances",
-                    Brand="BrandName"
+                    Brand="BrandName",
+                    PurchaseDate=null,
+                    NumberOfSale=0
                 },
                 new ProductDTO()
                 {
@@ -67,7 +75,9 @@ namespace Product.API.Data
                     ImageFile = "https://res.cloudinary.com/tinnd/image/upload/v1627224460/jrqdbberc90yi70yuhul.jpg",
                     Price = 380.00M,
                     Category = "Smart Phone",
-                    Brand="BrandName"
+                    Brand="BrandName",
+                    PurchaseDate=null,
+                    NumberOfSale=0
                 },
                 new ProductDTO()
                 {
@@ -77,7 +87,9 @@ namespace Product.API.Data
                     ImageFile = "https://res.cloudinary.com/tinnd/image/upload/v1627224460/jrqdbberc90yi70yuhul.jpg",
                     Price = 240.00M,
                     Category = "Home Kitchen",
-                    Brand="BrandName"
+                    Brand="BrandName",
+                    PurchaseDate=null,
+                    NumberOfSale=0
                 }
             };
         }

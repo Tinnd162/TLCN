@@ -66,11 +66,13 @@ namespace Inventory.API.Controllers
                 Id = objUpdateProductDTO.Id,
                 Name = objUpdateProductDTO.Name,
                 Description = objUpdateProductDTO.Description,
+                NumberOfSale = 0,
                 Image = objUpdateProductDTO.LinkImage,
                 Category = objUpdateProductDTO.CategoryDTO.Name,
                 Brand = objUpdateProductDTO.BrandDTO.Name,
                 Price = objUpdateProductDTO.PriceLogDTO.Price,
                 IsUpdate = true,
+                PurchaseDate = null,
             };
             if (bolIsUpdateProduct)
             {
@@ -90,10 +92,37 @@ namespace Inventory.API.Controllers
 
             objAddProductDTO.Id = ObjectId.GenerateNewId().ToString();
             objAddProductDTO.LinkImage = result.SecureUrl.AbsoluteUri;
-            
+
             bool bolIsAddProduct = await _inventoryRepository.AddDetailProduct(objAddProductDTO);
             ProductEventBO objProductEventBO = _inventoryRepository.MapperEventRabbitMQ(objAddProductDTO);
+            objProductEventBO.NumberOfSale = 0;
+            objProductEventBO.PurchaseDate = null;
+
             if (bolIsAddProduct)
+            {
+                Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
+                var endPoint = await _bus.GetSendEndpoint(uri);
+                await endPoint.Send(objProductEventBO);
+                return Ok("Success");
+            }
+            return BadRequest("Fail!");
+        }
+        [HttpPut]
+        [Route("UpdateNumberOfSaleAfterSO")]
+        public async Task<ActionResult<bool>> UpdateNumberOfSaleAfterSO(string strProductID, int intNumberOfSale)
+        {
+            bool bolIsUpdateQuantity = await _inventoryRepository.UpdateNumberOfSaleAfterSO(strProductID, intNumberOfSale);
+
+
+            ProductEventBO objProductEventBO = new ProductEventBO()
+            {
+                Id = strProductID,
+                NumberOfSale = intNumberOfSale,
+                PurchaseDate = DateTime.Now,
+                IsUpdateQuantityAfterSO = true,
+                IsUpdate = true,
+            };
+            if (bolIsUpdateQuantity)
             {
                 Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
                 var endPoint = await _bus.GetSendEndpoint(uri);

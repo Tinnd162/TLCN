@@ -12,14 +12,9 @@ namespace Inventory.API.DTOs
         public string LinkImage { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
-        public bool IsDiscontinued { get; set; }
-        public bool IsStatus { get; set; }
         public InfoDTO BrandDTO { get; set; }
         public InfoDTO CategoryDTO { get; set; }
         public PriceLogDTO PriceLogDTO { get; set; }
         public IFormFile Image { get; set; }
-        // public ConfigurationProductDTO ConfigurationProductDTO { get; set; }
-        // public InfoDTO SupplierDTO { get; set; }
-        // public List<InfoDTO> lstColor { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -17,5 +18,8 @@ namespace Product.API.Entities
         public decimal Price { get; set; }
         public bool IsUpdate { get; set; }
         public bool IsDelete { get; set; }
+        public bool IsUpdateQuantityAfterSO { get; set; }
+        public int NumberOfSale { get; set; }
+        public DateTime? PurchaseDate { get; set; }
     }
 }
