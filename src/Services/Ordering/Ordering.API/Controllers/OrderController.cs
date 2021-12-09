@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Ordering.BL.Interfaces;
 using Ordering.BO;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace Ordering.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/[controller]")]
     public class OrderController : ControllerBase
     {
