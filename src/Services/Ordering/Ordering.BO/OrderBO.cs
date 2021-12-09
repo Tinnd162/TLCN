@@ -13,7 +13,6 @@ namespace Ordering.BO
         public DateTime? ConfirmDate { get; set; }
         public double TotalAmount { get; set; }
         public int? Status { get; set; }
-        public double SalePrice { get; set; }
         public string CustomerID { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }

@@ -53,16 +53,28 @@ namespace Product.API.Repositories.Impl
         public async Task CreateProduct(ProductDTO objProduct)
         {
             await _productContext.Products.InsertOneAsync(objProduct);
+            return;
         }
 
         public async Task RemoveProduct(string strProductId)
         {
             await _productContext.Products.DeleteOneAsync(x => x.Id == strProductId);
+            return;
         }
 
         public async Task UpdateProduct(ProductDTO objProduct)
         {
-            await _productContext.Products.ReplaceOneAsync(x => x.Id == objProduct.Id, objProduct);
+            if (objProduct.IsUpdateQuantityAfterSO)
+            {
+                ProductDTO objResult = await _productContext.Products.Find(x => x.Id == objProduct.Id).FirstOrDefaultAsync();
+                objResult.NumberOfSale = objProduct.NumberOfSale;
+                objResult.PurchaseDate = objProduct.PurchaseDate;
+                await _productContext.Products.ReplaceOneAsync(x => x.Id == objResult.Id, objResult);
+                return;
+            }
+            else
+                await _productContext.Products.ReplaceOneAsync(x => x.Id == objProduct.Id, objProduct);
+            return;
         }
     }
 }

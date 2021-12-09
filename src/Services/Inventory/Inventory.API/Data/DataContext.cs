@@ -57,7 +57,7 @@ namespace Inventory.API.Data
             //
             builder.Entity<PriceLog>(Entity =>
             {
-                Entity.Property(e => e.Price)
+                Entity.Property(e => e.SalePrice)
                 .HasColumnType("decimal(18,4)");
 
                 Entity.HasOne(x => x.Product)
@@ -77,8 +77,8 @@ namespace Inventory.API.Data
                 .WithOne(y => y.Configuration)
                 .HasForeignKey<Product>(z => z.CongigurationId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
-            
+
+
         }
     }
 }

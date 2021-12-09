@@ -1,6 +1,5 @@
 {
   "Routes": [
-    //Basket API
     {
       "DownstreamPathTemplate": "/api/v1/Basket/{userName}",
       "DownstreamScheme": "http",

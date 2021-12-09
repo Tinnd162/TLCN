@@ -28,48 +28,36 @@ namespace Ordering.API.Controllers
             try
             {
                 objSaleOrderBO = _orderBL.GetOrderByID(CustomerID, SaleOrderID, ref strErrorMessage);
-                if(objSaleOrderBO == null)
+                if (objSaleOrderBO == null)
                 {
                     return Ok(new { error = true, content = strErrorMessage });
                 }
-                return Ok(new { error = false, data = objSaleOrderBO});
+                return Ok(new { error = false, data = objSaleOrderBO });
             }
             catch
             {
                 return NotFound();
-            }    
+            }
         }
 
         [HttpPost]
         [Route("InsertSaleOrder")]
-        public ActionResult<string> InsertSaleOrder([FromBody] object objRequest)
+        public ActionResult<string> InsertSaleOrder(OrderBO objSaleOrderBO)
         {
-            OrderBO objSaleOrderBO = null;
+            // OrderBO objSaleOrderBO = new OrderBO();
             string strErrorMessage = string.Empty;
             try
             {
-                var objRequestParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(objRequest.ToString());
-                foreach (var objParam in objRequestParams)
-                {
-                    switch (objParam.Key.ToString().Trim().ToUpper())
-                    {
-                        case "SALEORDER":
-                            objSaleOrderBO = JsonConvert.DeserializeObject<OrderBO>(objParam.Value.ToString());
-                            break;
-                        default:
-                            break;
-                    }
-                }
                 if (!_orderBL.InsertSaleOrder(objSaleOrderBO, ref strErrorMessage))
                 {
                     return Ok(new { error = true, content = strErrorMessage });
                 }
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 return NotFound();
             }
-            return Ok(new { error = false, data = objSaleOrderBO.OrderID});
+            return Ok(new { error = false, data = objSaleOrderBO.OrderID });
         }
 
         [HttpGet]
@@ -127,10 +115,10 @@ namespace Ordering.API.Controllers
             string strErrorMessage = null;
             try
             {
-                if(CustomerID != null)
+                if (CustomerID != null)
                 {
                     var lstobjSO = _orderBL.GetSaleOrderList(CustomerID, ref strErrorMessage);
-                    if(strErrorMessage != null)
+                    if (strErrorMessage != null)
                     {
                         return Ok(new { error = true, data = strErrorMessage });
                     }
