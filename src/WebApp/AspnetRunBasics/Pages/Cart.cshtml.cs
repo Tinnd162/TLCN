@@ -32,7 +32,7 @@ namespace AspnetRunBasics
             var userName = "swn";
             var basket = await _basketService.GetBasket(userName);
 
-            var item = basket.Items.Single(x => x.ProductId == productId && x.Color==color);
+            var item = basket.Items.Single(x => x.ProductID == productId && x.Color == color);
             basket.Items.Remove(item);
 
             var basketUpdated = await _basketService.UpdateBasket(basket);

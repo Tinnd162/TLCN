@@ -13,7 +13,7 @@ namespace Common
         public string Image { get; set; }
         public string Category { get; set; }
         public string Brand { get; set; }
-        public decimal Price { get; set; }
+        public decimal SalePrice { get; set; }
         public bool IsUpdate { get; set; }
         public bool IsDelete { get; set; }
         public bool IsUpdateQuantityAfterSO { get; set; }

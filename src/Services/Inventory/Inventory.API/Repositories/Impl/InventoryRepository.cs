@@ -73,9 +73,9 @@ namespace Inventory.API.Repositories.Impl
                                                         {
                                                             Id = s.Id,
                                                             Name = s.ProductName,
-                                                            Price = s.PriceLogs
+                                                            SalePrice = s.PriceLogs
                                                             .OrderByDescending(x => x.UpdateDate)
-                                                            .Select(x => x.Price)
+                                                            .Select(x => x.SalePrice)
                                                             .FirstOrDefault()
                                                         })
                                                         .ToListAsync();
@@ -86,20 +86,15 @@ namespace Inventory.API.Repositories.Impl
             ProductDetailDTO objProductDetailDTO = await _context.Products
                                                     .Where(x => x.Id == strProductId && x.IsDelete == false
                                                             && x.IsDiscontinued == false && x.IsStatus == false)
+                                                    .Include(x => x.PriceLogs)
                                                     .Select(s1 => new ProductDetailDTO
                                                     {
                                                         Id = s1.Id,
                                                         Name = s1.ProductName,
                                                         Description = s1.Description,
                                                         LinkImage = s1.LinkImage,
-                                                        UnitPrice = s1.UnitPrice,
                                                         Quantity = s1.Quantity,
-                                                        UpdateDate = s1.UpdateDate,
-                                                        DeleteDate = s1.DeleteDate,
-                                                        IsUpdate = s1.IsUpdate,
-                                                        IsStatus = s1.IsStatus,
-                                                        IsDiscontinued = s1.IsDiscontinued,
-                                                        IsDelete = s1.IsDelete,
+                                                        SalePrice = s1.PriceLogs.OrderByDescending(x => x.UpdateDate).Select(x => x.SalePrice).FirstOrDefault()
                                                     }).FirstOrDefaultAsync();
 
             return objProductDetailDTO;
@@ -163,7 +158,7 @@ namespace Inventory.API.Repositories.Impl
                 PriceLogs = new Collection<PriceLog>(){
                     new PriceLog(){
                         Id=ObjectId.GenerateNewId().ToString(),
-                        Price=objAddProductDTO.PriceLogDTO.Price,
+                        SalePrice=objAddProductDTO.PriceLogDTO.SalePrice,
                         ProductId=objAddProductDTO.Id,
                         IsUpdate=false,
                         CreateDate=DateTime.Now,
@@ -212,7 +207,7 @@ namespace Inventory.API.Repositories.Impl
                     new PriceLog()
                     {
                         Id=ObjectId.GenerateNewId().ToString(),
-                        Price=objUpdateProductDTO.PriceLogDTO.Price,
+                        SalePrice=objUpdateProductDTO.PriceLogDTO.SalePrice,
                         IsUpdate=true,
                         UpdateDate=DateTime.Now,
                         UserUpdate="Tinnd"

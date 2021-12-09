@@ -52,14 +52,14 @@ namespace AspnetRunBasics
             var userName = "swn";
             var basket = await _basketService.GetBasket(userName);
 
-            var itemTemp = basket.Items.FirstOrDefault(x => x.ProductId == productId && x.Color == "Black");
+            var itemTemp = basket.Items.FirstOrDefault(x => x.ProductID == productId && x.Color == "Black");
             var basketTemp = basket;
 
             if (itemTemp != null)
             {
                 foreach (var item in basketTemp.Items)
                 {
-                    if (item.ProductId == productId && item.Color == "Black")
+                    if (item.ProductID == productId && item.Color == "Black")
                     {
                         item.Quantity += 1;
                     }
@@ -69,9 +69,9 @@ namespace AspnetRunBasics
             {
                 basket.Items.Add(new BasketItemModel
                 {
-                    ProductId = productId,
+                    ProductID = productId,
                     ProductName = product.Name,
-                    Price = product.Price,
+                    SalePrice = product.SalePrice,
                     Quantity = 1,
                     Color = "Black",
                     ImageFile = product.ImageFile

@@ -8,6 +8,6 @@ namespace Aggregator.Services
 {
     public interface IInventoryService
     {
-        public  Task<IEnumerable<InventoryModel>> GetProductDetailById(string strProductId);
+        public  Task<InventoryModel> GetProductDetailById(string strProductId);
     }
 }

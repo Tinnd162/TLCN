@@ -36,7 +36,10 @@ namespace Aggregator.Controllers
                 {
                     switch (objParam.Key.ToString().Trim().ToUpper())
                     {
-                        case "USERNAME":
+                        case "CUSTOMERID":
+                            objSaleOrderBO.CustomerID = objParam.Value.ToString();
+                            break;
+                        case "CUSTOMERNAME":
                             objSaleOrderBO.CustomerName = objParam.Value.ToString();
                             break;
                         case "TOTALAMOUNT":

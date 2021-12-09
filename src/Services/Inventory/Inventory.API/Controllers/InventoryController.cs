@@ -31,8 +31,8 @@ namespace Inventory.API.Controllers
             return Ok(products);
         }
         [HttpGet]
-        [Route("GetProductDetailById")]
-        public async Task<ActionResult<IEnumerable<ProductDetailDTO>>> GetProductDetailById(string strProductId)
+        [Route("GetProductDetailById/{strProductId}")]
+        public async Task<ActionResult<ProductDetailDTO>> GetProductDetailById(string strProductId)
         {
             var product = await _inventoryRepository.GetProductDetailById(strProductId);
             return Ok(product);
@@ -70,7 +70,7 @@ namespace Inventory.API.Controllers
                 Image = objUpdateProductDTO.LinkImage,
                 Category = objUpdateProductDTO.CategoryDTO.Name,
                 Brand = objUpdateProductDTO.BrandDTO.Name,
-                Price = objUpdateProductDTO.PriceLogDTO.Price,
+                SalePrice = objUpdateProductDTO.PriceLogDTO.SalePrice,
                 IsUpdate = true,
                 PurchaseDate = null,
             };

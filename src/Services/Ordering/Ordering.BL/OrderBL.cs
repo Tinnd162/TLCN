@@ -106,9 +106,9 @@ namespace Ordering.BL
                     return false;
                 }
 
-                if(objSaleOrderBO.OrderDetails !=null && objSaleOrderBO.OrderDetails.Count > 0)
+                if (objSaleOrderBO.OrderDetails != null && objSaleOrderBO.OrderDetails.Count > 0)
                 {
-                    if(!objOrderDA.InsertSaleOrderDetail(strSaleOrderID, objSaleOrderBO.OrderDetails, ref strErrorMessage))
+                    if (!objOrderDA.InsertSaleOrderDetail(strSaleOrderID, objSaleOrderBO.OrderDetails, ref strErrorMessage))
                     {
                         transaction.Rollback();
                         return false;
@@ -119,7 +119,7 @@ namespace Ordering.BL
                 transaction.Commit();
                 return true;
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 transaction.Rollback();
                 return false;

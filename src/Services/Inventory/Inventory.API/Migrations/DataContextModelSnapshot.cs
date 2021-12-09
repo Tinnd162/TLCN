@@ -146,11 +146,11 @@ namespace Inventory.API.Migrations
                     b.Property<bool>("IsUpdate")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,4)");
-
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("SalePrice")
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");

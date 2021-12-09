@@ -31,19 +31,17 @@ namespace AspnetRunBasics.Services
                 throw new Exception("Something went wrong when calling api.");
             }
         }
-
-        public async Task CheckoutBasket(BasketCheckoutModel model)
+        public async Task DeleteBasket(string userName)
         {
-            var response = await _client.PostAsJson($"/Basket/Checkout", model);
+            var response = await _client.DeleteAsync($"/Basket/{userName}");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Something went wrong when calling api.");
             }
         }
-
-        public async Task DeleteBasket(string userName)
+        public async Task CheckoutBasket(OrderResponseModel model)
         {
-            var response = await _client.DeleteAsync($"/Basket/{userName}");
+            var response = await _client.PostAsJson($"/Basket/Checkout", model);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Something went wrong when calling api.");

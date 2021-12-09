@@ -27,7 +27,7 @@ namespace Product.API.Consumer
                 ImageFile = objProductEventBO.Image,
                 Category = objProductEventBO.Category,
                 Brand = objProductEventBO.Brand,
-                Price = objProductEventBO.Price,
+                SalePrice = objProductEventBO.SalePrice,
                 IsDelete = objProductEventBO.IsDelete,
                 IsUpdate = objProductEventBO.IsUpdate,
                 NumberOfSale = objProductEventBO.NumberOfSale,
