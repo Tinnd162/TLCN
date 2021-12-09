@@ -53,9 +53,9 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            DeliveryID = "3505cd98-075c-4285-a1cb-9ad17a307005",
+                            DeliveryID = "172899e9-aafd-422a-9ae9-700784893d51",
                             Address = "123 ABC",
-                            CustomerID = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a",
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
                             Email = "asd@gmail.com",
                             FirstNameReceiver = "Viet",
                             LastNameReceiver = "Lam",
@@ -122,14 +122,14 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderID = "18d259f2-3171-4d33-86ab-03de0cc6339e",
-                            CustomerID = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a",
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
                             CustomerName = "Viet",
-                            DeliveryID = "3505cd98-075c-4285-a1cb-9ad17a307005",
+                            DeliveryID = "172899e9-aafd-422a-9ae9-700784893d51",
                             Gender = 0,
                             IsDelete = false,
                             OrderDate = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PaymentID = "8d5ef6ed-1b0b-41cb-bd2b-8e759436ff36",
+                            PaymentID = "f8bff311-f0d8-400e-b34e-0aa801841a2f",
                             TotalAmount = 100000.0
                         });
                 });
@@ -170,9 +170,9 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderDetailID = "385df4f6-94d7-49f1-b38b-fd7d4476fb75",
+                            OrderDetailID = "dcdc9940-b56d-481e-8d4c-54c574a9667a",
                             IMEI = "312312321312",
-                            OrderID = "18d259f2-3171-4d33-86ab-03de0cc6339e",
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
                             ProductName = "Itel 33",
                             Quantity = 1,
                             SalePrice = 50000.0,
@@ -180,8 +180,8 @@ namespace Ordering.DA.Migrations
                         },
                         new
                         {
-                            OrderDetailID = "7574cd23-8448-4a19-a7db-8b3893e0f7d1",
-                            OrderID = "18d259f2-3171-4d33-86ab-03de0cc6339e",
+                            OrderDetailID = "f28c6161-116f-44c1-a08d-c9b3f9b72e3a",
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
                             ProductName = "Tai nghe Sony",
                             Quantity = 1,
                             SalePrice = 50000.0,
@@ -225,11 +225,11 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            PaymentID = "8d5ef6ed-1b0b-41cb-bd2b-8e759436ff36",
+                            PaymentID = "f8bff311-f0d8-400e-b34e-0aa801841a2f",
                             CVV = "123",
                             CardName = "ABC",
                             CardNo = "1221313",
-                            CustomerID = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a",
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
                             Expiration = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentMethod = ""
                         });
