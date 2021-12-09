@@ -8,6 +8,7 @@ using Inventory.API.DTOs;
 using Inventory.API.Entities;
 using Inventory.API.Repositories;
 using MassTransit;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
@@ -30,8 +31,8 @@ namespace Inventory.API.Controllers
             return Ok(products);
         }
         [HttpGet]
-        [Route("GetProductDetailById")]
-        public async Task<ActionResult<IEnumerable<ProductDetailDTO>>> GetProductDetailById(string strProductId)
+        [Route("GetProductDetailById/{strProductId}")]
+        public async Task<ActionResult<ProductDetailDTO>> GetProductDetailById(string strProductId)
         {
             var product = await _inventoryRepository.GetProductDetailById(strProductId);
             return Ok(product);
@@ -65,11 +66,13 @@ namespace Inventory.API.Controllers
                 Id = objUpdateProductDTO.Id,
                 Name = objUpdateProductDTO.Name,
                 Description = objUpdateProductDTO.Description,
+                NumberOfSale = 0,
                 Image = objUpdateProductDTO.LinkImage,
                 Category = objUpdateProductDTO.CategoryDTO.Name,
                 Brand = objUpdateProductDTO.BrandDTO.Name,
-                Price = objUpdateProductDTO.PriceLogDTO.Price,
+                SalePrice = objUpdateProductDTO.PriceLogDTO.SalePrice,
                 IsUpdate = true,
+                PurchaseDate = null,
             };
             if (bolIsUpdateProduct)
             {
@@ -82,12 +85,44 @@ namespace Inventory.API.Controllers
         }
         [HttpPost]
         [Route("AddProduct")]
-        public async Task<ActionResult<bool>> AddProduct(AddProductDTO objAddProductDTO)
+        public async Task<ActionResult<bool>> AddProduct([FromForm] AddProductDTO objAddProductDTO)
         {
+            var result = await _inventoryRepository.AddPhotoAsync(objAddProductDTO.Image);
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
             objAddProductDTO.Id = ObjectId.GenerateNewId().ToString();
+            objAddProductDTO.LinkImage = result.SecureUrl.AbsoluteUri;
+
             bool bolIsAddProduct = await _inventoryRepository.AddDetailProduct(objAddProductDTO);
             ProductEventBO objProductEventBO = _inventoryRepository.MapperEventRabbitMQ(objAddProductDTO);
+            objProductEventBO.NumberOfSale = 0;
+            objProductEventBO.PurchaseDate = null;
+
             if (bolIsAddProduct)
+            {
+                Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
+                var endPoint = await _bus.GetSendEndpoint(uri);
+                await endPoint.Send(objProductEventBO);
+                return Ok("Success");
+            }
+            return BadRequest("Fail!");
+        }
+        [HttpPut]
+        [Route("UpdateNumberOfSaleAfterSO")]
+        public async Task<ActionResult<bool>> UpdateNumberOfSaleAfterSO(string strProductID, int intNumberOfSale)
+        {
+            bool bolIsUpdateQuantity = await _inventoryRepository.UpdateNumberOfSaleAfterSO(strProductID, intNumberOfSale);
+
+
+            ProductEventBO objProductEventBO = new ProductEventBO()
+            {
+                Id = strProductID,
+                NumberOfSale = intNumberOfSale,
+                PurchaseDate = DateTime.Now,
+                IsUpdateQuantityAfterSO = true,
+                IsUpdate = true,
+            };
+            if (bolIsUpdateQuantity)
             {
                 Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
                 var endPoint = await _bus.GetSendEndpoint(uri);

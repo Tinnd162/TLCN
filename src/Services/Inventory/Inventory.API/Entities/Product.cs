@@ -15,13 +15,15 @@ namespace Inventory.API.Entities
         public string LinkImage { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
+        public int NumberOfSale { get; set; }
+        public DateTime? PurchaseDate { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public DateTime? DeleteDate { get; set; }
         public bool IsUpdate { get; set; }
-        [Description("Tình trạng sản phẩm: còn hàng, hết hàng, đang nhập")]
+        [Description("Tình trạng sản phẩm: còn hàng, hết hàng")]
         public bool IsStatus { get; set; }
-        [Description("Tình trạng sản phẩm: Đã ngưng sản xuất, ")]
+        [Description("Tình trạng sản phẩm: Đã ngưng sản xuất")]
         public bool IsDiscontinued { get; set; }
         public bool IsDelete { get; set; }
         public string SupplierId { get; set; }

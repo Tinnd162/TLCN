@@ -1,3 +1,4 @@
+using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -11,11 +12,14 @@ namespace Product.API.Entities
         [BsonElement("Name")]
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Image { get; set; }
+        public string ImageFile { get; set; }
         public string Category { get; set; }
         public string Brand { get; set; }
-        public decimal Price { get; set; }
+        public decimal SalePrice { get; set; }
         public bool IsUpdate { get; set; }
         public bool IsDelete { get; set; }
+        public bool IsUpdateQuantityAfterSO { get; set; }
+        public int NumberOfSale { get; set; }
+        public DateTime? PurchaseDate { get; set; }
     }
 }

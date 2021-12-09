@@ -1,6 +1,5 @@
 {
   "Routes": [
-    //Basket API
     {
       "DownstreamPathTemplate": "/api/v1/Basket/GetBasket/{UserName}",
       "DownstreamScheme": "https",
@@ -11,7 +10,9 @@
         }
       ],
       "UpstreamPathTemplate": "/Basket/{UserName}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/v1/Basket/DeleteBasket/{UserName}",
@@ -23,7 +24,9 @@
         }
       ],
       "UpstreamPathTemplate": "/Basket/{UserName}",
-      "UpstreamHttpMethod": [ "Delete" ]
+      "UpstreamHttpMethod": [
+        "Delete"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/v1/Basket/UpdateBasket",
@@ -35,10 +38,10 @@
         }
       ],
       "UpstreamPathTemplate": "/Basket",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
     },
-
-    //Ordering API
     {
       "DownstreamPathTemplate": "/api/v1/Order/InsertSaleOrder",
       "DownstreamScheme": "https",
@@ -49,7 +52,9 @@
         }
       ],
       "UpstreamPathTemplate": "/Order/Insert",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
     },
     {
       "DownstreamPathTemplate": "/api/v1/Order/GetOrderByID/{CustomerID}/{SaleOrderID}",
@@ -61,12 +66,54 @@
         }
       ],
       "UpstreamPathTemplate": "/Order/GetSO/{CustomerID}/{SaleOrderID}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
     },
-
-    //Inventory API
     {
-      "DownstreamPathTemplate": "/api/v1/Inventory/GetProductDetailById",
+      "DownstreamPathTemplate": "/api/v1/Order/GetSaleOrderList/{CustomerID}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5004"
+        }
+      ],
+      "UpstreamPathTemplate": "/Order/GetSaleOrderList/{CustomerID}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Order/GetPaymentInfos/{CustomerID}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5004"
+        }
+      ],
+      "UpstreamPathTemplate": "/Order/GetPaymentInfos/{CustomerID}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Order/GetDeliveryInfos/{CustomerID}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5004"
+        }
+      ],
+      "UpstreamPathTemplate": "/Order/GetDeliveryInfos/{CustomerID}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Inventory/GetProductDetailById/{ProductId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -74,8 +121,80 @@
           "Port": "5003"
         }
       ],
-      "UpstreamPathTemplate": "/Inventory/GetProductDetailById",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamPathTemplate": "/Inventory/GetProductDetailById/{ProductId}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Product/GetProducts",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5007"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/GetProducts",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Product/GetProduct/{ProductId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5007"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/GetProduct/{ProductId}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Product/GetProductByCategory/{Category}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5007"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/GetProductByCategory/{Category}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Product/GetProductByBrand/{Brand}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5007"
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/GetProductByBrand/{Brand}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/SaleOrder/InsertSO",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5005"
+        }
+      ],
+      "UpstreamPathTemplate": "/SaleOrder/InsertSO",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
     }
   ],
   "GlobalConfiguration": {

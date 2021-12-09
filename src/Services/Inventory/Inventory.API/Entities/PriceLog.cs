@@ -9,7 +9,7 @@ namespace Inventory.API.Entities
     {
         public string Id { get; set; }
         [Column(TypeName = "decimal(18,4)")]
-        public decimal Price { get; set; }
+        public decimal SalePrice { get; set; }
         public string UserUpdate { get; set; }
         public string ProductId { get; set; }
         public bool IsUpdate { get; set; } = false;

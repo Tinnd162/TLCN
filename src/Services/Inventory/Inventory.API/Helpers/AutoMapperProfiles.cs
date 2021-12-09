@@ -10,7 +10,7 @@ namespace Inventory.API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<AddProductDTO, ProductEventBO>()
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.PriceLogDTO.Price))
+                .ForMember(dest => dest.SalePrice, opt => opt.MapFrom(src => src.PriceLogDTO.SalePrice))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.CategoryDTO.Name))
                 .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.BrandDTO.Name))
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.LinkImage));

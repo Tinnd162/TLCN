@@ -17,7 +17,7 @@ namespace Ordering.DA
         {
             _context = context;
         }
-        public bool InsertSaleOrder(string strSaleOrderID, string strCustomerID, string strPaymentID, string strDeliveryID, double douTotalAmount, 
+        public bool InsertSaleOrder(string strSaleOrderID, string strCustomerID, string strPaymentID, string strDeliveryID, double douTotalAmount,
             string strCustomerName, string strCustomerAddress, int intGender, string strCustomerPhone, ref string strErrorMessage)
         {
             try
@@ -52,13 +52,13 @@ namespace Ordering.DA
             try
             {
                 string strSaleOrderDetailID = string.Empty;
-                foreach(var objSODetail in lstSaleOrderDetailBO)
+                foreach (var objSODetail in lstSaleOrderDetailBO)
                 {
                     strSaleOrderDetailID = Guid.NewGuid().ToString();
                     _context.OrderDetails.Add(new Entities.OrderDetail
                     {
                         OrderID = strSaleOrderID,
-                        OrderDetailID  = strSaleOrderDetailID,
+                        OrderDetailID = strSaleOrderDetailID,
                         ProductID = objSODetail.ProductID,
                         ProductName = objSODetail.ProductName,
                         IMEI = objSODetail.IMEI,
@@ -78,7 +78,7 @@ namespace Ordering.DA
             return true;
         }
 
-        public bool InsertPaymentInfo(PaymentInfo objPaymentInfo, ref string strErrorMessage)
+        public bool InsertPaymentInfo(PaymentInfo objPaymentInfo, string strCustomerID, ref string strErrorMessage)
         {
             try
             {
@@ -90,7 +90,8 @@ namespace Ordering.DA
                     CardName = objPaymentInfo.CardName,
                     CardNo = objPaymentInfo.CardNo,
                     Expiration = objPaymentInfo.Expiration,
-                    CVV = objPaymentInfo.CVV
+                    CVV = objPaymentInfo.CVV,
+                    CustomerID = strCustomerID,
                 });
                 objPaymentInfo.PaymentID = strPaymentID;
                 _context.SaveChanges();
@@ -104,7 +105,7 @@ namespace Ordering.DA
             return true;
         }
 
-        public bool InsertDeliveryInfo(DeliveryInfo objDeliveryInfo, ref string strErrorMessage)
+        public bool InsertDeliveryInfo(DeliveryInfo objDeliveryInfo, string strCustomerID, ref string strErrorMessage)
         {
             try
             {
@@ -117,7 +118,7 @@ namespace Ordering.DA
                     Address = objDeliveryInfo.Address,
                     PhoneNo = objDeliveryInfo.PhoneNo,
                     Email = objDeliveryInfo.Email,
-                    CustomerID = objDeliveryInfo.CustomerID
+                    CustomerID = strCustomerID
                 });
                 objDeliveryInfo.DeliveryID = strDeliveryID;
                 _context.SaveChanges();
@@ -167,7 +168,7 @@ namespace Ordering.DA
                     strErrorMessage = "Không tìm thấy đơn hàng theo yêu cầu!";
                 return objSaleOrderBO;
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 strErrorMessage = $"Lỗi lấy thông tin của đơn hàng {strSaleOrderID}!";
                 Console.WriteLine(strErrorMessage + ", Message detail: " + objEx.ToString());
@@ -182,7 +183,7 @@ namespace Ordering.DA
             try
             {
                 var lstSaleOrderBO = _context.Orders.Where(x => x.CustomerID == strCustomerID)
-                                                    .Include(x => x.OrderDetails)
+                                                    // .Include(x => x.OrderDetails)
                                                     .Select(x => new OrderBO
                                                     {
                                                         OrderID = x.OrderID,
@@ -198,15 +199,24 @@ namespace Ordering.DA
                                                             Quantity = od.Quantity,
                                                             VAT = od.VAT,
                                                             SalePrice = od.SalePrice
-                                                        }).ToList()
+                                                        }).ToList(),
+                                                        DeliveryInfo = new DeliveryInfo
+                                                        {
+                                                            DeliveryID = x.DeliveryID,
+                                                            FirstNameReceiver = x.Delivery.FirstNameReceiver,
+                                                            LastNameReceiver = x.Delivery.LastNameReceiver,
+                                                            Address = x.Delivery.Address,
+                                                            Email = x.Delivery.Email,
+                                                            PhoneNo = x.Delivery.PhoneNo
+                                                        },
                                                     })
                                                     .OrderByDescending(x => x.OrderDate)
                                                     .ToList();
-                if(lstSaleOrderBO == null || lstSaleOrderBO.Count == 0)
+                if (lstSaleOrderBO == null || lstSaleOrderBO.Count == 0)
                     strErrorMessage = "Không tìm thấy đơn hàng theo yêu cầu!";
                 return lstSaleOrderBO;
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 strErrorMessage = $"Lỗi lấy danh sách đơn hàng của khách hàng!";
                 Console.WriteLine(strErrorMessage + ", Message detail: " + objEx.ToString());
@@ -260,7 +270,7 @@ namespace Ordering.DA
                 strErrorMessage = "Không tìm thấy thông tin giao hàng của khách hàng!";
                 return null;
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 strErrorMessage = "Lỗi lấy thông tin giao hàng của khách hàng!";
                 Console.WriteLine(strErrorMessage + ", Message detail: " + objEx.ToString());

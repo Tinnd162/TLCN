@@ -13,13 +13,14 @@ namespace Basket.API.Entities
         }
         public string UserName { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
-        public decimal TotalPrice { 
+        public decimal TotalAmount
+        {
             get
             {
                 decimal totalPrice = 0;
-                totalPrice = Items.Sum(x => x.Price * x.Quantity);
+                totalPrice = Items.Sum(x => x.SalePrice * x.Quantity);
                 return totalPrice;
-            } 
+            }
         }
     }
 }

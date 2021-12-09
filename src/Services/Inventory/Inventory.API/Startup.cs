@@ -48,6 +48,7 @@ namespace Inventory.API
             services.AddMassTransitHostedService();
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.Configure<CloudinarySettings>(_config.GetSection("CloudinarySettings"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
