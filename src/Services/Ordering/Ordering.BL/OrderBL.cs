@@ -82,7 +82,7 @@ namespace Ordering.BL
                 OrderDA objOrderDA = new OrderDA(_context);
                 if (objSaleOrderBO.PaymentInfo != null && !objSaleOrderBO.PaymentInfo.cus_IsExist)
                 {
-                    if (!objOrderDA.InsertPaymentInfo(objSaleOrderBO.PaymentInfo, ref strErrorMessage))
+                    if (!objOrderDA.InsertPaymentInfo(objSaleOrderBO.PaymentInfo, objSaleOrderBO.CustomerID, ref strErrorMessage))
                     {
                         transaction.Rollback();
                         return false;
@@ -91,7 +91,7 @@ namespace Ordering.BL
 
                 if (objSaleOrderBO.DeliveryInfo != null && !objSaleOrderBO.DeliveryInfo.cus_IsExist)
                 {
-                    if (!objOrderDA.InsertDeliveryInfo(objSaleOrderBO.DeliveryInfo, ref strErrorMessage))
+                    if (!objOrderDA.InsertDeliveryInfo(objSaleOrderBO.DeliveryInfo, objSaleOrderBO.CustomerID, ref strErrorMessage))
                     {
                         transaction.Rollback();
                         return false;
@@ -100,15 +100,15 @@ namespace Ordering.BL
 
                 string strSaleOrderID = Guid.NewGuid().ToString();
                 if (!objOrderDA.InsertSaleOrder(strSaleOrderID, objSaleOrderBO.CustomerID, objSaleOrderBO.PaymentInfo.PaymentID, objSaleOrderBO.DeliveryInfo.DeliveryID
-                    , objSaleOrderBO.TotalAmount, objSaleOrderBO.CustomerName, objSaleOrderBO.CustomerAddress, objSaleOrderBO.Gender, objSaleOrderBO.CustomerName, ref strErrorMessage))
+                    , objSaleOrderBO.TotalAmount, objSaleOrderBO.CustomerName, objSaleOrderBO.CustomerAddress, objSaleOrderBO.Gender, objSaleOrderBO.CustomerPhone, ref strErrorMessage))
                 {
                     transaction.Rollback();
                     return false;
                 }
 
-                if(objSaleOrderBO.OrderDetails !=null && objSaleOrderBO.OrderDetails.Count > 0)
+                if (objSaleOrderBO.OrderDetails != null && objSaleOrderBO.OrderDetails.Count > 0)
                 {
-                    if(!objOrderDA.InsertSaleOrderDetail(strSaleOrderID, objSaleOrderBO.OrderDetails, ref strErrorMessage))
+                    if (!objOrderDA.InsertSaleOrderDetail(strSaleOrderID, objSaleOrderBO.OrderDetails, ref strErrorMessage))
                     {
                         transaction.Rollback();
                         return false;
@@ -119,7 +119,7 @@ namespace Ordering.BL
                 transaction.Commit();
                 return true;
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 transaction.Rollback();
                 return false;

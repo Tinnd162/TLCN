@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace Inventory.API.DTOs
 {
@@ -11,14 +12,9 @@ namespace Inventory.API.DTOs
         public string LinkImage { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
-        public DateTime CreateDate { get; set; }
-        public bool IsDiscontinued { get; set; } = false;
-        public bool IsStatus { get; set; } = false;
         public InfoDTO BrandDTO { get; set; }
         public InfoDTO CategoryDTO { get; set; }
         public PriceLogDTO PriceLogDTO { get; set; }
-        public ConfigurationProductDTO ConfigurationProductDTO { get; set; }
-        public InfoDTO SupplierDTO { get; set; }
-        public List<InfoDTO> lstColor { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

@@ -27,47 +27,64 @@ namespace Aggregator.Controllers
         [Route("InsertSO")]
         public async Task<ActionResult> InsertSO([FromBody] object objRequest)
         {
-            OrderModel objSaleOrderBO = null;
+            OrderModel objSaleOrderBO = new OrderModel();
             try
             {
                 var objRequestParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(objRequest.ToString());
+
                 foreach (var objParam in objRequestParams)
                 {
                     switch (objParam.Key.ToString().Trim().ToUpper())
                     {
-                        case "SALEORDER":
-                            objSaleOrderBO = JsonConvert.DeserializeObject<OrderModel>(objParam.Value.ToString());
+                        case "CUSTOMERID":
+                            objSaleOrderBO.CustomerID = objParam.Value.ToString();
+                            break;
+                        case "CUSTOMERNAME":
+                            objSaleOrderBO.CustomerName = objParam.Value.ToString();
+                            break;
+                        case "TOTALAMOUNT":
+                            objSaleOrderBO.TotalAmount = Convert.ToDouble(objParam.Value.ToString());
+                            break;
+                        case "DELIVERYINFO":
+                            objSaleOrderBO.DeliveryInfo = JsonConvert.DeserializeObject<DeliveryModel>(objParam.Value.ToString());
+                            break;
+                        case "PAYMENTINFO":
+                            objSaleOrderBO.PaymentInfo = JsonConvert.DeserializeObject<PaymentModel>(objParam.Value.ToString());
+                            break;
+                        case "ORDERDETAILS":
+                            objSaleOrderBO.OrderDetails = JsonConvert.DeserializeObject<List<OrderDetailModel>>(objParam.Value.ToString());
                             break;
                         default:
                             break;
                     }
                 }
-                List<InventoryModel> lstObjProductInventory = null;
+                InventoryModel objProductInventory = new InventoryModel();
                 decimal intTotalMoney = 0;
-               if(objSaleOrderBO != null && objSaleOrderBO.OrderDetails != null && objSaleOrderBO.OrderDetails.Count > 0)
+                if (objSaleOrderBO != null && objSaleOrderBO.OrderDetails != null && objSaleOrderBO.OrderDetails.Count > 0)
                 {
                     foreach (var item in objSaleOrderBO.OrderDetails)
                     {
-                        lstObjProductInventory = await objIInventoryService.GetProductDetailById(item.ProductID) as List<InventoryModel>;
-                        if (item.ProductName.Trim() != lstObjProductInventory[0].Name && Convert.ToDecimal(item.SalePrice) != lstObjProductInventory[0].UnitPrice)
+                        objProductInventory = await objIInventoryService.GetProductDetailById(item.ProductID);
+                        if (item.ProductName.Trim() != objProductInventory.Name/* && Convert.ToDecimal(item.SalePrice) != objProductInventory.Price*/)
                         {
-                            return Ok(new { error = true, data="Lỗi kiểm tra dữ liệu đầu vào!"});
+                            return Ok(new { error = true, data = "Lỗi kiểm tra dữ liệu đầu vào!" });
                         }
-                        intTotalMoney += lstObjProductInventory[0].UnitPrice;
+                        intTotalMoney += objProductInventory.SalePrice * item.Quantity;
                     }
-                    if(intTotalMoney != Convert.ToDecimal(objSaleOrderBO.TotalAmount))
+                    if (intTotalMoney != Convert.ToDecimal(objSaleOrderBO.TotalAmount))
                     {
                         return Ok(new { error = true, data = "Lỗi kiểm tra tổng tiền!" });
                     }
                 }
-                string strSaleOrderID =  await objIOrderService.InsertSaleOrder(objRequest);
-                if(strSaleOrderID != null)
+                string strSaleOrderID = await objIOrderService.InsertSaleOrder(objSaleOrderBO);
+                if (strSaleOrderID != null)
                 {
                     await objIBasketService.DeleteBasket(objSaleOrderBO.CustomerID);
                 }
                 return Ok(new { error = false, data = strSaleOrderID });
             }
-            catch{
+            catch
+            {
                 return NotFound();
             }
         }

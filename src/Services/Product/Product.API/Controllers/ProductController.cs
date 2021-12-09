@@ -27,39 +27,39 @@ namespace Product.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetProduct")]
-        public async Task<ActionResult<ProductDTO>> GetProduct(string id)
+        [Route("GetProduct/{strProductId}")]
+        public async Task<ActionResult<ProductDTO>> GetProduct(string strProductId)
         {
-            var item = await _productRepository.GetProduct(id);
+            var item = await _productRepository.GetProduct(strProductId);
             if (item == null)
             {
-                _logger.LogError($"Item with id: {id}, not found.");
+                _logger.LogError($"Item with id: {strProductId}, not found.");
                 return NotFound();
             }
             return Ok(item);
         }
 
         [HttpGet]
-        [Route("GetProductByCategory")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByCategory(string categoryName)
+        [Route("GetProductByCategory/{strCategory}")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByCategory(string strCategory)
         {
-            var items = await _productRepository.GetProductByCategory(categoryName);
+            var items = await _productRepository.GetProductByCategory(strCategory);
             if (items == null)
             {
-                _logger.LogError($"Item with category: {categoryName}, not found.");
+                _logger.LogError($"Item with category: {strCategory}, not found.");
                 return NotFound();
             }
             return Ok(items);
         }
 
         [HttpGet]
-        [Route("GetProductByBrand")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByBrand(string brandName)
+        [Route("GetProductByBrand/{strBrand}")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByBrand(string strBrand)
         {
-            var items = await _productRepository.GetProductByBrand(brandName);
+            var items = await _productRepository.GetProductByBrand(strBrand);
             if (items == null)
             {
-                _logger.LogError($"Item with brand: {brandName}, not found.");
+                _logger.LogError($"Item with brand: {strBrand}, not found.");
                 return NotFound();
             }
             return Ok(items);

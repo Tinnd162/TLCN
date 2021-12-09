@@ -15,7 +15,6 @@ namespace Ordering.DA.Entities
         public string PhoneNo { get; set; }
         public string Email { get; set; }
         public string CustomerID { get; set; }
-        
         public List<Order> Orders { get; set; }
     }
 }
