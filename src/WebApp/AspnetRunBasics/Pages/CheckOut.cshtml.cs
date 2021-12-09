@@ -26,7 +26,7 @@ namespace AspnetRunBasics
         public IEnumerable<PaymentModel> lstPayment { get; set; } = new List<PaymentModel>();
         public async Task<IActionResult> OnGetAsync()
         {
-            var userName = "swn";
+            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
             Cart = await _basketService.GetBasket(userName);
 
             return Page();
@@ -34,15 +34,11 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnPostCheckOutAsync()
         {
-            var userName = "swn";
+            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
             Cart = await _basketService.GetBasket(userName);
-            // if (ModelState.IsValid)
-            // {
-            //     return Page();
-            // }
 
-            Order.CustomerName = userName;
-            Order.CustomerID = "6a4b041e-36e0-42c3-b496-2c4086310086";
+            Order.CustomerName = "Viet";
+            Order.CustomerID = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
             Order.TotalAmount = Cart.TotalAmount;
             Order.OrderDetails = Cart.Items;
 

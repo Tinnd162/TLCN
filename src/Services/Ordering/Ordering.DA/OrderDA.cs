@@ -78,7 +78,7 @@ namespace Ordering.DA
             return true;
         }
 
-        public bool InsertPaymentInfo(PaymentInfo objPaymentInfo, ref string strErrorMessage)
+        public bool InsertPaymentInfo(PaymentInfo objPaymentInfo, string strCustomerID, ref string strErrorMessage)
         {
             try
             {
@@ -90,7 +90,8 @@ namespace Ordering.DA
                     CardName = objPaymentInfo.CardName,
                     CardNo = objPaymentInfo.CardNo,
                     Expiration = objPaymentInfo.Expiration,
-                    CVV = objPaymentInfo.CVV
+                    CVV = objPaymentInfo.CVV,
+                    CustomerID = strCustomerID,
                 });
                 objPaymentInfo.PaymentID = strPaymentID;
                 _context.SaveChanges();
@@ -104,7 +105,7 @@ namespace Ordering.DA
             return true;
         }
 
-        public bool InsertDeliveryInfo(DeliveryInfo objDeliveryInfo, ref string strErrorMessage)
+        public bool InsertDeliveryInfo(DeliveryInfo objDeliveryInfo, string strCustomerID, ref string strErrorMessage)
         {
             try
             {
@@ -117,7 +118,7 @@ namespace Ordering.DA
                     Address = objDeliveryInfo.Address,
                     PhoneNo = objDeliveryInfo.PhoneNo,
                     Email = objDeliveryInfo.Email,
-                    CustomerID = objDeliveryInfo.CustomerID
+                    CustomerID = strCustomerID
                 });
                 objDeliveryInfo.DeliveryID = strDeliveryID;
                 _context.SaveChanges();

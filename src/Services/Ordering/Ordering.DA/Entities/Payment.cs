@@ -15,7 +15,6 @@ namespace Ordering.DA.Entities
         public string CardNo { get; set; }
         public DateTime? Expiration { get; set; }
         public string CVV { get; set; }
-
         public List<Order> Orders { get; set; }
     }
 }

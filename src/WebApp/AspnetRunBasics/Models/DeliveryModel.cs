@@ -8,9 +8,6 @@ namespace AspnetRunBasics.Models
         public string Address { get; set; }
         public string PhoneNo { get; set; }
         public string Email { get; set; }
-        public string Country { get; set; }
-        public string State { get; set; }
-        public string ZipCode { get; set; }
         public bool cus_IsExist { get; set; }
     }
 }

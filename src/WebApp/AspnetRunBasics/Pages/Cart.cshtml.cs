@@ -21,7 +21,7 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var userName = "swn";
+            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
             Cart = await _basketService.GetBasket(userName);
 
             return Page();
@@ -29,7 +29,7 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnPostRemoveToCartAsync(string productId, string color)
         {
-            var userName = "swn";
+            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
             var basket = await _basketService.GetBasket(userName);
 
             var item = basket.Items.Single(x => x.ProductID == productId && x.Color == color);

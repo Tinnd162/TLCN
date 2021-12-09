@@ -20,7 +20,10 @@ namespace Aggregator.Services
         {
             var response = await _client.PostAsJson($"/Order/Insert", objSaleOrderBO);
             if (response.IsSuccessStatusCode)
-                return await response.ReadContentAs<string>();
+            {
+                var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return dataAsString;
+            }
             else
             {
                 throw new Exception("Something went wrong when calling api.");

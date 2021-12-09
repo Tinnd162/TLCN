@@ -38,7 +38,11 @@ namespace AspnetRunBasics.Services
         {
             var response = await _client.PostAsJson($"/SaleOrder/InsertSO", objSO);
             if (response.IsSuccessStatusCode)
-                return await response.ReadContentAs<string>();
+            {
+                var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return dataAsString;
+
+            }    
             else
             {
                 throw new Exception("Something went wrong when calling api.");

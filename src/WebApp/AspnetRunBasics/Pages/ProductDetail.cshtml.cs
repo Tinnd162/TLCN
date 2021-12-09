@@ -47,7 +47,7 @@ namespace AspnetRunBasics
 
             var product = await _productService.GetProduct(productId);
 
-            var userName = "swn";
+            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
             var basket = await _basketService.GetBasket(userName);
 
             var itemTemp = basket.Items.FirstOrDefault(x => x.ProductID == productId && x.Color == Color);
