@@ -21,16 +21,16 @@ namespace Ordering.DA.Migrations
 
             modelBuilder.Entity("Ordering.DA.Entities.Delivery", b =>
                 {
-                    b.Property<Guid>("DeliveryID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("DeliveryID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CustomerID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CustomerID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -53,9 +53,9 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            DeliveryID = new Guid("9c8389da-3a06-40e0-a17b-aefa996d4ce6"),
+                            DeliveryID = "172899e9-aafd-422a-9ae9-700784893d51",
                             Address = "123 ABC",
-                            CustomerID = new Guid("eec92800-02a2-4f87-91b5-dd5f03a5d9d8"),
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
                             Email = "asd@gmail.com",
                             FirstNameReceiver = "Viet",
                             LastNameReceiver = "Lam",
@@ -65,18 +65,32 @@ namespace Ordering.DA.Migrations
 
             modelBuilder.Entity("Ordering.DA.Entities.Order", b =>
                 {
-                    b.Property<Guid>("OrderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("OrderID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("ConfirmDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CustomerAddress")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("DeliveryID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CustomerID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeliveryID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
@@ -84,11 +98,12 @@ namespace Ordering.DA.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PaymentID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PaymentID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("StaffID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("StaffID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Status")
                         .HasColumnType("int");
@@ -102,33 +117,37 @@ namespace Ordering.DA.Migrations
 
                     b.HasIndex("PaymentID");
 
-                    b.ToTable("Order");
+                    b.ToTable("SaleOrder");
 
                     b.HasData(
                         new
                         {
-                            OrderID = new Guid("135d885d-33ab-48b6-aaf3-c3468d49dca4"),
-                            CustomerID = new Guid("eec92800-02a2-4f87-91b5-dd5f03a5d9d8"),
-                            DeliveryID = new Guid("9c8389da-3a06-40e0-a17b-aefa996d4ce6"),
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
+                            CustomerName = "Viet",
+                            DeliveryID = "172899e9-aafd-422a-9ae9-700784893d51",
+                            Gender = 0,
                             IsDelete = false,
                             OrderDate = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PaymentID = new Guid("4ccb9f59-4452-46c1-9ea0-38893a7a07bd"),
-                            StaffID = new Guid("00000000-0000-0000-0000-000000000000"),
+                            PaymentID = "f8bff311-f0d8-400e-b34e-0aa801841a2f",
                             TotalAmount = 100000.0
                         });
                 });
 
             modelBuilder.Entity("Ordering.DA.Entities.OrderDetail", b =>
                 {
-                    b.Property<Guid>("OrderDetailID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("OrderDetailID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IMEI")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OrderID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("OrderID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProductID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
@@ -146,14 +165,14 @@ namespace Ordering.DA.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("SaleOrderDetail");
 
                     b.HasData(
                         new
                         {
-                            OrderDetailID = new Guid("d2930de6-a1cc-42ce-b0bc-4a59e3e1b054"),
+                            OrderDetailID = "dcdc9940-b56d-481e-8d4c-54c574a9667a",
                             IMEI = "312312321312",
-                            OrderID = new Guid("135d885d-33ab-48b6-aaf3-c3468d49dca4"),
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
                             ProductName = "Itel 33",
                             Quantity = 1,
                             SalePrice = 50000.0,
@@ -161,8 +180,8 @@ namespace Ordering.DA.Migrations
                         },
                         new
                         {
-                            OrderDetailID = new Guid("0a307435-8605-46ee-a01b-66fc4b6ba6c3"),
-                            OrderID = new Guid("135d885d-33ab-48b6-aaf3-c3468d49dca4"),
+                            OrderDetailID = "f28c6161-116f-44c1-a08d-c9b3f9b72e3a",
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
                             ProductName = "Tai nghe Sony",
                             Quantity = 1,
                             SalePrice = 50000.0,
@@ -172,9 +191,8 @@ namespace Ordering.DA.Migrations
 
             modelBuilder.Entity("Ordering.DA.Entities.Payment", b =>
                 {
-                    b.Property<Guid>("PaymentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PaymentID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CVV")
                         .IsRequired()
@@ -185,6 +203,10 @@ namespace Ordering.DA.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CardNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -203,10 +225,11 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            PaymentID = new Guid("4ccb9f59-4452-46c1-9ea0-38893a7a07bd"),
+                            PaymentID = "f8bff311-f0d8-400e-b34e-0aa801841a2f",
                             CVV = "123",
                             CardName = "ABC",
                             CardNo = "1221313",
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
                             Expiration = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentMethod = ""
                         });

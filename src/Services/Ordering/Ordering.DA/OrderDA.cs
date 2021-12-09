@@ -90,7 +90,7 @@ namespace Ordering.DA
                     CardName = objPaymentInfo.CardName,
                     CardNo = objPaymentInfo.CardNo,
                     Expiration = objPaymentInfo.Expiration,
-                    CVV = objPaymentInfo.CardNo
+                    CVV = objPaymentInfo.CVV
                 });
                 objPaymentInfo.PaymentID = strPaymentID;
                 _context.SaveChanges();
