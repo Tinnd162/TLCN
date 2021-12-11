@@ -8,6 +8,6 @@ namespace AspnetRunBasics.Models
         public string Address { get; set; }
         public string PhoneNo { get; set; }
         public string Email { get; set; }
-        public bool cus_IsExist { get; set; }
+        public bool IsExist { get; set; }
     }
 }

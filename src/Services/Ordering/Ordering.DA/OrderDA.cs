@@ -64,7 +64,8 @@ namespace Ordering.DA
                         IMEI = objSODetail.IMEI,
                         Quantity = objSODetail.Quantity,
                         SalePrice = objSODetail.SalePrice,
-                        VAT = objSODetail.VAT
+                        VAT = 0.1,
+                        Color = objSODetail.Color
                     });
                 }
                 _context.SaveChanges();
@@ -147,6 +148,8 @@ namespace Ordering.DA
                 {
                     objSaleOrderBO = new OrderBO()
                     {
+                        CustomerID = objSaleOrder.CustomerID,
+                        CustomerName = objSaleOrder.CustomerName,
                         OrderID = objSaleOrder.OrderID,
                         OrderDate = objSaleOrder.OrderDate,
                         ConfirmDate = objSaleOrder.ConfirmDate,
@@ -160,7 +163,8 @@ namespace Ordering.DA
                                 IMEI = od.IMEI,
                                 Quantity = od.Quantity,
                                 VAT = od.VAT,
-                                SalePrice = od.SalePrice
+                                SalePrice = od.SalePrice,
+                                Color = od.Color
                             }).ToList()
                     };
                 }
@@ -183,9 +187,9 @@ namespace Ordering.DA
             try
             {
                 var lstSaleOrderBO = _context.Orders.Where(x => x.CustomerID == strCustomerID)
-                                                    // .Include(x => x.OrderDetails)
                                                     .Select(x => new OrderBO
                                                     {
+                                                        CustomerID = x.CustomerID,
                                                         OrderID = x.OrderID,
                                                         OrderDate = x.OrderDate,
                                                         ConfirmDate = x.ConfirmDate,

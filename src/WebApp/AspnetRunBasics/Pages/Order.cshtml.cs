@@ -17,12 +17,11 @@ namespace AspnetRunBasics
             _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
         }
 
-        public IEnumerable<OrderResponseModel> Orders { get; set; } = new List<OrderResponseModel>();
+        public IEnumerable<SOModel> Orders { get; set; } = new List<SOModel>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Orders = await _orderService.GetSaleOrderList("d7f522e1-a49e-4e98-a834-4b0b7aadd82a");
-
+            Orders = await _orderService.GetSaleOrderList("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
             return Page();
         }
     }

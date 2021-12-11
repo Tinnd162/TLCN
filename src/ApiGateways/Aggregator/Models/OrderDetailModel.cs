@@ -14,5 +14,6 @@ namespace Aggregator.Models
         public int Quantity { get; set; }
         public double VAT { get; set; }
         public double SalePrice { get; set; }
+        public string Color { get; set; }
     }
 }

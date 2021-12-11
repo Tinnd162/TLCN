@@ -28,21 +28,26 @@ namespace AspnetRunBasics.Services
             return await response.ReadContentAs<List<PaymentModel>>();
         }
 
-        public async Task<IEnumerable<OrderResponseModel>> GetSaleOrderList(string strCustomerId)
+        public async Task<SOModel> GetSO(string strCustomerId, string strSaleOrderId)
         {
-            var response = await _client.GetAsync($"/Order/GetSaleOrderList/{strCustomerId}");
-            return await response.ReadContentAs<List<OrderResponseModel>>();
+            var response = await _client.GetAsync($"/Order/GetSO/{strCustomerId}/{strSaleOrderId}");
+            return await response.ReadContentAs<SOModel>();
         }
 
-        public async Task<string> InsertSaleOrder(OrderResponseModel objSO)
+        public async Task<IEnumerable<SOModel>> GetSaleOrderList(string strCustomerId)
+        {
+            var response = await _client.GetAsync($"/Order/GetSaleOrderList/{strCustomerId}");
+            return await response.ReadContentAs<List<SOModel>>();
+        }
+
+        public async Task<string> InsertSaleOrder(SOModel objSO)
         {
             var response = await _client.PostAsJson($"/SaleOrder/InsertSO", objSO);
             if (response.IsSuccessStatusCode)
             {
                 var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return dataAsString;
-
-            }    
+            }
             else
             {
                 throw new Exception("Something went wrong when calling api.");
