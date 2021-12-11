@@ -16,6 +16,7 @@ namespace Ordering.DA.Entities
         public int Quantity { get; set; }
         public double VAT { get; set; }
         public double SalePrice { get; set; }
+        public string Color { get; set; }
         public Order Orders { get; set; }
     }
 }

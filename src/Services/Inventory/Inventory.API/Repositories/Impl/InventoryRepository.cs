@@ -40,75 +40,110 @@ namespace Inventory.API.Repositories.Impl
         #region Lấy thông tin sản phẩm, nhãn hàng, nhà cung cấp
         public async Task<BrandWithCategoryDTO> GetBrandsWithByCategory(string strCategoryId)
         {
-            BrandWithCategoryDTO objBrandWithCategory = await _context.Categories.Where(x => x.Id == strCategoryId)
-                                                                .Select(s1 => new BrandWithCategoryDTO
-                                                                {
-                                                                    Id = s1.Id,
-                                                                    Name = s1.CategoryName,
-                                                                    lstBrandDTO = s1.Brands.Select(s2 => new InfoDTO
+            try
+            {
+                BrandWithCategoryDTO objBrandWithCategory = await _context.Categories.Where(x => x.Id == strCategoryId)
+                                                                    .Select(s1 => new BrandWithCategoryDTO
                                                                     {
-                                                                        Id = s2.Id,
-                                                                        Name = s2.BrandName
-                                                                    }).ToList()
-                                                                }).FirstOrDefaultAsync();
-            return objBrandWithCategory;
+                                                                        Id = s1.Id,
+                                                                        Name = s1.CategoryName,
+                                                                        lstBrandDTO = s1.Brands.Select(s2 => new InfoDTO
+                                                                        {
+                                                                            Id = s2.Id,
+                                                                            Name = s2.BrandName
+                                                                        }).ToList()
+                                                                    }).FirstOrDefaultAsync();
+                return objBrandWithCategory;
+
+            }
+            catch (Exception objExcep)
+            {
+                return null;
+            }
         }
         public async Task<IEnumerable<InfoDTO>> GetCategories()
         {
-            List<InfoDTO> lstCategoryDTO = await _context.Categories
+            try
+            {
+                List<InfoDTO> lstCategoryDTO = await _context.Categories
                                                             .Select(s => new InfoDTO
                                                             {
                                                                 Id = s.Id,
                                                                 Name = s.CategoryName
                                                             }).ToListAsync();
-
-            return lstCategoryDTO;
+                return lstCategoryDTO;
+            }
+            catch (Exception objExcep)
+            {
+                return null;
+            }
         }
         public async Task<IEnumerable<ProductDTO>> GetProductsByBrand(string strBrandId)
         {
-            List<ProductDTO> lstProduct = await _context.Products
-                                                        .Where(x => x.BrandId == strBrandId && x.IsDelete == false
-                                                                && x.IsDiscontinued == false && x.IsStatus == false)
-                                                        .Select(s => new ProductDTO
-                                                        {
-                                                            Id = s.Id,
-                                                            Name = s.ProductName,
-                                                            SalePrice = s.PriceLogs
-                                                            .OrderByDescending(x => x.UpdateDate)
-                                                            .Select(x => x.SalePrice)
-                                                            .FirstOrDefault()
-                                                        })
-                                                        .ToListAsync();
-            return lstProduct;
+            try
+            {
+                List<ProductDTO> lstProduct = await _context.Products
+                                                      .Where(x => x.BrandId == strBrandId && x.IsDelete == false
+                                                              && x.IsDiscontinued == false && x.IsStatus == false)
+                                                      .Select(s => new ProductDTO
+                                                      {
+                                                          Id = s.Id,
+                                                          Name = s.ProductName,
+                                                          SalePrice = s.PriceLogs
+                                                          .OrderByDescending(x => x.UpdateDate)
+                                                          .Select(x => x.SalePrice)
+                                                          .FirstOrDefault()
+                                                      })
+                                                      .ToListAsync();
+                return lstProduct;
+            }
+            catch (Exception objExcep)
+            {
+                return null;
+            }
         }
         public async Task<ProductDetailDTO> GetProductDetailById(string strProductId)
         {
-            ProductDetailDTO objProductDetailDTO = await _context.Products
-                                                    .Where(x => x.Id == strProductId && x.IsDelete == false
-                                                            && x.IsDiscontinued == false && x.IsStatus == false)
-                                                    .Include(x => x.PriceLogs)
-                                                    .Select(s1 => new ProductDetailDTO
-                                                    {
-                                                        Id = s1.Id,
-                                                        Name = s1.ProductName,
-                                                        Description = s1.Description,
-                                                        LinkImage = s1.LinkImage,
-                                                        Quantity = s1.Quantity,
-                                                        SalePrice = s1.PriceLogs.OrderByDescending(x => x.UpdateDate).Select(x => x.SalePrice).FirstOrDefault()
-                                                    }).FirstOrDefaultAsync();
+            try
+            {
+                ProductDetailDTO objProductDetailDTO = await _context.Products
+                                                                  .Where(x => x.Id == strProductId && x.IsDelete == false
+                                                                          && x.IsDiscontinued == false && x.IsStatus == false)
+                                                                  .Include(x => x.PriceLogs)
+                                                                  .Select(s1 => new ProductDetailDTO
+                                                                  {
+                                                                      Id = s1.Id,
+                                                                      Name = s1.ProductName,
+                                                                      Description = s1.Description,
+                                                                      LinkImage = s1.LinkImage,
+                                                                      Quantity = s1.Quantity,
+                                                                      SalePrice = s1.PriceLogs.OrderByDescending(x => x.UpdateDate).Select(x => x.SalePrice).FirstOrDefault()
+                                                                  }).FirstOrDefaultAsync();
+                return objProductDetailDTO;
+            }
+            catch (Exception objExcep)
+            {
+                return null;
+            }
 
-            return objProductDetailDTO;
         }
         public async Task<IEnumerable<InfoDTO>> GetSuppliers()
         {
-            List<InfoDTO> lstCategoryDTO = await _context.Suppliers
-                                                            .Select(s => new InfoDTO
-                                                            {
-                                                                Id = s.Id,
-                                                                Name = s.SupplierName
-                                                            }).ToListAsync();
+            try
+            {
+                List<InfoDTO> lstCategoryDTO = await _context.Suppliers
+                                                          .Select(s => new InfoDTO
+                                                          {
+                                                              Id = s.Id,
+                                                              Name = s.SupplierName
+                                                          }).ToListAsync();
+                return lstCategoryDTO;
 
-            return lstCategoryDTO;
+            }
+            catch (Exception objExcep)
+            {
+                return null;
+            }
         }
         #endregion
 
@@ -116,46 +151,56 @@ namespace Inventory.API.Repositories.Impl
         #region CRUD sản phẩm.
         public async Task<bool> RemoveProduct(string strProductId)
         {
-            Product objProduct = await _context.Products.FirstOrDefaultAsync(x => x.Id == strProductId);
-            if (objProduct != null)
+            try
             {
-                objProduct.IsDelete = true;
-                _context.SaveChanges();
-                return true;
+                Product objProduct = await _context.Products.FirstOrDefaultAsync(x => x.Id == strProductId);
+                if (objProduct != null)
+                {
+                    objProduct.IsDelete = true;
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception objExcep)
+            {
+                return false;
+            }
+
         }
 
         public async Task<bool> AddDetailProduct(AddProductDTO objAddProductDTO)
         {
-            objAddProductDTO.BrandDTO.Id = ObjectId.GenerateNewId().ToString();
-            objAddProductDTO.CategoryDTO.Id = ObjectId.GenerateNewId().ToString();
-
-            Product objProduct = new Product()
+            try
             {
-                Id = objAddProductDTO.Id,
-                ProductName = objAddProductDTO.Name,
-                Description = objAddProductDTO.Description,
-                UnitPrice = objAddProductDTO.UnitPrice,
-                Quantity = objAddProductDTO.Quantity,
-                LinkImage = objAddProductDTO.LinkImage,
-                CreateDate = DateTime.Now,
-                IsUpdate = false,
-                IsStatus = false,
-                IsDiscontinued = false,
-                IsDelete = false,
-                Brand = new Brand
+                objAddProductDTO.BrandDTO.Id = ObjectId.GenerateNewId().ToString();
+                objAddProductDTO.CategoryDTO.Id = ObjectId.GenerateNewId().ToString();
+
+                Product objProduct = new Product()
                 {
-                    Id = objAddProductDTO.BrandDTO.Id,
-                    BrandName = objAddProductDTO.BrandDTO.Name,
-                    CategoryId = objAddProductDTO.CategoryDTO.Id
-                },
-                Category = new Category
-                {
-                    Id = objAddProductDTO.CategoryDTO.Id,
-                    CategoryName = objAddProductDTO.CategoryDTO.Name
-                },
-                PriceLogs = new Collection<PriceLog>(){
+                    Id = objAddProductDTO.Id,
+                    ProductName = objAddProductDTO.Name,
+                    Description = objAddProductDTO.Description,
+                    UnitPrice = objAddProductDTO.UnitPrice,
+                    Quantity = objAddProductDTO.Quantity,
+                    LinkImage = objAddProductDTO.LinkImage,
+                    CreateDate = DateTime.Now,
+                    IsUpdate = false,
+                    IsStatus = false,
+                    IsDiscontinued = false,
+                    IsDelete = false,
+                    Brand = new Brand
+                    {
+                        Id = objAddProductDTO.BrandDTO.Id,
+                        BrandName = objAddProductDTO.BrandDTO.Name,
+                        CategoryId = objAddProductDTO.CategoryDTO.Id
+                    },
+                    Category = new Category
+                    {
+                        Id = objAddProductDTO.CategoryDTO.Id,
+                        CategoryName = objAddProductDTO.CategoryDTO.Name
+                    },
+                    PriceLogs = new Collection<PriceLog>(){
                     new PriceLog(){
                         Id=ObjectId.GenerateNewId().ToString(),
                         SalePrice=objAddProductDTO.PriceLogDTO.SalePrice,
@@ -165,44 +210,51 @@ namespace Inventory.API.Repositories.Impl
                         UserUpdate="Tinnd"
                     }
                 },
-            };
-            await _context.Products.AddAsync(objProduct);
-            return await _context.SaveChangesAsync() > 0;
+                };
+                await _context.Products.AddAsync(objProduct);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch (Exception objExcep)
+            {
+                return false;
+            }
+
         }
         public async Task<bool> UpdateDetailProduct(UpdateProductDTO objUpdateProductDTO)
         {
-
-            Product objProduct = _context.Products.FirstOrDefault(x => x.Id == objUpdateProductDTO.Id);
-            if (objProduct != null)
+            try
             {
-                objProduct.Id = objUpdateProductDTO.Id;
-                objProduct.ProductName = objUpdateProductDTO.Name;
-                objProduct.Description = objUpdateProductDTO.Description;
-                objProduct.LinkImage = objUpdateProductDTO.LinkImage;
-                objProduct.Quantity = objUpdateProductDTO.Quantity;
-                objProduct.IsDiscontinued = objUpdateProductDTO.IsDiscontinued;
-                objProduct.IsStatus = objUpdateProductDTO.IsStatus;
-                objProduct.UpdateDate = DateTime.Now;
-                objProduct.IsUpdate = true;
-                objProduct.IsDelete = false;
-                if (objProduct.BrandId != objUpdateProductDTO.BrandDTO.Id)
+                Product objProduct = _context.Products.FirstOrDefault(x => x.Id == objUpdateProductDTO.Id);
+                if (objProduct != null)
                 {
-                    objProduct.Brand = new Brand
+                    objProduct.Id = objUpdateProductDTO.Id;
+                    objProduct.ProductName = objUpdateProductDTO.Name;
+                    objProduct.Description = objUpdateProductDTO.Description;
+                    objProduct.LinkImage = objUpdateProductDTO.LinkImage;
+                    objProduct.Quantity = objUpdateProductDTO.Quantity;
+                    objProduct.IsDiscontinued = objUpdateProductDTO.IsDiscontinued;
+                    objProduct.IsStatus = objUpdateProductDTO.IsStatus;
+                    objProduct.UpdateDate = DateTime.Now;
+                    objProduct.IsUpdate = true;
+                    objProduct.IsDelete = false;
+                    if (objProduct.BrandId != objUpdateProductDTO.BrandDTO.Id)
                     {
-                        Id = objUpdateProductDTO.BrandDTO.Id,
-                        BrandName = objUpdateProductDTO.BrandDTO.Name,
-                        CategoryId = objUpdateProductDTO.CategoryDTO.Id
-                    };
-                }
-                if (objProduct.CategoryId != objUpdateProductDTO.CategoryDTO.Id)
-                {
-                    objProduct.Category = new Category
+                        objProduct.Brand = new Brand
+                        {
+                            Id = objUpdateProductDTO.BrandDTO.Id,
+                            BrandName = objUpdateProductDTO.BrandDTO.Name,
+                            CategoryId = objUpdateProductDTO.CategoryDTO.Id
+                        };
+                    }
+                    if (objProduct.CategoryId != objUpdateProductDTO.CategoryDTO.Id)
                     {
-                        Id = objUpdateProductDTO.CategoryDTO.Id,
-                        CategoryName = objUpdateProductDTO.CategoryDTO.Name
-                    };
-                }
-                objProduct.PriceLogs = new Collection<PriceLog>()
+                        objProduct.Category = new Category
+                        {
+                            Id = objUpdateProductDTO.CategoryDTO.Id,
+                            CategoryName = objUpdateProductDTO.CategoryDTO.Name
+                        };
+                    }
+                    objProduct.PriceLogs = new Collection<PriceLog>()
                 {
                     new PriceLog()
                     {
@@ -213,41 +265,65 @@ namespace Inventory.API.Repositories.Impl
                         UserUpdate="Tinnd"
                     }
                 };
-                _context.Update<Product>(objProduct);
-                return await _context.SaveChangesAsync() > 0;
+                    _context.Update<Product>(objProduct);
+                    return await _context.SaveChangesAsync() > 0;
+                }
+                return false;
             }
-            return false;
-        }
-        public async Task<bool> UpdateNumberOfSaleAfterSO(string strProductID, int intNumberOfSale)
-        {
-            Product objProduct = _context.Products.FirstOrDefault(x => x.Id == strProductID);
-            if (objProduct != null)
+            catch (Exception objExcep)
             {
-                objProduct.NumberOfSale = intNumberOfSale;
-                objProduct.PurchaseDate = DateTime.Now;
-                _context.Update<Product>(objProduct);
-                return await _context.SaveChangesAsync() > 0;
+                return false;
             }
-            return false;
+
         }
-        #endregion        
+        public async Task<bool> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams)
+        {
+            try
+            {
+                foreach (var item in lstObjParams)
+                {
+                    Product objProduct = _context.Products.FirstOrDefault(x => x.Id == item.ProductId);
+                    if (objProduct == null)
+                        return false;
+
+                    objProduct.NumberOfSale = item.NumberOfSale;
+                    objProduct.PurchaseDate = DateTime.Now;
+                    _context.Update<Product>(objProduct);
+
+                    if (!(await _context.SaveChangesAsync() > 0))
+                        return false;
+                }
+                return true;
+            }
+            catch (Exception objExcep)
+            {
+                return false;
+            }
+
+        }
+        #endregion
 
         #region Image
         public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
-
-            if (file.Length > 0)
+            try
             {
-                using var stream = file.OpenReadStream();
-                var uploadParams = new ImageUploadParams
+                if (file.Length > 0)
                 {
-                    File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
-                };
-                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                    using var stream = file.OpenReadStream();
+                    var uploadParams = new ImageUploadParams
+                    {
+                        File = new FileDescription(file.FileName, stream),
+                        Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
+                    };
+                    uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                }
             }
+            catch (Exception objExcep)
+            {
 
+            }
             return uploadResult;
         }
         #endregion

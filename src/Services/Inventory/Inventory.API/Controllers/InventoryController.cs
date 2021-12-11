@@ -109,27 +109,25 @@ namespace Inventory.API.Controllers
         }
         [HttpPut]
         [Route("UpdateNumberOfSaleAfterSO")]
-        public async Task<ActionResult<bool>> UpdateNumberOfSaleAfterSO(string strProductID, int intNumberOfSale)
+        public async Task<ActionResult<bool>> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams)
         {
-            bool bolIsUpdateQuantity = await _inventoryRepository.UpdateNumberOfSaleAfterSO(strProductID, intNumberOfSale);
-
+            bool bolIsUpdateQuantity = await _inventoryRepository.UpdateNumberOfSaleAfterSO(lstObjParams);
 
             ProductEventBO objProductEventBO = new ProductEventBO()
             {
-                Id = strProductID,
-                NumberOfSale = intNumberOfSale,
-                PurchaseDate = DateTime.Now,
                 IsUpdateQuantityAfterSO = true,
                 IsUpdate = true,
+                PurchaseDate = DateTime.Now,
+                ParamsUpdate = lstObjParams
             };
             if (bolIsUpdateQuantity)
             {
                 Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
                 var endPoint = await _bus.GetSendEndpoint(uri);
                 await endPoint.Send(objProductEventBO);
-                return Ok("Success");
+                return true;
             }
-            return BadRequest("Fail!");
+            return false;
         }
     }
 }

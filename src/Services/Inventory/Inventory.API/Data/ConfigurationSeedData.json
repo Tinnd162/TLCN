@@ -1,6 +1,83 @@
 [
     {
-        "Id": "c6eb36d3-a691-4024-ba5f-666dc6272d94",
+        "Id": "61b39bc5a1531b510c08cca0",
+        "OperatingSystem": "Tinnd",
+        "RearCamera": "Tinnd",
+        "FrontCamera": "Tinnd",
+        "Chips": "Tinnd",
+        "RAM": "Tinnd",
+        "InternalMemory": "Tinnd",
+        "SIM": "Tinnd",
+        "Batteries": "Tinnd"
+    },
+    {
+        "Id": "61b39bcad45a395f9f70726f",
+        "OperatingSystem": "Tinnd",
+        "RearCamera": "Tinnd",
+        "FrontCamera": "Tinnd",
+        "Chips": "Tinnd",
+        "RAM": "Tinnd",
+        "InternalMemory": "Tinnd",
+        "SIM": "Tinnd",
+        "Batteries": "Tinnd"
+    },
+    {
+        "Id": "61b39bce42681fa0272d5926",
+        "OperatingSystem": "Tinnd",
+        "RearCamera": "Tinnd",
+        "FrontCamera": "Tinnd",
+        "Chips": "Tinnd",
+        "RAM": "Tinnd",
+        "InternalMemory": "Tinnd",
+        "SIM": "Tinnd",
+        "Batteries": "Tinnd"
+    },
+    {
+        "Id": "61b39bd369b87bfccc55a5b2",
+        "OperatingSystem": "Tinnd",
+        "RearCamera": "Tinnd",
+        "FrontCamera": "Tinnd",
+        "Chips": "Tinnd",
+        "RAM": "Tinnd",
+        "InternalMemory": "Tinnd",
+        "SIM": "Tinnd",
+        "Batteries": "Tinnd"
+    },
+    {
+        "Id": "61b39bd78112641dd688bcd0",
+        "OperatingSystem": "Tinnd",
+        "RearCamera": "Tinnd",
+        "FrontCamera": "Tinnd",
+        "Chips": "Tinnd",
+        "RAM": "Tinnd",
+        "InternalMemory": "Tinnd",
+        "SIM": "Tinnd",
+        "Batteries": "Tinnd"
+    },
+    {
+        "Id": "61b39bdccf44fc5c150fe6d7",
+        "OperatingSystem": "Tinnd",
+        "RearCamera": "Tinnd",
+        "FrontCamera": "Tinnd",
+        "Chips": "Tinnd",
+        "RAM": "Tinnd",
+        "InternalMemory": "Tinnd",
+        "SIM": "Tinnd",
+        "Batteries": "Tinnd"
+    },
+    {
+        "Id": "61b39be34ba2022ef3ee51f3",
+        "OperatingSystem": "Tinnd",
+        "RearCamera": "Tinnd",
+        "FrontCamera": "Tinnd",
+        "Chips": "Tinnd",
+        "RAM": "Tinnd",
+        "InternalMemory": "Tinnd",
+        "SIM": "Tinnd",
+        "Batteries": "Tinnd"
+    },
+    {
+        "Id": "61b39be79b9a32c6a65d6f72",
         "OperatingSystem": "Tinnd",
         "RearCamera": "Tinnd",
         "FrontCamera": "Tinnd",

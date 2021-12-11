@@ -21,19 +21,16 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
-            Cart = await _basketService.GetBasket(userName);
-
+            Cart = await _basketService.GetBasket("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveToCartAsync(string productId, string color)
         {
-            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
-            var basket = await _basketService.GetBasket(userName);
+            var basket = await _basketService.GetBasket("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
 
-            var item = basket.Items.Single(x => x.ProductID == productId && x.Color == color);
-            basket.Items.Remove(item);
+            var SODetail = basket.Items.Single(x => x.ProductID == productId && x.Color == color);
+            basket.Items.Remove(SODetail);
 
             var basketUpdated = await _basketService.UpdateBasket(basket);
 

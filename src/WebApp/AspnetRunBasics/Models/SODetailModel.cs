@@ -1,6 +1,6 @@
 ﻿namespace AspnetRunBasics.Models
 {
-    public class BasketItemModel
+    public class SODetailModel
     {
         public string ProductID { get; set; }
         public string ProductName { get; set; }

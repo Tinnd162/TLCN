@@ -19,5 +19,10 @@ namespace Aggregator.Services
             var response = await _client.GetAsync($"/Inventory/GetProductDetailById/{strProductId}");
             return await response.ReadContentAs<InventoryModel>();
         }
+        public async Task<bool> UpdateNumberOfSaleAfterSO(List<ParamsUpdateModel> lstObjParams)
+        {
+            var response = await _client.PutAsJson($"/Inventory/UpdateNumberOfSaleAfterSO", lstObjParams);
+            return await response.ReadContentAs<bool>();
+        }
     }
 }

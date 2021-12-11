@@ -1,0 +1,54 @@
+﻿@page
+@model AspnetRunBasics.Pages.SaleOrderDetailModel
+@{
+    ViewData["Title"] = "History SaleOrder";
+}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">History Order</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.SOModel.OrderDetails)
+                        {
+                            <tr>
+                                <td>@order.ProductName</td>
+                                <td>@order.Color</td>
+                                <td>@order.Quantity</td>
+                                <td>@order.SalePrice $</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <a asp-page="Order" class="btn btn-lg btn-block btn-success">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

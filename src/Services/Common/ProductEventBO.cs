@@ -17,5 +17,6 @@ namespace Common
         public bool IsUpdate { get; set; }
         public bool IsDelete { get; set; }
         public bool IsUpdateQuantityAfterSO { get; set; }
+        public List<UpdateParamsNumberOfSale> ParamsUpdate { get; set; }
     }
 }
