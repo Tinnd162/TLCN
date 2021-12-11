@@ -1,17 +1,42 @@
 [
     {
-        "Id": "b14a8f81-491e-456e-a7e7-ccc73f0a03ff",
+        "Id": "61b39a6f185d6ced7effbd64",
         "ColorName": "Xanh",
-        "ProductId": "19e23051-a4c6-405c-8a65-684f9e16371c"
+        "ProductId": "61b3819de878c94250ee4b5b"
     },
     {
-        "Id": "8c339f5a-c23b-4473-b577-a0e5f7eece71",
+        "Id": "61b39a69fe1baaf3ba2c0104",
         "ColorName": "Đỏ",
-        "ProductId": "19e23051-a4c6-405c-8a65-684f9e16371c"
+        "ProductId": "61b381a6805299fab3f65a62"
     },
     {
-        "Id": "d3aed180-1991-416d-8262-09c8fb02a2f9",
+        "Id": "61b39a6597973ed745ed0c7d",
         "ColorName": "Tím",
-        "ProductId": "19e23051-a4c6-405c-8a65-684f9e16371c"
+        "ProductId": "61b381acebed40d75685eca0"
+    },
+    {
+        "Id": "61b39a5d8b8863519df19341",
+        "ColorName": "Vàng",
+        "ProductId": "61b381b6f60a8e418e41bfda"
+    },
+    {
+        "Id": "61b39a43c144d253931e9993",
+        "ColorName": "Lục",
+        "ProductId": "61b381bfddb1655fc081885d"
+    },
+    {
+        "Id": "61b39a3d326fb518d0be3874",
+        "ColorName": "Lam",
+        "ProductId": "61b381c54944257555493659"
+    },
+    {
+        "Id": "61b39a39fabea7fe7699c3e7",
+        "ColorName": "Chàm",
+        "ProductId": "61b381cd3c6ea7f7f0a4c4e3"
+    },
+    {
+        "Id": "61b39a3279a69b9003bbb4c0",
+        "ColorName": "Cam",
+        "ProductId": "61b381d659d66f854ec540d8"
     }
 ]

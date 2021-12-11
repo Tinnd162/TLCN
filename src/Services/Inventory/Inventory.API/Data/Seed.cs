@@ -27,10 +27,10 @@ namespace Inventory.API.Data
             var colors = JsonSerializer.Deserialize<List<Color>>(colorData);
             context.Colors.AddRange(colors);
 
-            if (await context.Configurations.AnyAsync()) return;
-            var configurationData = await System.IO.File.ReadAllTextAsync("Data/ConfigurationSeedData.json");
-            var configurations = JsonSerializer.Deserialize<List<Configuration>>(configurationData);
-            context.Configurations.AddRange(configurations);
+            // if (await context.Configurations.AnyAsync()) return;
+            // var configurationData = await System.IO.File.ReadAllTextAsync("Data/ConfigurationSeedData.json");
+            // var configurations = JsonSerializer.Deserialize<List<Configuration>>(configurationData);
+            // context.Configurations.AddRange(configurations);
 
             if (await context.Suppliers.AnyAsync()) return;
             var supplierData = await System.IO.File.ReadAllTextAsync("Data/SupplierSeedData.json");
@@ -42,10 +42,10 @@ namespace Inventory.API.Data
             var products = JsonSerializer.Deserialize<List<Product>>(productData);
             context.Products.AddRange(products);
 
-            if (await context.Devices.AnyAsync()) return;
-            var deviceData = await System.IO.File.ReadAllTextAsync("Data/DeviceSeedData.json");
-            var devices = JsonSerializer.Deserialize<List<Device>>(deviceData);
-            context.Devices.AddRange(devices);
+            // if (await context.Devices.AnyAsync()) return;
+            // var deviceData = await System.IO.File.ReadAllTextAsync("Data/DeviceSeedData.json");
+            // var devices = JsonSerializer.Deserialize<List<Device>>(deviceData);
+            // context.Devices.AddRange(devices);
 
             if (await context.PriceLogs.AnyAsync()) return;
             var pricelogData = await System.IO.File.ReadAllTextAsync("Data/PriceLogSeedData.json");

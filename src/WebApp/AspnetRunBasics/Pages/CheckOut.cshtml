@@ -61,7 +61,7 @@
                     <div class="col-md-6 mb-3">
                         <label asp-for="Order.DeliveryInfo.FirstNameReceiver" for="firstName">First name</label>
                         <input asp-for="Order.DeliveryInfo.FirstNameReceiver" type="text" class="form-control"
-                            id="firstName" placeholder="" value="" required>
+                               id="firstName" placeholder="" value="@Model.objDelivery.FirstNameReceiver" required>
                         <div class="invalid-feedback">
                             Valid first name is required.
                         </div>
@@ -69,7 +69,7 @@
                     <div class="col-md-6 mb-3">
                         <label asp-for="Order.DeliveryInfo.LastNameReceiver" for="lastName">Last name</label>
                         <input asp-for="Order.DeliveryInfo.LastNameReceiver" type="text" class="form-control"
-                            id="lastName" placeholder="" value="" required>
+                               id="lastName" placeholder="" value="@Model.objDelivery.LastNameReceiver" required>
                         <div class="invalid-feedback">
                             Valid last name is required.
                         </div>
@@ -79,17 +79,18 @@
                 <div class="mb-3">
                     <label asp-for="Order.DeliveryInfo.PhoneNo" for="phoneNo">Phone</label>
                     <input asp-for="Order.DeliveryInfo.PhoneNo" type="number" class="form-control" id="phoneNo"
-                        placeholder="" value="" required>
+                           placeholder="" value="@Model.objDelivery.PhoneNo" required>
                     <div class="invalid-feedback" style="width: 100%;">
                         Your phone is required.
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Order.DeliveryInfo.Email" for="email">Email <span
-                            class="text-muted">(Optional)</span></label>
+                    <label asp-for="Order.DeliveryInfo.Email" for="email">
+                        Email <span class="text-muted">(Optional)</span>
+                    </label>
                     <input asp-for="Order.DeliveryInfo.Email" type="email" class="form-control" id="email"
-                        placeholder="you@example.com">
+                           value="@Model.objDelivery.Email" placeholder="you@example.com">
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
@@ -98,11 +99,13 @@
                 <div class="mb-3">
                     <label asp-for="Order.DeliveryInfo.Address" for="address">Address</label>
                     <input asp-for="Order.DeliveryInfo.Address" type="text" class="form-control" id="address"
-                        placeholder="1234 Main St" required>
+                           value="@Model.objDelivery.Address" placeholder="1234 Main St" required>
                     <div class="invalid-feedback">
                         Please enter your shipping address.
                     </div>
                 </div>
+                <input asp-for="Order.DeliveryInfo.IsExist" type="hidden" value="@Model.objDelivery.IsExist">
+                <input asp-for="Order.DeliveryInfo.DeliveryID" type="hidden" value="@Model.objDelivery.DeliveryID">
 
                 <hr class="mb-4">
 
@@ -111,22 +114,24 @@
                 <div class="d-block my-3">
                     <div class="custom-control custom-radio">
                         <input asp-for="Order.PaymentInfo.PaymentMethod" id="credit" type="radio" value="Credit card"
-                            class="custom-control-input" checked required>
+                               class="custom-control-input" checked required>
                         <label asp-for="Order.PaymentInfo.PaymentMethod" class="custom-control-label"
-                            for="credit">Credit card</label>
+                               for="credit">Credit card</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input asp-for="Order.PaymentInfo.PaymentMethod" id="debit" type="radio" value="Debit card"
-                            class="custom-control-input" required>
-                        <label asp-for="Order.PaymentInfo.PaymentMethod" class="custom-control-label" for="debit">Debit
-                            card</label>
+                               class="custom-control-input" required>
+                        <label asp-for="Order.PaymentInfo.PaymentMethod" class="custom-control-label" for="debit">
+                            Debit
+                            card
+                        </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label asp-for="Order.PaymentInfo.CardName" for="cc-name">Name on card</label>
                         <input asp-for="Order.PaymentInfo.CardName" type="text" class="form-control" id="cc-name"
-                            placeholder="" required>
+                               placeholder="" required>
                         <small class="text-muted">Full name as displayed on card</small>
                         <div class="invalid-feedback">
                             Name on card is required
@@ -135,7 +140,7 @@
                     <div class="col-md-6 mb-3">
                         <label asp-for="Order.PaymentInfo.CardNo" for="cc-number">Credit card number</label>
                         <input asp-for="Order.PaymentInfo.CardNo" type="text" class="form-control" id="cc-number"
-                            placeholder="" required>
+                               placeholder="" required>
                         <div class="invalid-feedback">
                             Credit card number is required
                         </div>
@@ -145,7 +150,7 @@
                     <div class="col-md-3 mb-3">
                         <label asp-for="Order.PaymentInfo.Expiration" for="cc-expiration">Expiration</label>
                         <input asp-for="Order.PaymentInfo.Expiration" type="text" class="form-control"
-                            id="cc-expiration" placeholder="" required>
+                               id="cc-expiration" placeholder="" required>
                         <div class="invalid-feedback">
                             Expiration date required
                         </div>
@@ -153,7 +158,7 @@
                     <div class="col-md-3 mb-3">
                         <label asp-for="Order.PaymentInfo.CVV" for="cc-expiration">CVV</label>
                         <input asp-for="Order.PaymentInfo.CVV" type="text" class="form-control" id="cc-cvv"
-                            placeholder="" required>
+                               placeholder="" required>
                         <div class="invalid-feedback">
                             Security code required
                         </div>

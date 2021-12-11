@@ -29,12 +29,12 @@ namespace Inventory.API.Entities
         public string SupplierId { get; set; }
         public string CategoryId { get; set; }
         public string BrandId { get; set; }
-        public string CongigurationId { get; set; }
+        // public string CongigurationId { get; set; }
         public Brand Brand { get; set; }
         public Category Category { get; set; }
         public Supplier Supplier { get; set; }
-        public Configuration Configuration { get; set; }
-        public ICollection<Device> Devices { get; set; }
+        // public Configuration Configuration { get; set; }
+        // public ICollection<Device> Devices { get; set; }
         public ICollection<PriceLog> PriceLogs { get; set; }
         public ICollection<Color> Colors { get; set; }
     }

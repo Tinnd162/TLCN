@@ -1,0 +1,71 @@
+﻿@page
+@model AspnetRunBasics.Pages.SelecteDeliveryModel
+@{
+    ViewData["Title"] = "Choose delivery address";
+}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Delivery address</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var order in Model.DeliveryModels)
+                        {
+                            <tr>
+                                <td>@order.FirstNameReceiver @order.LastNameReceiver</td>
+                                <td>@order.Email</td>
+                                <td>@order.Address</td>
+                                <td>@order.PhoneNo</td>
+                                <td>
+                                    <form asp-page="CheckOut" method="get">
+                                        <button class="btn btn-primary">Choose</button>
+                                        <input type="hidden" asp-for="@order.DeliveryID" name="deliveryID" />
+                                        <input type="hidden" asp-for="@order.FirstNameReceiver" name="firstName" />
+                                        <input type="hidden" asp-for="@order.LastNameReceiver" name="lastName" />
+                                        <input type="hidden" asp-for="@order.Address" name="address" />
+                                        <input type="hidden" asp-for="@order.Email" name="email" />
+                                        <input type="hidden" asp-for="@order.PhoneNo" name="phoneNo" />
+                                        <input type="hidden" asp-for="@order.IsExist" name="isExist" />
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <a asp-page="Cart" class="btn btn-lg btn-block btn-success">Back</a>
+                </div>
+                <div class="col-sm-12  col-md-6">
+                    <a asp-page="CheckOut" class="btn btn-lg btn-block btn-primary">Add new Address</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

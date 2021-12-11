@@ -53,9 +53,9 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            DeliveryID = "172899e9-aafd-422a-9ae9-700784893d51",
+                            DeliveryID = "2084bbbf-3e3c-4049-9d6a-0cc4d5f090b2",
                             Address = "123 ABC",
-                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
+                            CustomerID = "8e96bf62-8135-4332-931a-dc5aa25aa2a8",
                             Email = "asd@gmail.com",
                             FirstNameReceiver = "Viet",
                             LastNameReceiver = "Lam",
@@ -122,14 +122,14 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
-                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
+                            OrderID = "5ea54bea-c943-4f41-88fb-5ea025cebaed",
+                            CustomerID = "8e96bf62-8135-4332-931a-dc5aa25aa2a8",
                             CustomerName = "Viet",
-                            DeliveryID = "172899e9-aafd-422a-9ae9-700784893d51",
+                            DeliveryID = "2084bbbf-3e3c-4049-9d6a-0cc4d5f090b2",
                             Gender = 0,
                             IsDelete = false,
                             OrderDate = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PaymentID = "f8bff311-f0d8-400e-b34e-0aa801841a2f",
+                            PaymentID = "4866debb-66b4-42b9-8167-a17c4131b4d0",
                             TotalAmount = 100000.0
                         });
                 });
@@ -138,6 +138,9 @@ namespace Ordering.DA.Migrations
                 {
                     b.Property<string>("OrderDetailID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IMEI")
                         .HasColumnType("nvarchar(max)");
@@ -170,9 +173,9 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderDetailID = "dcdc9940-b56d-481e-8d4c-54c574a9667a",
+                            OrderDetailID = "32727028-baec-483d-a409-6fc8a79129b3",
                             IMEI = "312312321312",
-                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
+                            OrderID = "5ea54bea-c943-4f41-88fb-5ea025cebaed",
                             ProductName = "Itel 33",
                             Quantity = 1,
                             SalePrice = 50000.0,
@@ -180,8 +183,8 @@ namespace Ordering.DA.Migrations
                         },
                         new
                         {
-                            OrderDetailID = "f28c6161-116f-44c1-a08d-c9b3f9b72e3a",
-                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
+                            OrderDetailID = "e4a6465c-6b17-4872-a14e-f2c3a7aece6e",
+                            OrderID = "5ea54bea-c943-4f41-88fb-5ea025cebaed",
                             ProductName = "Tai nghe Sony",
                             Quantity = 1,
                             SalePrice = 50000.0,
@@ -225,11 +228,11 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            PaymentID = "f8bff311-f0d8-400e-b34e-0aa801841a2f",
+                            PaymentID = "4866debb-66b4-42b9-8167-a17c4131b4d0",
                             CVV = "123",
                             CardName = "ABC",
                             CardNo = "1221313",
-                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
+                            CustomerID = "8e96bf62-8135-4332-931a-dc5aa25aa2a8",
                             Expiration = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentMethod = ""
                         });

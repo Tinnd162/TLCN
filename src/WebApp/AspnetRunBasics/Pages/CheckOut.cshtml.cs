@@ -20,31 +20,36 @@ namespace AspnetRunBasics
         }
 
         [BindProperty]
-        public OrderResponseModel Order { get; set; }
+        public SOModel Order { get; set; }
         public BasketModel Cart { get; set; } = new BasketModel();
-        public IEnumerable<DeliveryModel> lstDelivery { get; set; } = new List<DeliveryModel>();
+        public DeliveryModel objDelivery { get; set; } = new DeliveryModel();
         public IEnumerable<PaymentModel> lstPayment { get; set; } = new List<PaymentModel>();
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string deliveryID, string firstName, string lastName, string email, string phoneNo, string address, bool isExist)
         {
-            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
-            Cart = await _basketService.GetBasket(userName);
+            objDelivery.DeliveryID = deliveryID;
+            objDelivery.FirstNameReceiver = firstName;
+            objDelivery.LastNameReceiver = lastName;
+            objDelivery.Email = email;
+            objDelivery.PhoneNo = phoneNo;
+            objDelivery.Address = address;
+            objDelivery.IsExist = isExist;
 
+            Cart = await _basketService.GetBasket("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
             return Page();
         }
 
         public async Task<IActionResult> OnPostCheckOutAsync()
         {
-            var userName = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
-            Cart = await _basketService.GetBasket(userName);
+            Cart = await _basketService.GetBasket("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
 
             Order.CustomerName = "Viet";
-            Order.CustomerID = "d7f522e1-a49e-4e98-a834-4b0b7aadd82a";
+            Order.CustomerID = "8e96bf62-8135-4332-931a-dc5aa25aa2a8";
             Order.TotalAmount = Cart.TotalAmount;
             Order.OrderDetails = Cart.Items;
 
-            await _orderService.InsertSaleOrder(Order);
+            string strSOId = await _orderService.InsertSaleOrder(Order);
 
-            return RedirectToPage("Confirmation", "OrderSubmitted");
+            return RedirectToPage("Confirmation", "OrderSubmitted", strSOId);
         }
     }
 }
