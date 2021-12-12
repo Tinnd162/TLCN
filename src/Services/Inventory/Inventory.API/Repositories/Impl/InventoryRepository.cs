@@ -128,8 +128,8 @@ namespace Inventory.API.Repositories.Impl
 
         public async Task<bool> AddDetailProduct(AddProductDTO objAddProductDTO)
         {
-            objAddProductDTO.BrandDTO.Id = ObjectId.GenerateNewId().ToString();
-            objAddProductDTO.CategoryDTO.Id = ObjectId.GenerateNewId().ToString();
+            //objAddProductDTO.BrandDTO.Id = ObjectId.GenerateNewId().ToString();
+            //objAddProductDTO.CategoryDTO.Id = ObjectId.GenerateNewId().ToString();
 
             Product objProduct = new Product()
             {
@@ -144,17 +144,8 @@ namespace Inventory.API.Repositories.Impl
                 IsStatus = false,
                 IsDiscontinued = false,
                 IsDelete = false,
-                Brand = new Brand
-                {
-                    Id = objAddProductDTO.BrandDTO.Id,
-                    BrandName = objAddProductDTO.BrandDTO.Name,
-                    CategoryId = objAddProductDTO.CategoryDTO.Id
-                },
-                Category = new Category
-                {
-                    Id = objAddProductDTO.CategoryDTO.Id,
-                    CategoryName = objAddProductDTO.CategoryDTO.Name
-                },
+                BrandId = objAddProductDTO.BrandDTO.Id,
+                CategoryId = objAddProductDTO.CategoryDTO.Id,
                 PriceLogs = new Collection<PriceLog>(){
                     new PriceLog(){
                         Id=ObjectId.GenerateNewId().ToString(),
