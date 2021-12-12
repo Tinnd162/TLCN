@@ -127,6 +127,20 @@
       ]
     },
     {
+      "DownstreamPathTemplate": "/api/v1/Inventory/AddProduct",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/AddProduct",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/v1/Product/GetProducts",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -192,6 +206,20 @@
         }
       ],
       "UpstreamPathTemplate": "/SaleOrder/InsertSO",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/User/Authenticate",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5012"
+        }
+      ],
+      "UpstreamPathTemplate": "/User/Authenticate",
       "UpstreamHttpMethod": [
         "POST"
       ]

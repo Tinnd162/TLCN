@@ -1,0 +1,86 @@
+﻿@page
+@model AdminWebApp.Pages.ProductModel
+@{
+    ViewData["Title"] = "Sản phẩm";
+}
+
+<div class="row ml-5">
+    <div class="col-9">
+        <form asp-page-handler="Search" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nhập mã sản phẩm để tìm kiểm ..." name="ProductID" value="@if (Model.Product != null && Model.IsSearch) { @Model.Product.Id} ">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3"><a asp-page="AddProduct" class="btn btn-primary">Thêm sản phẩm</a></div>
+</div>
+@if (Model.Product != null)
+{
+    <section class="mb-5 mt-5">
+
+        <div class="row">
+            <div class="col-md-6 mb-4 mb-md-0">
+
+                <div id="mdb-lightbox-ui"></div>
+
+                <div class="mdb-lightbox">
+
+                    <div class="row product-gallery mx-1">
+
+                        <div class="col-12 mb-0">
+                            <figure class="view overlay rounded z-depth-1 main-img">
+                                <img src="@Model.Product.LinkImage"
+                                     class="img-fluid z-depth-1">
+                            </figure>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-md-6">
+
+                <h5>@Model.Product.Name</h5>
+                <p class="mb-2 text-muted text-uppercase small">@Model.Product.Id</p>
+                <div class="table-responsive">
+                    <table class="table table-sm table-borderless mb-0">
+                        <tbody>
+                            <tr>
+                                <th class="pl-0 w-25" scope="row"><strong>Mã sản phẩm</strong></th>
+                                <td>@Model.Product.Id</td>
+                            </tr>
+                            <tr>
+                                <th class="pl-0 w-25" scope="row"><strong>Tên sản phẩm</strong></th>
+                                <td>@Model.Product.Name </td>
+                            </tr>
+                            <tr>
+                                <th class="pl-0 w-25" scope="row"><strong>Đơn giá</strong></th>
+                                <td>@Model.Product.SalePrice</td>
+                            </tr>
+                            <tr>
+                                <th class="pl-0 w-25" scope="row"><strong>Số lượng</strong></th>
+                                <td>@Model.Product.Quantity</td>
+                            </tr>
+                            <tr>
+                                <th class="pl-0 w-25" scope="row"><strong>Mô tả</strong></th>
+                                <td>@Model.Product.Description</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <a asp-page="EditProduct" class="btn btn-primary btn-md mr-1 mb-2">Chỉnh sửa</a>
+            </div>
+        </div>
+
+    </section>
+}
+else if (Model.IsSearch == true)
+{
+    <h5 class="m-5 text-secondary">Không tìm thấy sản phẩm nào, thử lại!</h5>
+}

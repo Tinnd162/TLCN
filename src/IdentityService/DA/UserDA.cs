@@ -24,7 +24,7 @@ namespace IdentityService.DA
                 {
                     UserID = userInfo.UserID,
                     UserName = userInfo.UserName,
-                    Password = userInfo.Password
+                    Password = null
                 };
                 return objUserBO;
             }
