@@ -19,7 +19,7 @@ namespace AspnetRunBasics.Pages
         public IEnumerable<DeliveryModel> DeliveryModels { get; set; } = new List<DeliveryModel>();
         public async Task<IActionResult> OnGetAsync(string customerId)
         {
-            customerId = "8e96bf62-8135-4332-931a-dc5aa25aa2a8";
+            customerId = "61b6f8d80a134a9697bba97c";
             DeliveryModels = await _orderService.GetDeliveryInfos(customerId);
             foreach (var item in DeliveryModels)
             {

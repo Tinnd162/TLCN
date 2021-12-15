@@ -1,4 +1,5 @@
 using AspnetRunBasics.Services;
+using AspnetRunBasics.Services.Impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,9 @@ namespace AspnetRunBasics
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
             services.AddHttpClient<IOrderService, OrderService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
-
+            services.AddHttpClient<IAggregatorService, AggregatorService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiSettings:AggregatorUrl"]));
+                
             services.AddRazorPages();
         }
 
