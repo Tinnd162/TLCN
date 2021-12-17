@@ -21,5 +21,6 @@ namespace AdminWebApp.Models
 
         [DataType(DataType.Upload)]
         public IFormFile Image { get; set; }
+        public string UserUpdate { get; set; }
     }
 }

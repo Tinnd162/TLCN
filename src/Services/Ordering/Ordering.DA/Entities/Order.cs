@@ -22,7 +22,6 @@ namespace Ordering.DA.Entities
         public string PaymentID { get; set; }
         public string DeliveryID { get; set; }
         public bool IsDelete { get; set; }
-        
         public Payment Payment { get; set; }
         public Delivery Delivery { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }

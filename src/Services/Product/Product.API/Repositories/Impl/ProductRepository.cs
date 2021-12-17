@@ -64,12 +64,15 @@ namespace Product.API.Repositories.Impl
 
         public async Task UpdateProduct(ProductDTO objProduct)
         {
-            if (objProduct.IsUpdateQuantityAfterSO)
+            if (objProduct.ParamsUpdate != null && objProduct.IsUpdateQuantityAfterSO)
             {
-                ProductDTO objResult = await _productContext.Products.Find(x => x.Id == objProduct.Id).FirstOrDefaultAsync();
-                objResult.NumberOfSale = objProduct.NumberOfSale;
-                objResult.PurchaseDate = objProduct.PurchaseDate;
-                await _productContext.Products.ReplaceOneAsync(x => x.Id == objResult.Id, objResult);
+                foreach (var item in objProduct.ParamsUpdate)
+                {
+                    ProductDTO objResult = await _productContext.Products.Find(x => x.Id == item.ProductId).FirstOrDefaultAsync();
+                    objResult.NumberOfSale = item.NumberOfSale;
+                    objResult.PurchaseDate = objProduct.PurchaseDate;
+                    await _productContext.Products.ReplaceOneAsync(x => x.Id == objResult.Id, objResult);
+                }
                 return;
             }
             else

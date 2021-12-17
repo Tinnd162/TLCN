@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Common;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -21,5 +23,6 @@ namespace Product.API.Entities
         public bool IsUpdateQuantityAfterSO { get; set; }
         public int NumberOfSale { get; set; }
         public DateTime? PurchaseDate { get; set; }
+        public List<UpdateParamsNumberOfSale> ParamsUpdate { get; set; }
     }
 }

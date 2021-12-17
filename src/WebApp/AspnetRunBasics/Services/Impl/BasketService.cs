@@ -39,7 +39,7 @@ namespace AspnetRunBasics.Services
                 throw new Exception("Something went wrong when calling api.");
             }
         }
-        public async Task CheckoutBasket(OrderResponseModel model)
+        public async Task CheckoutBasket(BasketModel model)
         {
             var response = await _client.PostAsJson($"/Basket/Checkout", model);
             if (!response.IsSuccessStatusCode)

@@ -12,22 +12,22 @@ namespace Inventory.API.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Device> Devices { get; set; }
+        // public DbSet<Device> Devices { get; set; }
         public DbSet<PriceLog> PriceLogs { get; set; }
-        public DbSet<Configuration> Configurations { get; set; }
+        // public DbSet<Configuration> Configurations { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            //
-            builder.Entity<Device>()
-                .HasOne(x => x.Product)
-                .WithMany(y => y.Devices)
-                .HasForeignKey(z => z.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
-            //
+            // //
+            // builder.Entity<Device>()
+            //     .HasOne(x => x.Product)
+            //     .WithMany(y => y.Devices)
+            //     .HasForeignKey(z => z.ProductId)
+            //     .OnDelete(DeleteBehavior.Cascade);
+            // //
             builder.Entity<Product>(Entity =>
             {
                 Entity.Property(e => e.UnitPrice)
@@ -71,12 +71,12 @@ namespace Inventory.API.Data
                 .WithMany(y => y.Colors)
                 .HasForeignKey(z => z.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-            //
-            builder.Entity<Configuration>()
-                .HasOne(x => x.Product)
-                .WithOne(y => y.Configuration)
-                .HasForeignKey<Product>(z => z.CongigurationId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // //
+            // builder.Entity<Configuration>()
+            //     .HasOne(x => x.Product)
+            //     .WithOne(y => y.Configuration)
+            //     .HasForeignKey<Product>(z => z.CongigurationId)
+            //     .OnDelete(DeleteBehavior.Cascade);
 
 
         }

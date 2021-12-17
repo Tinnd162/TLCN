@@ -28,7 +28,7 @@ namespace AdminWebApp.Pages
             if(UserModel != null)
             {
                 var objUser = await _identityService.Authenticate(UserModel);
-                if(objUser.Token != null)
+                if(objUser != null && objUser.Token != null)
                 {
                     CookieOptions cookieOptions = new CookieOptions();
                     cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddHours(1));

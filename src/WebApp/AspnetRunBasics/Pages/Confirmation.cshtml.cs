@@ -11,9 +11,9 @@ namespace AspnetRunBasics
             Message = "Your email was sent.";
         }
 
-        public void OnGetOrderSubmitted()
+        public void OnGetOrderSubmitted(string Id)
         {
-            Message = "Your order submitted successfully.";
+            Message = "Your order" + Id + "submitted successfully.";
         }
     }
 }

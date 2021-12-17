@@ -32,6 +32,7 @@ namespace AdminWebApp.Services
             reqContent.Add(new StringContent(objAddProductModel.CategoryDTO.Id), "CategoryDTO.Id");
             reqContent.Add(new StringContent(objAddProductModel.CategoryDTO.Name), "CategoryDTO.Name");
             reqContent.Add(new StringContent(objAddProductModel.Description), "Description");
+            reqContent.Add(new StringContent(objAddProductModel.UserUpdate), "UserUpdate");
 
             if (objAddProductModel.Image.Length > 0)
             {

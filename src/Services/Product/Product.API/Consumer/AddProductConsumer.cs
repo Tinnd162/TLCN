@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common;
 using MassTransit;
@@ -18,22 +19,25 @@ namespace Product.API.Consumer
 
         public Task Consume(ConsumeContext<ProductEventBO> consumeContext)
         {
-            ProductEventBO objProductEventBO = consumeContext.Message;
+            ProductEventBO obj = consumeContext.Message;
+
             ProductDTO objResult = new ProductDTO()
             {
-                Id = objProductEventBO.Id,
-                Name = objProductEventBO.Name,
-                Description = objProductEventBO.Description,
-                ImageFile = objProductEventBO.Image,
-                Category = objProductEventBO.Category,
-                Brand = objProductEventBO.Brand,
-                SalePrice = objProductEventBO.SalePrice,
-                IsDelete = objProductEventBO.IsDelete,
-                IsUpdate = objProductEventBO.IsUpdate,
-                NumberOfSale = objProductEventBO.NumberOfSale,
-                IsUpdateQuantityAfterSO = objProductEventBO.IsUpdateQuantityAfterSO,
-                PurchaseDate = objProductEventBO.PurchaseDate
+                Id = obj.Id,
+                Name = obj.Name,
+                Description = obj.Description,
+                ImageFile = obj.Image,
+                Category = obj.Category,
+                Brand = obj.Brand,
+                SalePrice = obj.SalePrice,
+                IsDelete = obj.IsDelete,
+                IsUpdate = obj.IsUpdate,
+                NumberOfSale = obj.NumberOfSale,
+                IsUpdateQuantityAfterSO = obj.IsUpdateQuantityAfterSO,
+                PurchaseDate = obj.PurchaseDate,
+                ParamsUpdate = obj.ParamsUpdate
             };
+
             if (objResult.IsDelete)
                 _productRepository.RemoveProduct(objResult.Id);
             else if (objResult.IsUpdate)

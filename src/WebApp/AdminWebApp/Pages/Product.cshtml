@@ -74,7 +74,7 @@
                     </table>
                 </div>
                 <hr>
-                <a asp-page="EditProduct" class="btn btn-primary btn-md mr-1 mb-2">Chỉnh sửa</a>
+                <a asp-page="EditProduct" asp-page-handler="ProductDetail" asp-route-ProductID="@Model.Product.Id" class="btn btn-primary btn-md mr-1 mb-2">Chỉnh sửa</a>
             </div>
         </div>
 

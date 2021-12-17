@@ -1,47 +1,47 @@
 [
     {
-        "Id": "f6ac9fa8-3bd6-4e16-997a-f41b434a0987",
+        "Id": "61b3995973c02975ebf239cc",
         "BrandName": "Dell",
-        "CategoryId": "4b3b5648-573b-41d1-8016-d780a3c93cee"
+        "CategoryId": "61b3994cd1987a12144d98fe"
     },
     {
-        "Id": "a70a9b34-46ab-4e96-b8f9-d95805aa5e27",
+        "Id": "61b3995fe61cd4a8df4d886f",
         "BrandName": "Macbook",
-        "CategoryId": "4b3b5648-573b-41d1-8016-d780a3c93cee"
+        "CategoryId": "61b3994cd1987a12144d98fe"
     },
     {
-        "Id": "61eb2165-9edb-4941-adcd-cea34eca8006",
+        "Id": "61b39969bedd2efa0ab6ca7b",
         "BrandName": "MSI",
-        "CategoryId": "4b3b5648-573b-41d1-8016-d780a3c93cee"
+        "CategoryId": "61b3994cd1987a12144d98fe"
     },
     {
-        "Id": "d2795b2b-837e-491f-82b2-fc7c81f1ef22",
+        "Id": "61b3996fdd0bb7050b967b1b",
         "BrandName": "IPad",
-        "CategoryId": "e0f439f7-adfe-4e79-84ae-653a10314d35"
+        "CategoryId": "61b3993fa4a656890b8d08ea"
     },
     {
-        "Id": "1203fad3-009a-40e9-93a8-c334bcfeaedc",
+        "Id": "61b399765b0ebb7dce5ea71c",
         "BrandName": "Huawei",
-        "CategoryId": "e0f439f7-adfe-4e79-84ae-653a10314d35"
+        "CategoryId": "61b39947409e7ee84a81caaa"
     },
     {
-        "Id": "4f9cf823-328e-498c-81e7-7617eac043f7",
+        "Id": "61b3997bb6257e4a7aa2a776",
         "BrandName": "Samsung",
-        "CategoryId": "e0f439f7-adfe-4e79-84ae-653a10314d35"
+        "CategoryId": "61b39947409e7ee84a81caaa"
     },
     {
-        "Id": "316a83cf-aa77-44f6-9b35-75b0ef335cbd",
+        "Id": "61b39984549b53e869089e1e",
         "BrandName": "Iphone",
-        "CategoryId": "1ec84e3a-e3da-4fd0-8d3b-d82fc51499d5"
+        "CategoryId": "61b39947409e7ee84a81caaa"
     },
     {
-        "Id": "df6f0c7c-d682-4a58-b7bc-52fdba878169",
-        "BrandName": "Nokia",
-        "CategoryId": "1ec84e3a-e3da-4fd0-8d3b-d82fc51499d5"
+        "Id": "61b399893f718710c96e217c",
+        "BrandName": "Xiaomi",
+        "CategoryId": "61b39947409e7ee84a81caaa"
     },
     {
-        "Id": "07d2cfc3-8ced-493b-8512-477ac4590f34",
+        "Id": "61b3998e8b5e66d725b924c1",
         "BrandName": "Sony",
-        "CategoryId": "1ec84e3a-e3da-4fd0-8d3b-d82fc51499d5"
+        "CategoryId": "61b39947409e7ee84a81caaa"
     }
 ]

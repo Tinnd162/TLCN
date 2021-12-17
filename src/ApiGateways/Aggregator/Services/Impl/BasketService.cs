@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Aggregator.Services
 {
-    public class BasketService :IBasketService
+    public class BasketService : IBasketService
     {
         private readonly HttpClient _client;
         public BasketService(HttpClient client)

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Ordering.API.Controllers
 {
     [ApiController]
-    [Authorize]
+    // [Authorize]
     [Route("api/v1/[controller]")]
     public class OrderController : ControllerBase
     {
@@ -34,7 +34,7 @@ namespace Ordering.API.Controllers
                 {
                     return Ok(new { error = true, content = strErrorMessage });
                 }
-                return Ok(new { error = false, data = objSaleOrderBO });
+                return Ok(objSaleOrderBO);
             }
             catch
             {
@@ -52,14 +52,14 @@ namespace Ordering.API.Controllers
             {
                 if (!_orderBL.InsertSaleOrder(objSaleOrderBO, ref strErrorMessage))
                 {
-                    return Ok(new { error = true, content = strErrorMessage });
+                    return null;
                 }
             }
             catch (Exception objEx)
             {
                 return NotFound();
             }
-            return Ok(new { error = false, data = objSaleOrderBO.OrderID });
+            return Ok(objSaleOrderBO.OrderID);
         }
 
         [HttpGet]

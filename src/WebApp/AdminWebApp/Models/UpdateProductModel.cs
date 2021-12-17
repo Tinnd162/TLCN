@@ -1,6 +1,11 @@
-namespace Inventory.API.DTOs
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AdminWebApp.Models
 {
-    public class UpdateProductDTO
+    public class UpdateProductModel
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -9,9 +14,9 @@ namespace Inventory.API.DTOs
         public int Quantity { get; set; }
         public bool IsDiscontinued { get; set; }
         public bool IsStatus { get; set; }
-        public InfoDTO BrandDTO { get; set; }
-        public InfoDTO CategoryDTO { get; set; }
-        public PriceLogDTO PriceLogDTO { get; set; }
+        public BrandInfoModel BrandDTO { get; set; }
+        public BrandInfoModel CategoryDTO { get; set; }
+        public PriceLogModel PriceLogDTO { get; set; }
         public string UserUpdate { get; set; }
 
     }
