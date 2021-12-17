@@ -173,9 +173,10 @@ namespace Inventory.API.Repositories.Impl
         {
             try
             {
-                objAddProductDTO.BrandDTO.Id = ObjectId.GenerateNewId().ToString();
-                objAddProductDTO.CategoryDTO.Id = ObjectId.GenerateNewId().ToString();
-
+                //objAddProductDTO.BrandDTO.Id = ObjectId.GenerateNewId().ToString();
+                //objAddProductDTO.CategoryDTO.Id = ObjectId.GenerateNewId().ToString();
+                var objBrand = _context.Brands.First(x => x.BrandName.ToUpper() == objAddProductDTO.BrandDTO.Name.ToUpper());
+                var objCategory = _context.Categories.First(x => x.CategoryName.ToUpper() == objAddProductDTO.CategoryDTO.Name.ToUpper());
                 Product objProduct = new Product()
                 {
                     Id = objAddProductDTO.Id,
@@ -189,27 +190,19 @@ namespace Inventory.API.Repositories.Impl
                     IsStatus = false,
                     IsDiscontinued = false,
                     IsDelete = false,
-                    Brand = new Brand
-                    {
-                        Id = objAddProductDTO.BrandDTO.Id,
-                        BrandName = objAddProductDTO.BrandDTO.Name,
-                        CategoryId = objAddProductDTO.CategoryDTO.Id
-                    },
-                    Category = new Category
-                    {
-                        Id = objAddProductDTO.CategoryDTO.Id,
-                        CategoryName = objAddProductDTO.CategoryDTO.Name
-                    },
+                    BrandId = objBrand.Id,
+                    CategoryId = objCategory.Id,
                     PriceLogs = new Collection<PriceLog>(){
-                    new PriceLog(){
-                        Id=ObjectId.GenerateNewId().ToString(),
-                        SalePrice=objAddProductDTO.PriceLogDTO.SalePrice,
-                        ProductId=objAddProductDTO.Id,
-                        IsUpdate=false,
-                        CreateDate=DateTime.Now,
-                        UserUpdate="Tinnd"
-                    }
-                },
+                        new PriceLog(){
+                            Id=ObjectId.GenerateNewId().ToString(),
+                            SalePrice=objAddProductDTO.PriceLogDTO.SalePrice,
+                            ProductId=objAddProductDTO.Id,
+                            IsUpdate=false,
+                            CreateDate=DateTime.Now,
+                            UserUpdate=objAddProductDTO.UserUpdate,
+                            UpdateDate = DateTime.Now
+                        }
+                    },
                 };
                 await _context.Products.AddAsync(objProduct);
                 return await _context.SaveChangesAsync() > 0;
@@ -224,6 +217,8 @@ namespace Inventory.API.Repositories.Impl
         {
             try
             {
+                var objBrand = _context.Brands.First(x => x.BrandName.ToUpper() == objUpdateProductDTO.BrandDTO.Name.ToUpper());
+                var objCategory = _context.Categories.First(x => x.CategoryName.ToUpper() == objUpdateProductDTO.CategoryDTO.Name.ToUpper());
                 Product objProduct = _context.Products.FirstOrDefault(x => x.Id == objUpdateProductDTO.Id);
                 if (objProduct != null)
                 {
@@ -237,23 +232,8 @@ namespace Inventory.API.Repositories.Impl
                     objProduct.UpdateDate = DateTime.Now;
                     objProduct.IsUpdate = true;
                     objProduct.IsDelete = false;
-                    if (objProduct.BrandId != objUpdateProductDTO.BrandDTO.Id)
-                    {
-                        objProduct.Brand = new Brand
-                        {
-                            Id = objUpdateProductDTO.BrandDTO.Id,
-                            BrandName = objUpdateProductDTO.BrandDTO.Name,
-                            CategoryId = objUpdateProductDTO.CategoryDTO.Id
-                        };
-                    }
-                    if (objProduct.CategoryId != objUpdateProductDTO.CategoryDTO.Id)
-                    {
-                        objProduct.Category = new Category
-                        {
-                            Id = objUpdateProductDTO.CategoryDTO.Id,
-                            CategoryName = objUpdateProductDTO.CategoryDTO.Name
-                        };
-                    }
+                    objProduct.BrandId = objBrand.Id;
+                    objProduct.CategoryId = objCategory.Id;
                     objProduct.PriceLogs = new Collection<PriceLog>()
                 {
                     new PriceLog()
@@ -262,7 +242,7 @@ namespace Inventory.API.Repositories.Impl
                         SalePrice=objUpdateProductDTO.PriceLogDTO.SalePrice,
                         IsUpdate=true,
                         UpdateDate=DateTime.Now,
-                        UserUpdate="Tinnd"
+                        UserUpdate=objUpdateProductDTO.UserUpdate
                     }
                 };
                     _context.Update<Product>(objProduct);
