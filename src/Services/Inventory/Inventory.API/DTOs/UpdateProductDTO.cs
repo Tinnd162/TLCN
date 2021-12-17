@@ -12,5 +12,7 @@ namespace Inventory.API.DTOs
         public InfoDTO BrandDTO { get; set; }
         public InfoDTO CategoryDTO { get; set; }
         public PriceLogDTO PriceLogDTO { get; set; }
+        public string UserUpdate { get; set; }
+
     }
 }

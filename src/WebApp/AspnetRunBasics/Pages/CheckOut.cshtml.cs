@@ -11,12 +11,12 @@ namespace AspnetRunBasics
     public class CheckOutModel : PageModel
     {
         private readonly IBasketService _basketService;
-        private readonly IAggregatorService _aggregatorService;
+        private readonly IOrderService _orderService;
 
-        public CheckOutModel(IBasketService basketService, IAggregatorService aggregatorService)
+        public CheckOutModel(IBasketService basketService, IOrderService orderService)
         {
-            _aggregatorService = aggregatorService ?? throw new ArgumentNullException(nameof(aggregatorService));
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
+            _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
         }
 
         [BindProperty]
@@ -34,20 +34,20 @@ namespace AspnetRunBasics
             objDelivery.Address = address;
             objDelivery.IsExist = isExist;
 
-            Cart = await _basketService.GetBasket("61b6f8d80a134a9697bba97c");
+            Cart = await _basketService.GetBasket("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
             return Page();
         }
 
         public async Task<IActionResult> OnPostCheckOutAsync()
         {
-            Cart = await _basketService.GetBasket("61b6f8d80a134a9697bba97c");
+            Cart = await _basketService.GetBasket("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
 
             Order.CustomerName = "Viet";
-            Order.CustomerID = "61b6f8d80a134a9697bba97c";
+            Order.CustomerID = "8e96bf62-8135-4332-931a-dc5aa25aa2a8";
             Order.TotalAmount = Cart.TotalAmount;
             Order.OrderDetails = Cart.Items;
 
-            string strSOId = await _aggregatorService.InsertSaleOrder(Order);
+            string strSOId = await _orderService.InsertSaleOrder(Order);
 
             return RedirectToPage("Confirmation", "OrderSubmitted", strSOId);
         }

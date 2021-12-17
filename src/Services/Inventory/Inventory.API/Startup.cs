@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace Inventory.API
@@ -34,23 +35,16 @@ namespace Inventory.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddMassTransit(x =>
-            // {
-            //     x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
-            //     {
-            //         config.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
-            //                             {
-            //                                 h.Username(RabbitMQConstants.UserName);
-            //                                 h.Password(RabbitMQConstants.Password);
-            //                             });
-            //     }));
-            // });
-            services.AddMassTransit(config =>
+            services.AddMassTransit(x =>
             {
-                config.UsingRabbitMq((ctx, cfg) =>
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                 {
-                    cfg.Host(_config["EventBusSettings:HostAddress"]);
-                });
+                    config.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
+                    {
+                        h.Username(RabbitMQConstants.UserName);
+                        h.Password(RabbitMQConstants.Password);
+                    });
+                }));
             });
             services.AddMassTransitHostedService();
 
@@ -63,11 +57,31 @@ namespace Inventory.API
             });
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlServer(_config.GetConnectionString("InventoryConnectionString"));
+                options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
             });
 
             services.AddScoped<IInventoryRepository, InventoryRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:5011";
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
+            // adds an authorization policy to make sure the token is for scope 'api1'
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "api1");
+                });
+            });
 
         }
 
@@ -84,6 +98,8 @@ namespace Inventory.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

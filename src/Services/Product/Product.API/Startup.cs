@@ -34,40 +34,23 @@ namespace Product.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddMassTransit(x =>
-            // {
-            //     x.AddConsumer<AddProductConsumer>();
-            //     x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-            //     {
-            //         cfg.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
-            //         {
-            //             h.Username(RabbitMQConstants.UserName);
-            //             h.Password(RabbitMQConstants.Password);
-            //         });
-            //         cfg.ReceiveEndpoint("productQueue", ep =>
-            //         {
-            //             ep.PrefetchCount = 16;
-            //             ep.UseMessageRetry(r => r.Interval(2, 100));
-            //             ep.ConfigureConsumer<AddProductConsumer>(provider);
-            //         });
-            //     }));
-            // });
-            services.AddMassTransit(config =>
+            services.AddMassTransit(x =>
             {
-
-                config.AddConsumer<AddProductConsumer>();
-
-                config.UsingRabbitMq((ctx, cfg) =>
+                x.AddConsumer<AddProductConsumer>();
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
-
-                    cfg.ReceiveEndpoint(RabbitMQConstants.ProductQueue, c =>
+                    cfg.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
                     {
-                        c.PrefetchCount = 16;
-                        c.UseMessageRetry(r => r.Interval(2, 100));
-                        c.ConfigureConsumer<AddProductConsumer>(ctx);
+                        h.Username(RabbitMQConstants.UserName);
+                        h.Password(RabbitMQConstants.Password);
                     });
-                });
+                    cfg.ReceiveEndpoint("productQueue", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<AddProductConsumer>(provider);
+                    });
+                }));
             });
             services.AddMassTransitHostedService();
             services.AddControllers();

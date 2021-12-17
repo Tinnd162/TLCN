@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace AspnetRunBasics.Services.Impl
+namespace AspnetRunBasics.Services
 {
     public class OrderService : IOrderService
     {
@@ -38,6 +38,20 @@ namespace AspnetRunBasics.Services.Impl
         {
             var response = await _client.GetAsync($"/Order/GetSaleOrderList/{strCustomerId}");
             return await response.ReadContentAs<List<SOModel>>();
+        }
+
+        public async Task<string> InsertSaleOrder(SOModel objSO)
+        {
+            var response = await _client.PostAsJson($"/SaleOrder/InsertSO", objSO);
+            if (response.IsSuccessStatusCode)
+            {
+                var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return dataAsString;
+            }
+            else
+            {
+                throw new Exception("Something went wrong when calling api.");
+            }
         }
     }
 }

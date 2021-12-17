@@ -4,7 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace AspnetRunBasics.Services.Impl
+namespace AspnetRunBasics.Services
 {
     public class BasketService : IBasketService
     {

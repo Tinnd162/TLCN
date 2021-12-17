@@ -23,13 +23,14 @@ namespace AspnetRunBasics
         public IEnumerable<string> CategoryList { get; set; } = new List<string>();
         public IEnumerable<CategoryModel> ProductList { get; set; } = new List<CategoryModel>();
 
+
         [BindProperty(SupportsGet = true)]
         public string SelectedCategory { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string category)
         {
             var productList = await _productService.GetProducts();
-            CategoryList = productList.Select(c => c.Category).Distinct();
+            CategoryList = productList.Select(p => p.Category).Distinct();
 
             if (!string.IsNullOrWhiteSpace(category))
             {
@@ -40,6 +41,7 @@ namespace AspnetRunBasics
             {
                 ProductList = productList;
             }
+
             return Page();
         }
 
@@ -47,7 +49,7 @@ namespace AspnetRunBasics
         {
             var product = await _productService.GetProduct(productId);
 
-            var basket = await _basketService.GetBasket("61b6f8d80a134a9697bba97c");
+            var basket = await _basketService.GetBasket("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
 
             var itemTemp = basket.Items.FirstOrDefault(x => x.ProductID == productId && x.Color == "Black");
             var basketTemp = basket;
