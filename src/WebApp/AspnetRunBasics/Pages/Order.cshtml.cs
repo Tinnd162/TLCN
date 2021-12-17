@@ -21,7 +21,7 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Orders = await _orderService.GetSaleOrderList("8e96bf62-8135-4332-931a-dc5aa25aa2a8");
+            Orders = await _orderService.GetSaleOrderList("61b6f8d80a134a9697bba97c");
             return Page();
         }
     }

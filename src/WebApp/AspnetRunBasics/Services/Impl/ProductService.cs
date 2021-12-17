@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace AspnetRunBasics.Services
+namespace AspnetRunBasics.Services.Impl
 {
     public class ProductService : IProductService
     {

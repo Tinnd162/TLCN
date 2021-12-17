@@ -68,73 +68,6 @@ namespace Inventory.API.Migrations
                     b.ToTable("Color");
                 });
 
-            modelBuilder.Entity("Inventory.API.Entities.Configuration", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Batteries")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Chips")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FrontCamera")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InternalMemory")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OperatingSystem")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RAM")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RearCamera")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SIM")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Configuration");
-                });
-
-            modelBuilder.Entity("Inventory.API.Entities.Device", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("ActivateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ExportUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ImportDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ImportUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActivate")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SerialNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Device");
-                });
-
             modelBuilder.Entity("Inventory.API.Entities.PriceLog", b =>
                 {
                     b.Property<string>("Id")
@@ -152,7 +85,7 @@ namespace Inventory.API.Migrations
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<DateTime>("UpdateDate")
+                    b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserUpdate")
@@ -174,9 +107,6 @@ namespace Inventory.API.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CongigurationId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreateDate")
@@ -230,10 +160,6 @@ namespace Inventory.API.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CongigurationId")
-                        .IsUnique()
-                        .HasFilter("[CongigurationId] IS NOT NULL");
-
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Product");
@@ -272,16 +198,6 @@ namespace Inventory.API.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Inventory.API.Entities.Device", b =>
-                {
-                    b.HasOne("Inventory.API.Entities.Product", "Product")
-                        .WithMany("Devices")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Inventory.API.Entities.PriceLog", b =>
                 {
                     b.HasOne("Inventory.API.Entities.Product", "Product")
@@ -304,11 +220,6 @@ namespace Inventory.API.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Inventory.API.Entities.Configuration", "Configuration")
-                        .WithOne("Product")
-                        .HasForeignKey("Inventory.API.Entities.Product", "CongigurationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Inventory.API.Entities.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierId")
@@ -317,8 +228,6 @@ namespace Inventory.API.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Configuration");
 
                     b.Navigation("Supplier");
                 });
@@ -335,16 +244,9 @@ namespace Inventory.API.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Inventory.API.Entities.Configuration", b =>
-                {
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Inventory.API.Entities.Product", b =>
                 {
                     b.Navigation("Colors");
-
-                    b.Navigation("Devices");
 
                     b.Navigation("PriceLogs");
                 });

@@ -12,10 +12,10 @@ namespace Ordering.DA.EF
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            string paymentID = Guid.NewGuid().ToString();
-            string deliveryID = Guid.NewGuid().ToString();
-            string customerID = Guid.NewGuid().ToString();
-            string orderID = Guid.NewGuid().ToString();
+            string paymentID = "61b6f8c78909657b658f6887";
+            string deliveryID = "61b6f8cfbc9a67e61c8ddf2e";
+            string customerID = "61b6f8d80a134a9697bba97c";
+            string orderID = "61b6f8e8a13fc9a1ba108bf3";
             modelBuilder.Entity<Payment>().HasData(
                 new Payment
                 {
