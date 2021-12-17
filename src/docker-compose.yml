@@ -1,0 +1,147 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+services:
+  productdb:
+    image: mongo
+    container_name: productdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  basketdb:
+    image: redis:alpine
+    container_name: basketdb
+    restart: always
+    ports:
+      - "6379:6379"
+
+  sqldb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqldb
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "concho@123"
+    restart: always
+    ports:
+      - "1433:1433"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  product.api:
+    image: productapi
+    container_name: product.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://productdb:27017"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    build:
+      context: .
+      dockerfile: Services/Product/Product.API/Dockerfile
+    depends_on:
+      - productdb
+      - rabbitmq
+    ports:
+      - "8000:80"
+
+  basket.api:
+    image: basketapi
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=basketdb:6379"
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+    depends_on:
+      - basketdb
+    ports:
+      - "8001:80"
+
+  ordering.api:
+    image: orderingapi
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderingConnectionString=Server=sqldb;Database=OrderDb;User Id=sa;Password=concho@123;"
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+    depends_on:
+      - sqldb
+      - rabbitmq
+    ports:
+      - "8004:80"
+
+  inventory.api:
+    image: inventoryapi
+    container_name: inventory.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:InventoryConnectionString=Server=sqldb;Database=InventoryDb;User Id=sa;Password=concho@123;"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    build:
+      context: .
+      dockerfile: Services/Inventory/Inventory.API/Dockerfile
+    depends_on:
+      - sqldb
+      - rabbitmq
+    ports:
+      - "8003:80"
+
+  ocelotapigw:
+    image: ocelotapigw
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
+    depends_on:
+      - product.api
+      - basket.api
+      - inventory.api
+      - ordering.api
+    ports:
+      - "8010:80"
+
+  aggregator:
+    image: aggregator
+    container_name: aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    build:
+      context: .
+      dockerfile: ApiGateways/Aggregator/Dockerfile
+    depends_on:
+      - ocelotapigw
+    ports:
+      - "8005:80"
+
+  client:
+    image: client
+    container_name: client
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:AggregatorUrl=http://aggregator"
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    build:
+      context: .
+      dockerfile: WebApp/AspnetRunBasics/Dockerfile
+    depends_on:
+      - ocelotapigw
+    ports:
+      - "8006:80"
+
+volumes:
+  mongo_data:
