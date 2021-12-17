@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace IdentityService.Controllers
 {
     [ApiController]
-    [Route("User")]
+    [Route("api/v1/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserBL objIUserBL;
@@ -26,7 +26,7 @@ namespace IdentityService.Controllers
         public async Task<ActionResult> Authenticate([FromBody] object objRequest)
         {
             var objRequestParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(objRequest.ToString());
-            var objUserBO = objIUserBL.Authenticate(objRequestParams["Username"].ToString(), objRequestParams["Password"].ToString());
+            var objUserBO = objIUserBL.Authenticate(objRequestParams["UserName"].ToString(), objRequestParams["Password"].ToString());
             if (objUserBO != null)
             {
                 var client = new HttpClient();

@@ -1,0 +1,65 @@
+﻿@page
+@model AdminWebApp.Pages.AddProductModel
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<form asp-page-handler="AddProduct" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label class="col-md-4 control-label" >Tên sản phẩm</label>
+        <div class="col-md-4">
+            <input class="form-control input-md" required type="text" asp-for="ProductModel.Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="product_categorie">Loại sản phẩm</label>
+        <div class="col-md-4">
+            <select asp-for="ProductModel.CategoryDTO.Id" class="form-control" required>
+                <option>Smartphone</option>
+                <option>Laptop</option>
+                <option>Tablet</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="product_categorie">Hãng sản xuất</label>
+        <div class="col-md-4">
+            <select asp-for="ProductModel.BrandDTO.Id" class="form-control" required>
+                <option>Samsung</option>
+                <option>Sony</option>
+                <option>Apple</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="product_id">Đơn giá</label>
+        <div class="col-md-4">
+            <input placeholder="PRODUCT NAME" class="form-control input-md" required type="number" asp-for="ProductModel.PriceLogDTO.SalePrice">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="product_id">Số lượng</label>
+        <div class="col-md-4">
+            <input placeholder="PRODUCT NAME" class="form-control input-md" required type="number" asp-for="ProductModel.Quantity">
+        </div>
+    </div>
+    <!-- Textarea -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="product_description">Mô tả</label>
+        <div class="col-md-4">
+            <textarea class="form-control" asp-for="ProductModel.Description"></textarea>
+        </div>
+    </div>
+    <!-- File Button -->
+    <div class="form-group">
+        <label class="col-md-4 control-label">Hình ảnh</label>
+        <div class="col-md-4">
+            <input asp-for="ProductModel.Image" type="file" required>
+        </div>
+    </div>
+    <div class="input-group-append">
+        <button class="btn btn-secondary" type="submit">
+            Thêm sản phẩm
+        </button>
+    </div>
+</form>
