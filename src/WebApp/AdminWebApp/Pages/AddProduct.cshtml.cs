@@ -51,13 +51,9 @@ namespace AdminWebApp.Pages
             }
             if (ProductModel != null)
             {
-                var brand = ProductModel.BrandDTO.Id.Split("-");
-                ProductModel.BrandDTO.Id = brand[0].Trim();
-                ProductModel.BrandDTO.Name = brand[1].Trim();
-                var category = ProductModel.CategoryDTO.Id.Split("-");
-                ProductModel.CategoryDTO.Id = category[0].Trim();
-                ProductModel.CategoryDTO.Name = category[1].Trim();
-
+                ProductModel.BrandDTO.Name = ProductModel.BrandDTO.Id;
+                ProductModel.CategoryDTO.Name = ProductModel.CategoryDTO.Id;
+                ProductModel.UserUpdate = Request.Cookies["username"];
                 var result = await _inventoryService.AddProduct(ProductModel, Token);
 
                 return RedirectToPage("/Product");

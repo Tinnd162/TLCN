@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,6 +51,10 @@ namespace AdminWebApp.Pages
                 return RedirectToPage("Login");
             }
             IsSearch = true;
+            if(ProductID == null || ProductID == "")
+            {
+                ViewData["Error"] = "Vui lòng nhập mã sản phẩm";
+            }
            var objProduct = await _inventoryService.GetProductDetailById(ProductID.Trim(), Token);
             Product = objProduct;
             return Page();

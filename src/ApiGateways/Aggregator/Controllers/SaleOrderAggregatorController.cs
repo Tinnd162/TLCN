@@ -59,6 +59,16 @@ namespace Aggregator.Controllers
                     }
                 }
                 InventoryModel objProductInventory = new InventoryModel();
+                List<ParamsUpdateModel> lstObjParams = new List<ParamsUpdateModel>();
+                foreach (var item in objSaleOrderBO.OrderDetails)
+                {
+                    ParamsUpdateModel objParams = new ParamsUpdateModel
+                    {
+                        ProductId = item.ProductID,
+                        NumberOfSale = item.Quantity
+                    };
+                    lstObjParams.Add(objParams);
+                }
                 decimal intTotalMoney = 0;
                 if (objSaleOrderBO != null && objSaleOrderBO.OrderDetails != null && objSaleOrderBO.OrderDetails.Count > 0)
                 {
@@ -76,12 +86,15 @@ namespace Aggregator.Controllers
                         return Ok(new { error = true, data = "Lỗi kiểm tra tổng tiền!" });
                     }
                 }
-                string strSaleOrderID = await objIOrderService.InsertSaleOrder(objSaleOrderBO);
-                if (strSaleOrderID != null)
-                {
-                    await objIBasketService.DeleteBasket(objSaleOrderBO.CustomerID);
-                }
-                return Ok(new { error = false, data = strSaleOrderID });
+                string strSaleOrderId = await objIOrderService.InsertSaleOrder(objSaleOrderBO);
+
+                if (string.IsNullOrEmpty(strSaleOrderId))
+                    return Ok(new { error = true, data = "Lỗi thêm thông tin đơn hàng" });
+
+                await objIBasketService.DeleteBasket(objSaleOrderBO.CustomerID);
+                await objIInventoryService.UpdateNumberOfSaleAfterSO(lstObjParams);
+
+                return Ok(new { error = false, data = strSaleOrderId });
             }
             catch
             {

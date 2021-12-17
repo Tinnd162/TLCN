@@ -14,7 +14,7 @@ namespace Inventory.API.Entities
         public string ProductId { get; set; }
         public bool IsUpdate { get; set; } = false;
         public DateTime CreateDate { get; set; } = DateTime.Now;
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public Product Product { get; set; }
     }
 }
