@@ -23,7 +23,7 @@ namespace AdminWebApp.Pages
         [BindProperty]
         public UpdateProductModel UpdateProductModel { get; set; }
 
-        public async Task<IActionResult> OnGetProductDetail(string ProductID)
+        public async Task<IActionResult> OnGet(string ProductID)
         {
             if (Request != null)
             {
