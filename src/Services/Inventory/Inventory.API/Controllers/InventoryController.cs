@@ -18,9 +18,11 @@ namespace Inventory.API.Controllers
     {
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IBus _bus;
-        public InventoryController(IInventoryRepository inventoryRepository, IBus bus)
+        private readonly IPublishEndpoint _publishEndpoint;
+        public InventoryController(IInventoryRepository inventoryRepository, IBus bus, IPublishEndpoint publishEndpoint)
         {
             _bus = bus;
+            _publishEndpoint = publishEndpoint;
             _inventoryRepository = inventoryRepository;
         }
         [HttpGet]
@@ -49,13 +51,16 @@ namespace Inventory.API.Controllers
             };
             if (bolIsRemoveProduct)
             {
-                Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
-                var endPoint = await _bus.GetSendEndpoint(uri);
-                await endPoint.Send(objProductEventBO);
-                return Ok("Success");
+                // Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
+                // var endPoint = await _bus.GetSendEndpoint(uri);
+                // await endPoint.Send(objProductEventBO);
+                // return Ok("Success");
+                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                return true;
             }
-            return BadRequest("Fail!");
+            return false;
         }
+
         [HttpPut]
         [Route("UpdateProduct")]
         public async Task<ActionResult<bool>> UpdateProduct(UpdateProductDTO objUpdateProductDTO)
@@ -76,13 +81,16 @@ namespace Inventory.API.Controllers
             };
             if (bolIsUpdateProduct)
             {
-                Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
-                var endPoint = await _bus.GetSendEndpoint(uri);
-                await endPoint.Send(objProductEventBO);
-                return Ok("Success");
+                // Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
+                // var endPoint = await _bus.GetSendEndpoint(uri);
+                // await endPoint.Send(objProductEventBO);
+                // return Ok("Success");
+                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                return true;
             }
-            return BadRequest("Fail!");
+            return false;
         }
+        
         [HttpPost]
         [Route("AddProduct")]
         public async Task<ActionResult<bool>> AddProduct([FromForm] AddProductDTO objAddProductDTO)
@@ -100,12 +108,14 @@ namespace Inventory.API.Controllers
 
             if (bolIsAddProduct)
             {
-                Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
-                var endPoint = await _bus.GetSendEndpoint(uri);
-                await endPoint.Send(objProductEventBO);
-                return Ok("Success");
+                // Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
+                // var endPoint = await _bus.GetSendEndpoint(uri);
+                // await endPoint.Send(objProductEventBO);
+                // return Ok("Success");
+                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                return true;
             }
-            return BadRequest("Fail!");
+            return false;
         }
         [HttpPut]
         [Route("UpdateNumberOfSaleAfterSO")]
@@ -122,9 +132,10 @@ namespace Inventory.API.Controllers
             };
             if (bolIsUpdateQuantity)
             {
-                Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
-                var endPoint = await _bus.GetSendEndpoint(uri);
-                await endPoint.Send(objProductEventBO);
+                // Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
+                // var endPoint = await _bus.GetSendEndpoint(uri);
+                // await endPoint.Send(objProductEventBO);
+                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;

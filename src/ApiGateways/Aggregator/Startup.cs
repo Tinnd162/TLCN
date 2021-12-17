@@ -27,11 +27,11 @@ namespace Aggregator
         {
 
             services.AddHttpClient<IBasketService, BasketService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiSettings:Url"]));
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
             services.AddHttpClient<IInventoryService, InventoryService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiSettings:Url"]));
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
             services.AddHttpClient<IOrderService, OrderService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiSettings:Url"]));
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
