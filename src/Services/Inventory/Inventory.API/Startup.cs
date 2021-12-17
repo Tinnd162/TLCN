@@ -35,16 +35,23 @@ namespace Inventory.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMassTransit(x =>
+            // services.AddMassTransit(x =>
+            // {
+            //     x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+            //     {
+            //         config.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
+            //                             {
+            //                                 h.Username(RabbitMQConstants.UserName);
+            //                                 h.Password(RabbitMQConstants.Password);
+            //                             });
+            //     }));
+            // });
+            services.AddMassTransit(config =>
             {
-                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+                config.UsingRabbitMq((ctx, cfg) =>
                 {
-                    config.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
-                    {
-                        h.Username(RabbitMQConstants.UserName);
-                        h.Password(RabbitMQConstants.Password);
-                    });
-                }));
+                    cfg.Host(_config["EventBusSettings:HostAddress"]);
+                });
             });
             services.AddMassTransitHostedService();
 
@@ -57,7 +64,7 @@ namespace Inventory.API
             });
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(_config.GetConnectionString("InventoryConnectionString"));
             });
 
             services.AddScoped<IInventoryRepository, InventoryRepository>();

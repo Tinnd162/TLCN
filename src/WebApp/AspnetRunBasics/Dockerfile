@@ -1,16 +1,15 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+ENV ASPNETCORE_URLS=http://+:80
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR /src
-COPY ["WebApps/AspnetRunBasics/AspnetRunBasics.csproj", "WebApps/AspnetRunBasics/"]
-RUN dotnet restore "WebApps/AspnetRunBasics/AspnetRunBasics.csproj"
+COPY ["WebApp/AspnetRunBasics/AspnetRunBasics.csproj", "WebApp/AspnetRunBasics/"]
+RUN dotnet restore "WebApp/AspnetRunBasics/AspnetRunBasics.csproj"
 COPY . .
-WORKDIR "/src/WebApps/AspnetRunBasics"
+WORKDIR "/src/WebApp/AspnetRunBasics"
 RUN dotnet build "AspnetRunBasics.csproj" -c Release -o /app/build
 
 FROM build AS publish
