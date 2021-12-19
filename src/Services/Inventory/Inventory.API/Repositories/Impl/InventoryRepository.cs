@@ -256,30 +256,38 @@ namespace Inventory.API.Repositories.Impl
             }
 
         }
-        public async Task<bool> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams)
+        public async Task<List<UpdateParamsNumberOfSale>> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams)
         {
             try
             {
+                Product objProduct = new Product();
+                List<UpdateParamsNumberOfSale> lstResult = new List<UpdateParamsNumberOfSale>();
                 foreach (var item in lstObjParams)
                 {
-                    Product objProduct = _context.Products.FirstOrDefault(x => x.Id == item.ProductId);
+                    UpdateParamsNumberOfSale objResult = new UpdateParamsNumberOfSale();
+                    objProduct = _context.Products.FirstOrDefault(x => x.Id == item.ProductId);
                     if (objProduct == null)
-                        return false;
+                        return null;
 
-                    objProduct.NumberOfSale = item.NumberOfSale;
+                    objProduct.NumberOfSale += item.NumberOfSale;
                     objProduct.PurchaseDate = DateTime.Now;
+
                     _context.Update<Product>(objProduct);
 
+                    objResult.ProductId = objProduct.Id;
+                    objResult.NumberOfSale = objProduct.NumberOfSale;
+
                     if (!(await _context.SaveChangesAsync() > 0))
-                        return false;
+                        return lstResult;
+
+                    lstResult.Add(objResult);
                 }
-                return true;
+                return lstResult;
             }
             catch (Exception objExcep)
             {
-                return false;
+                return null;
             }
-
         }
         #endregion
 
@@ -314,5 +322,28 @@ namespace Inventory.API.Repositories.Impl
             return _mapper.Map<ProductEventBO>(objAddProductDTO);
         }
         #endregion
+        public List<ProductDTO> Search(string strKeyword)
+        {
+            try
+            {
+                return _context.Products.Where(x => x.IsDelete == false
+                                                            && x.IsDiscontinued == false
+                                                            && x.IsStatus == false
+                                                            && x.ProductName.Contains(strKeyword))
+                                                            .Select(s => new ProductDTO
+                                                            {
+                                                                Id = s.Id,
+                                                                Name = s.ProductName,
+                                                                SalePrice = s.PriceLogs
+                                                                .OrderByDescending(x => x.UpdateDate)
+                                                                .Select(x => x.SalePrice)
+                                                                .FirstOrDefault()
+                                                            }).ToList();
+            }
+            catch (Exception objExcep)
+            {
+                return null;
+            }
+        }
     }
 }

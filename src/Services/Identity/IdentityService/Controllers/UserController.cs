@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace IdentityService.Controllers
 {
@@ -16,8 +17,10 @@ namespace IdentityService.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserBL objIUserBL;
-        public UserController(IUserBL objIUserBL)
+        private readonly IConfiguration _config;
+        public UserController(IUserBL objIUserBL, IConfiguration config)
         {
+            _config = config;
             this.objIUserBL = objIUserBL;
         }
 
@@ -30,7 +33,7 @@ namespace IdentityService.Controllers
             if (objUserBO != null)
             {
                 var client = new HttpClient();
-                var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5011");
+                var disco = await client.GetDiscoveryDocumentAsync(_config["IdentitySettings:IdentityHost"]);
                 // request token
                 var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
                 {

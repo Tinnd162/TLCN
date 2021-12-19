@@ -73,7 +73,7 @@ namespace Inventory.API
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:5011";
+                    options.Authority = _config["IdentitySettings:IdentityHost"];
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {

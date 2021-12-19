@@ -173,7 +173,7 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderDetailID = "3da3c057-db5b-439a-88e4-b06f23263d39",
+                            OrderDetailID = "f96507d0-45f2-442a-bc6c-f4675b38a188",
                             IMEI = "312312321312",
                             OrderID = "61b6f8e8a13fc9a1ba108bf3",
                             ProductName = "Itel 33",
@@ -183,7 +183,7 @@ namespace Ordering.DA.Migrations
                         },
                         new
                         {
-                            OrderDetailID = "39d5552f-6cf2-492d-be40-9f814236058d",
+                            OrderDetailID = "d155feb9-cfa3-4f71-bfe1-9b4509bf2ded",
                             OrderID = "61b6f8e8a13fc9a1ba108bf3",
                             ProductName = "Tai nghe Sony",
                             Quantity = 1,
