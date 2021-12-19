@@ -59,5 +59,15 @@ namespace AdminWebApp.Services
             var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             return JsonConvert.DeserializeObject<ProductDetailModel>(dataAsString);
         }
+
+        public async Task<bool> UpdateProduct(UpdateProductModel objUpdateProductDTO, string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _client.PostAsJson<UpdateProductModel>("/Inventory/UpdateProduct", objUpdateProductDTO);
+            var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (dataAsString == null)
+                return false;
+            return Convert.ToBoolean(dataAsString);
+        }
     }
 }

@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspnetRunBasics.Models;
 using AspnetRunBasics.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace AspnetRunBasics
 {
@@ -47,8 +49,40 @@ namespace AspnetRunBasics
 
             var product = await _productService.GetProduct(productId);
 
-            var userName = "61b6f8d80a134a9697bba97c";
-            var basket = await _basketService.GetBasket(userName);
+            string strUserID = null;
+            BasketModel basket = null;
+            string strCartList = null;
+            bool bolIsLogin = false;
+
+            if (Request != null && Request.Cookies["userid"] != null)
+            {
+                strUserID = Request.Cookies["userid"];
+                if (strUserID != null && strUserID != "") bolIsLogin = true;
+            }
+
+            if (Request != null && Request.Cookies["cart"] != null)
+            {
+                strCartList = Request.Cookies["cart"];
+                if (strCartList != null && strCartList != "")
+                {
+                    basket = JsonConvert.DeserializeObject<BasketModel>(strCartList);
+                    if (bolIsLogin)
+                        basket.Username = strUserID.Trim();
+                }
+            }
+
+            if (strUserID != null && basket != null)
+            {
+                basket = await _basketService.GetBasket(strUserID);
+                if (basket.Username == null)
+                    basket.Username = strUserID.Trim();
+            }
+
+            if (basket == null)
+            {
+                basket = new BasketModel();
+            }
+
 
             var itemTemp = basket.Items.FirstOrDefault(x => x.ProductID == productId && x.Color == Color);
             var basketTemp = basket;
@@ -75,7 +109,16 @@ namespace AspnetRunBasics
                     ImageFile = product.ImageFile
                 });
             }
-            var basketUpdated = await _basketService.UpdateBasket(basketTemp);
+
+            if (bolIsLogin)
+            {
+                basketTemp.Username = strUserID.Trim();
+                await _basketService.UpdateBasket(basketTemp);
+            }
+            string strbasket = JsonConvert.SerializeObject(basket);
+            CookieOptions cookieOptions = new CookieOptions();
+            cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddHours(1));
+            HttpContext.Response.Cookies.Append("cart", strbasket, cookieOptions);
 
             return RedirectToPage("Cart");
         }

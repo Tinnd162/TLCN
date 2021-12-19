@@ -1,13 +1,13 @@
-﻿using AdminWebApp.Models;
+﻿using AspnetRunBasics.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AdminWebApp.Services
+namespace AspnetRunBasics.Services
 {
     public interface IIdentityService
     {
-        Task<UserModel> Authenticate(UserModel objUser);
+         Task<UserModel> Authenticate(UserModel objUser);
     }
 }

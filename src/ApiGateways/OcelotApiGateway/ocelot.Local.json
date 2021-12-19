@@ -128,7 +128,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Inventory/AddProduct",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -136,6 +136,20 @@
         }
       ],
       "UpstreamPathTemplate": "/Inventory/AddProduct",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Inventory/UpdateProduct",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/UpdateProduct",
       "UpstreamHttpMethod": [
         "POST"
       ]
