@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AdminWebApp.Models;
-using AdminWebApp.Services;
+using AspnetRunBasics.Models;
+using AspnetRunBasics.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AdminWebApp.Pages
+namespace AspnetRunBasics.Pages
 {
     public class LoginModel : PageModel
     {
@@ -43,7 +43,7 @@ namespace AdminWebApp.Pages
                     return Page();
                 }
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 ViewData["Error"] = "Lỗi kết nối, thử lại!";
             }
