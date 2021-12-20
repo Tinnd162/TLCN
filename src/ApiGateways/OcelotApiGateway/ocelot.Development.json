@@ -215,7 +215,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "identityservice",
           "Port": "80"
         }
       ],

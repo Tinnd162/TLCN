@@ -18,10 +18,21 @@ namespace AspnetRunBasics
         }
 
         public IEnumerable<SOModel> Orders { get; set; } = new List<SOModel>();
-
+        private string Token { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
-            Orders = await _orderService.GetSaleOrderList("61b6f8d80a134a9697bba97c");
+            if (Request != null)
+            {
+                Token = Request.Cookies["token"];
+                if (Token == null)
+                    return RedirectToPage("Login");
+            }
+            else
+            {
+                return RedirectToPage("Login");
+            }
+            string strCustomerId = Request.Cookies["userid"].ToString().Trim();
+            Orders = await _orderService.GetSaleOrderList(strCustomerId, Token);
             return Page();
         }
     }

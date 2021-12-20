@@ -17,9 +17,20 @@ namespace AspnetRunBasics.Pages
             _orderService = orderService;
         }
         public SOModel SOModel { get; set; } = new SOModel();
+        private string Token { get; set; }
         public async Task<IActionResult> OnGetAsync(string customerId, string orderId)
         {
-            SOModel = await _orderService.GetSO(customerId, orderId);
+            if (Request != null)
+            {
+                Token = Request.Cookies["token"];
+                if (Token == null)
+                    return RedirectToPage("Login");
+            }
+            else
+            {
+                return RedirectToPage("Login");
+            }
+            SOModel = await _orderService.GetSO(customerId, orderId, Token);
             return Page();
         }
     }

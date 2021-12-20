@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspnetRunBasics.Models;
 using AspnetRunBasics.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace AspnetRunBasics
 {
@@ -21,18 +23,58 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Cart = await _basketService.GetBasket("61b6f8d80a134a9697bba97c");
+            string strUserID = null;
+            string strCartList = null;
+            if (Request != null)
+            {
+                strUserID = Request.Cookies["userid"];
+            }
+
+            if (Request != null && Request.Cookies["cart"] != null)
+            {
+                strCartList = Request.Cookies["cart"];
+                if (strCartList != null && strCartList != "")
+                {
+                    Cart = JsonConvert.DeserializeObject<BasketModel>(strCartList);
+                }
+            }
+
+            if(strUserID !=null && (Cart.Items == null || Cart.Items.Count == 0))
+                Cart = await _basketService.GetBasket(strUserID);
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveToCartAsync(string productId, string color)
         {
-            var basket = await _basketService.GetBasket("61b6f8d80a134a9697bba97c");
+            string strUserID = null;
+            string strCartList = null;
+            if (Request != null && Request.Cookies["userid"] != null)
+            {
+                strUserID = Request.Cookies["userid"];
+            }
+            if (Request != null && Request.Cookies["cart"] != null)
+            {
+                strCartList = Request.Cookies["cart"];
+                if (strCartList != null && strCartList != "")
+                {
+                    Cart = JsonConvert.DeserializeObject<BasketModel>(strCartList);
+                }
+            }
 
-            var SODetail = basket.Items.Single(x => x.ProductID == productId && x.Color == color);
-            basket.Items.Remove(SODetail);
+            if (strUserID != null && (Cart.Items == null || Cart.Items.Count == 0))
+                Cart = await _basketService.GetBasket(strUserID);
 
-            var basketUpdated = await _basketService.UpdateBasket(basket);
+
+            var SODetail = Cart.Items.Single(x => x.ProductID == productId && x.Color == color);
+            Cart.Items.Remove(SODetail);
+
+            if(strUserID != null)
+                await _basketService.UpdateBasket(Cart);
+            string strbasket = JsonConvert.SerializeObject(Cart);
+            CookieOptions cookieOptions = new CookieOptions();
+            cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddHours(1));
+            HttpContext.Response.Cookies.Append("cart", strbasket, cookieOptions);
 
             return RedirectToPage();
         }

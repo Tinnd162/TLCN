@@ -29,7 +29,9 @@ namespace AspnetRunBasics
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
             services.AddHttpClient<IAggregatorService, AggregatorService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:AggregatorUrl"]));
-                
+            services.AddHttpClient<IIdentityService, IdentityService>(c =>
+               c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
+
             services.AddRazorPages();
         }
 

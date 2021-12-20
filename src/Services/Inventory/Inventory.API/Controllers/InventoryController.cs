@@ -57,23 +57,23 @@ namespace Inventory.API.Controllers
             return false;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("UpdateProduct")]
         public async Task<ActionResult<bool>> UpdateProduct(UpdateProductDTO objUpdateProductDTO)
         {
             bool bolIsUpdateProduct = await _inventoryRepository.UpdateDetailProduct(objUpdateProductDTO);
             ProductEventBO objProductEventBO = new ProductEventBO()
             {
-                Id = objUpdateProductDTO.Id,
-                Name = objUpdateProductDTO.Name,
-                Description = objUpdateProductDTO.Description,
-                NumberOfSale = 0,
-                Image = objUpdateProductDTO.LinkImage,
-                Category = objUpdateProductDTO.CategoryDTO.Name,
-                Brand = objUpdateProductDTO.BrandDTO.Name,
-                SalePrice = objUpdateProductDTO.PriceLogDTO.SalePrice,
-                IsUpdate = true,
-                PurchaseDate = null,
+               Id = objUpdateProductDTO.Id,
+               Name = objUpdateProductDTO.Name,
+               Description = objUpdateProductDTO.Description,
+               NumberOfSale = 0,
+               Image = objUpdateProductDTO.LinkImage,
+               Category = objUpdateProductDTO.CategoryDTO.Name,
+               Brand = objUpdateProductDTO.BrandDTO.Name,
+               SalePrice = objUpdateProductDTO.PriceLogDTO.SalePrice,
+               IsUpdate = true,
+               PurchaseDate = null,
             };
             if (bolIsUpdateProduct)
             {

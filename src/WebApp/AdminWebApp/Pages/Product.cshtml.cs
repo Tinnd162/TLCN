@@ -54,6 +54,7 @@ namespace AdminWebApp.Pages
             if(ProductID == null || ProductID == "")
             {
                 ViewData["Error"] = "Vui lòng nhập mã sản phẩm";
+                return Page();
             }
            var objProduct = await _inventoryService.GetProductDetailById(ProductID.Trim(), Token);
             Product = objProduct;
