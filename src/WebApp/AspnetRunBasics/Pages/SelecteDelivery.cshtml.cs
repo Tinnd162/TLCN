@@ -17,10 +17,22 @@ namespace AspnetRunBasics.Pages
             _orderService = orderService;
         }
         public IEnumerable<DeliveryModel> DeliveryModels { get; set; } = new List<DeliveryModel>();
+        private string Token { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string customerId)
         {
-            customerId = "61b6f8d80a134a9697bba97c";
-            DeliveryModels = await _orderService.GetDeliveryInfos(customerId);
+            if (Request != null)
+            {
+                Token = Request.Cookies["token"];
+                if (Token == null)
+                    return RedirectToPage("Login");
+            }
+            else
+            {
+                return RedirectToPage("Login");
+            }
+            customerId = Request.Cookies["userid"].ToString().Trim();
+            DeliveryModels = await _orderService.GetDeliveryInfos(customerId, Token);
             foreach (var item in DeliveryModels)
             {
                 item.IsExist = true;

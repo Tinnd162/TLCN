@@ -8,7 +8,9 @@ namespace AdminWebApp.Services
 {
     public interface IInventoryService
     {
-        public Task<ProductDetailModel> GetProductDetailById(string strProductID, string token);
-        public Task<bool> AddProduct(AddProductModel objAddProductModel, string token);
+        Task<ProductDetailModel> GetProductDetailById(string strProductID, string token);
+        Task<bool> AddProduct(AddProductModel objAddProductModel, string token);
+        Task<bool> UpdateProduct(UpdateProductModel objUpdateProductDTO, string token);
+
     }
 }

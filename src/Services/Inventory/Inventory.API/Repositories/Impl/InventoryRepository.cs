@@ -217,8 +217,8 @@ namespace Inventory.API.Repositories.Impl
         {
             try
             {
-                var objBrand = _context.Brands.First(x => x.BrandName.ToUpper() == objUpdateProductDTO.BrandDTO.Name.ToUpper());
-                var objCategory = _context.Categories.First(x => x.CategoryName.ToUpper() == objUpdateProductDTO.CategoryDTO.Name.ToUpper());
+                //var objBrand = _context.Brands.First(x => x.BrandName.ToUpper() == objUpdateProductDTO.BrandDTO.Name.ToUpper());
+                //var objCategory = _context.Categories.First(x => x.CategoryName.ToUpper() == objUpdateProductDTO.CategoryDTO.Name.ToUpper());
                 Product objProduct = _context.Products.FirstOrDefault(x => x.Id == objUpdateProductDTO.Id);
                 if (objProduct != null)
                 {
@@ -232,8 +232,8 @@ namespace Inventory.API.Repositories.Impl
                     objProduct.UpdateDate = DateTime.Now;
                     objProduct.IsUpdate = true;
                     objProduct.IsDelete = false;
-                    objProduct.BrandId = objBrand.Id;
-                    objProduct.CategoryId = objCategory.Id;
+                    //objProduct.BrandId = "1";//objBrand.Id;
+                    //objProduct.CategoryId = "1";//objCategory.Id;
                     objProduct.PriceLogs = new Collection<PriceLog>()
                 {
                     new PriceLog()
