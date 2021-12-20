@@ -8,7 +8,7 @@ namespace Aggregator.Services
 {
     public interface IInventoryService
     {
-        public Task<InventoryModel> GetProductDetailById(string strProductId);
-        public Task<bool> UpdateNumberOfSaleAfterSO(List<ParamsUpdateModel> lstObjParams);
+        Task<InventoryModel> GetProductDetailById(string strProductId, string strToken);
+        Task<bool> UpdateNumberOfSaleAfterSO(List<ParamsUpdateModel> lstObjParams, string strToken);
     }
 }

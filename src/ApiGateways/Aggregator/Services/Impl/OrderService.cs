@@ -16,8 +16,10 @@ namespace Aggregator.Services
         {
             _client = client;
         }
-        public async Task<string> InsertSaleOrder(OrderModel objSaleOrderBO)
+        public async Task<string> InsertSaleOrder(OrderModel objSaleOrderBO, string strToken)
         {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", strToken);
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var response = await _client.PostAsJson($"/Order/Insert", objSaleOrderBO);
             if (response.IsSuccessStatusCode)
             {

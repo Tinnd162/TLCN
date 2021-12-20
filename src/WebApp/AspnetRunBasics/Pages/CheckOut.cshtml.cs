@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AspnetRunBasics.Models;
 using AspnetRunBasics.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -98,9 +99,11 @@ namespace AspnetRunBasics
             Order.CustomerID = strUserID;
             Order.TotalAmount = Cart.TotalAmount;
             Order.OrderDetails = Cart.Items;
-
+            Order.Token = Token;
             string strSOId = await _aggregatorService.InsertSaleOrder(Order);
-
+            CookieOptions cookieOptions = new CookieOptions();
+            cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddHours(-1));
+            HttpContext.Response.Cookies.Append("cart", "", cookieOptions);
             return RedirectToPage("Confirmation", "OrderSubmitted", strSOId);
         }
     }

@@ -14,5 +14,6 @@ namespace AspnetRunBasics.Models
         public PaymentModel PaymentInfo { get; set; }
         //OrderDetail
         public List<SODetailModel> OrderDetails { get; set; }
+        public string Token { get; set; }
     }
 }

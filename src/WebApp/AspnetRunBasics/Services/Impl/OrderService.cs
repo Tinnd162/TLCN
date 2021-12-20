@@ -20,6 +20,7 @@ namespace AspnetRunBasics.Services.Impl
         public async Task<IEnumerable<DeliveryModel>> GetDeliveryInfos(string strCustomerId, string strToken)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", strToken);
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var response = await _client.GetAsync($"/Order/GetDeliveryInfos/{strCustomerId}");
             return await response.ReadContentAs<List<DeliveryModel>>();
         }
@@ -27,6 +28,7 @@ namespace AspnetRunBasics.Services.Impl
         public async Task<IEnumerable<PaymentModel>> GetPaymentInfos(string strCustomerId, string strToken)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", strToken);
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var response = await _client.GetAsync($"/Order/GetPaymentInfos/{strCustomerId}");
             return await response.ReadContentAs<List<PaymentModel>>();
         }
@@ -34,6 +36,7 @@ namespace AspnetRunBasics.Services.Impl
         public async Task<SOModel> GetSO(string strCustomerId, string strSaleOrderId, string strToken)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", strToken);
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var response = await _client.GetAsync($"/Order/GetSO/{strCustomerId}/{strSaleOrderId}");
             return await response.ReadContentAs<SOModel>();
         }
@@ -41,6 +44,7 @@ namespace AspnetRunBasics.Services.Impl
         public async Task<IEnumerable<SOModel>> GetSaleOrderList(string strCustomerId, string strToken)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", strToken);
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var response = await _client.GetAsync($"/Order/GetSaleOrderList/{strCustomerId}");
             return await response.ReadContentAs<List<SOModel>>();
         }

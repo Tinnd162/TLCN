@@ -28,6 +28,7 @@ namespace Aggregator.Controllers
         public async Task<ActionResult> InsertSO([FromBody] object objRequest)
         {
             OrderModel objSaleOrderBO = new OrderModel();
+            string strToken = string.Empty;
             try
             {
                 var objRequestParams = JsonConvert.DeserializeObject<Dictionary<string, object>>(objRequest.ToString());
@@ -38,6 +39,9 @@ namespace Aggregator.Controllers
                     {
                         case "CUSTOMERID":
                             objSaleOrderBO.CustomerID = objParam.Value.ToString();
+                            break;
+                        case "TOKEN":
+                            strToken = objParam.Value.ToString();
                             break;
                         case "CUSTOMERNAME":
                             objSaleOrderBO.CustomerName = objParam.Value.ToString();
@@ -74,7 +78,7 @@ namespace Aggregator.Controllers
                 {
                     foreach (var item in objSaleOrderBO.OrderDetails)
                     {
-                        objProductInventory = await objIInventoryService.GetProductDetailById(item.ProductID);
+                        objProductInventory = await objIInventoryService.GetProductDetailById(item.ProductID, strToken);
                         if (item.ProductName.Trim() != objProductInventory.Name/* && Convert.ToDecimal(item.SalePrice) != objProductInventory.Price*/)
                         {
                             return Ok(new { error = true, data = "Lỗi kiểm tra dữ liệu đầu vào!" });
@@ -86,17 +90,17 @@ namespace Aggregator.Controllers
                         return Ok(new { error = true, data = "Lỗi kiểm tra tổng tiền!" });
                     }
                 }
-                string strSaleOrderId = await objIOrderService.InsertSaleOrder(objSaleOrderBO);
+                string strSaleOrderId = await objIOrderService.InsertSaleOrder(objSaleOrderBO, strToken);
 
                 if (string.IsNullOrEmpty(strSaleOrderId))
                     return Ok(new { error = true, data = "Lỗi thêm thông tin đơn hàng" });
 
                 await objIBasketService.DeleteBasket(objSaleOrderBO.CustomerID);
-                await objIInventoryService.UpdateNumberOfSaleAfterSO(lstObjParams);
+                await objIInventoryService.UpdateNumberOfSaleAfterSO(lstObjParams, strToken);
 
                 return Ok(new { error = false, data = strSaleOrderId });
             }
-            catch
+            catch(Exception objEx)
             {
                 return NotFound();
             }
