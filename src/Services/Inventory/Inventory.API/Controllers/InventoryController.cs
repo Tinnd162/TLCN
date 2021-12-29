@@ -51,10 +51,6 @@ namespace Inventory.API.Controllers
             };
             if (bolIsRemoveProduct)
             {
-                // Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
-                // var endPoint = await _bus.GetSendEndpoint(uri);
-                // await endPoint.Send(objProductEventBO);
-                // return Ok("Success");
                 await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
@@ -66,31 +62,27 @@ namespace Inventory.API.Controllers
         public async Task<ActionResult<bool>> UpdateProduct(UpdateProductDTO objUpdateProductDTO)
         {
             bool bolIsUpdateProduct = await _inventoryRepository.UpdateDetailProduct(objUpdateProductDTO);
-            //ProductEventBO objProductEventBO = new ProductEventBO()
-            //{
-            //    Id = objUpdateProductDTO.Id,
-            //    Name = objUpdateProductDTO.Name,
-            //    Description = objUpdateProductDTO.Description,
-            //    NumberOfSale = 0,
-            //    Image = objUpdateProductDTO.LinkImage,
-            //    Category = objUpdateProductDTO.CategoryDTO.Name,
-            //    Brand = objUpdateProductDTO.BrandDTO.Name,
-            //    SalePrice = objUpdateProductDTO.PriceLogDTO.SalePrice,
-            //    IsUpdate = true,
-            //    PurchaseDate = null,
-            //};
+            ProductEventBO objProductEventBO = new ProductEventBO()
+            {
+               Id = objUpdateProductDTO.Id,
+               Name = objUpdateProductDTO.Name,
+               Description = objUpdateProductDTO.Description,
+               NumberOfSale = 0,
+               Image = objUpdateProductDTO.LinkImage,
+               Category = objUpdateProductDTO.CategoryDTO.Name,
+               Brand = objUpdateProductDTO.BrandDTO.Name,
+               SalePrice = objUpdateProductDTO.PriceLogDTO.SalePrice,
+               IsUpdate = true,
+               PurchaseDate = null,
+            };
             if (bolIsUpdateProduct)
             {
-                // Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
-                // var endPoint = await _bus.GetSendEndpoint(uri);
-                // await endPoint.Send(objProductEventBO);
-                // return Ok("Success");
-                //await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;
         }
-        
+
         [HttpPost]
         [Route("AddProduct")]
         public async Task<ActionResult<bool>> AddProduct([FromForm] AddProductDTO objAddProductDTO)
@@ -108,10 +100,6 @@ namespace Inventory.API.Controllers
 
             if (bolIsAddProduct)
             {
-                // Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
-                // var endPoint = await _bus.GetSendEndpoint(uri);
-                // await endPoint.Send(objProductEventBO);
-                // return Ok("Success");
                 await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
@@ -121,24 +109,32 @@ namespace Inventory.API.Controllers
         [Route("UpdateNumberOfSaleAfterSO")]
         public async Task<ActionResult<bool>> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams)
         {
-            bool bolIsUpdateQuantity = await _inventoryRepository.UpdateNumberOfSaleAfterSO(lstObjParams);
+            List<UpdateParamsNumberOfSale> lstResult = await _inventoryRepository.UpdateNumberOfSaleAfterSO(lstObjParams);
 
             ProductEventBO objProductEventBO = new ProductEventBO()
             {
                 IsUpdateQuantityAfterSO = true,
                 IsUpdate = true,
                 PurchaseDate = DateTime.Now,
-                ParamsUpdate = lstObjParams
+                ParamsUpdate = lstResult
             };
-            if (bolIsUpdateQuantity)
+
+            if (lstResult != null || lstResult.Count >= 1)
             {
-                // Uri uri = new Uri(RabbitMQConstants.RabbitMqUri);
-                // var endPoint = await _bus.GetSendEndpoint(uri);
-                // await endPoint.Send(objProductEventBO);
                 await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;
+        }
+
+        [HttpGet]
+        [Route("Search/{strKeyword}")]
+        public List<ProductDTO> Search(string strKeyword)
+        {
+            List<ProductDTO> lstResult = _inventoryRepository.Search(strKeyword);
+            if (lstResult == null || lstResult.Count == 0)
+                return null;
+            return lstResult;
         }
     }
 }

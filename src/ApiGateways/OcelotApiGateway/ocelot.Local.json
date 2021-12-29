@@ -226,7 +226,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/User/Authenticate",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",

@@ -25,9 +25,9 @@ namespace AdminWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<IInventoryService, InventoryService>(c =>
-               c.BaseAddress = new Uri(Configuration["ApiSettings:Url"]));
+               c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
             services.AddHttpClient<IIdentityService, IdentityService>(c =>
-               c.BaseAddress = new Uri(Configuration["ApiSettings:Url"]));
+               c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
             services.AddRazorPages();
         }
 

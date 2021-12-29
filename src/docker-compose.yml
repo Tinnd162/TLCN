@@ -37,6 +37,66 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  identityserver:
+    image: identityserver
+    container_name: identityserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: Services/Identity/IdentityServer/Dockerfile
+    ports:
+      - "8011:80"
+
+  identityservice:
+    image: identityservice
+    container_name: identityservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:IdentityConnectionString=Server=sqldb;Database=IdentityDb;User Id=sa;Password=concho@123;"
+      - "IdentitySettings:IdentityHost=http://identityserver"
+      - "Identity:client=client"
+      - "Identity:secret=secret"
+      - "Identity:scope=api1"
+    depends_on:
+      - sqldb
+    build:
+      context: .
+      dockerfile: Services/Identity/IdentityService/Dockerfile
+    ports:
+      - "8012:80"
+
+  basket.api:
+    image: basketapi
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=basketdb:6379"
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+    depends_on:
+      - basketdb
+    ports:
+      - "8001:80"
+
+  inventory.api:
+    image: inventoryapi
+    container_name: inventory.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:InventoryConnectionString=Server=sqldb;Database=InventoryDb;User Id=sa;Password=concho@123;"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "IdentitySettings:IdentityHost=http://identityserver"
+    build:
+      context: .
+      dockerfile: Services/Inventory/Inventory.API/Dockerfile
+    depends_on:
+      - sqldb
+      - rabbitmq
+    ports:
+      - "8003:80"
+
   product.api:
     image: productapi
     container_name: product.api
@@ -53,20 +113,6 @@ services:
     ports:
       - "8000:80"
 
-  basket.api:
-    image: basketapi
-    container_name: basket.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "CacheSettings:ConnectionString=basketdb:6379"
-    build:
-      context: .
-      dockerfile: Services/Basket/Basket.API/Dockerfile
-    depends_on:
-      - basketdb
-    ports:
-      - "8001:80"
-
   ordering.api:
     image: orderingapi
     container_name: ordering.api
@@ -82,22 +128,6 @@ services:
     ports:
       - "8004:80"
 
-  inventory.api:
-    image: inventoryapi
-    container_name: inventory.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:InventoryConnectionString=Server=sqldb;Database=InventoryDb;User Id=sa;Password=concho@123;"
-      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
-    build:
-      context: .
-      dockerfile: Services/Inventory/Inventory.API/Dockerfile
-    depends_on:
-      - sqldb
-      - rabbitmq
-    ports:
-      - "8003:80"
-
   ocelotapigw:
     image: ocelotapigw
     container_name: ocelotapigw
@@ -111,6 +141,7 @@ services:
       - basket.api
       - inventory.api
       - ordering.api
+      - identityservice
     ports:
       - "8010:80"
 
@@ -142,6 +173,20 @@ services:
       - ocelotapigw
     ports:
       - "8006:80"
+
+  admin:
+    image: admin
+    container_name: admin
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    build:
+      context: .
+      dockerfile: WebApp/AdminWebApp/Dockerfile
+    depends_on:
+      - ocelotapigw
+    ports:
+      - "8015:80"
 
 volumes:
   mongo_data:

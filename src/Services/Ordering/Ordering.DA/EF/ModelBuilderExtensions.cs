@@ -14,7 +14,7 @@ namespace Ordering.DA.EF
         {
             string paymentID = "61b6f8c78909657b658f6887";
             string deliveryID = "61b6f8cfbc9a67e61c8ddf2e";
-            string customerID = "61b6f8d80a134a9697bba97c";
+            string customerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8";
             string orderID = "61b6f8e8a13fc9a1ba108bf3";
             modelBuilder.Entity<Payment>().HasData(
                 new Payment
@@ -27,7 +27,7 @@ namespace Ordering.DA.EF
                     CVV = "123",
                     CustomerID = customerID
                 }
-            ) ;
+            );
 
             modelBuilder.Entity<Delivery>().HasData(
 
@@ -36,7 +36,7 @@ namespace Ordering.DA.EF
                         DeliveryID = deliveryID,
                         FirstNameReceiver = "Viet",
                         LastNameReceiver = "Lam",
-                        Address ="123 ABC",
+                        Address = "123 ABC",
                         PhoneNo = "0123213",
                         Email = "asd@gmail.com",
                         CustomerID = customerID
@@ -46,17 +46,17 @@ namespace Ordering.DA.EF
             modelBuilder.Entity<Order>().HasData(
                     new Order
                     {
-                       OrderID = orderID,
-                       OrderDate = new DateTime(2021,11,5),
-                       ConfirmDate = null,
-                       TotalAmount = 100000,
-                       Status = null,
-                       StaffID = null,
-                       CustomerID = customerID,
-                       PaymentID = paymentID,
-                       DeliveryID = deliveryID,
-                       IsDelete = false,
-                       CustomerName = "Viet"
+                        OrderID = orderID,
+                        OrderDate = new DateTime(2021, 11, 5),
+                        ConfirmDate = null,
+                        TotalAmount = 100000,
+                        Status = null,
+                        StaffID = null,
+                        CustomerID = customerID,
+                        PaymentID = paymentID,
+                        DeliveryID = deliveryID,
+                        IsDelete = false,
+                        CustomerName = "Viet"
                     }
                 );
 
@@ -82,7 +82,7 @@ namespace Ordering.DA.EF
                        IMEI = null
 
                    }
-              ) ;
+              );
 
         }
     }
