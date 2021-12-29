@@ -55,6 +55,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:IdentityConnectionString=Server=sqldb;Database=IdentityDb;User Id=sa;Password=concho@123;"
       - "IdentitySettings:IdentityHost=http://identityserver"
+      - "Identity:client=client"
+      - "Identity:secret=secret"
+      - "Identity:scope=api1"
     depends_on:
       - sqldb
     build:
@@ -78,21 +81,21 @@ services:
       - "8001:80"
 
   inventory.api:
-      image: inventoryapi
-      container_name: inventory.api
-      environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - "ConnectionStrings:InventoryConnectionString=Server=sqldb;Database=InventoryDb;User Id=sa;Password=concho@123;"
-        - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
-        - "IdentitySettings:IdentityHost=http://identityserver"
-      build:
-        context: .
-        dockerfile: Services/Inventory/Inventory.API/Dockerfile
-      depends_on:
-        - sqldb
-        - rabbitmq
-      ports:
-        - "8003:80"
+    image: inventoryapi
+    container_name: inventory.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:InventoryConnectionString=Server=sqldb;Database=InventoryDb;User Id=sa;Password=concho@123;"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "IdentitySettings:IdentityHost=http://identityserver"
+    build:
+      context: .
+      dockerfile: Services/Inventory/Inventory.API/Dockerfile
+    depends_on:
+      - sqldb
+      - rabbitmq
+    ports:
+      - "8003:80"
 
   product.api:
     image: productapi

@@ -14,7 +14,7 @@ namespace Ordering.DA.EF
         {
             string paymentID = "61b6f8c78909657b658f6887";
             string deliveryID = "61b6f8cfbc9a67e61c8ddf2e";
-            string customerID = "d86c7970-70cb-44fa-be01-78e73b976580";
+            string customerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8";
             string orderID = "61b6f8e8a13fc9a1ba108bf3";
             modelBuilder.Entity<Payment>().HasData(
                 new Payment
