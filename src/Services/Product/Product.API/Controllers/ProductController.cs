@@ -20,17 +20,17 @@ namespace Product.API.Controllers
         }
         [HttpGet]
         [Route("GetProducts")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts()
+        public ActionResult<IEnumerable<ProductDTO>> GetProducts()
         {
-            var items = await _productRepository.GetProducts();
+            var items = _productRepository.GetProducts();
             return Ok(items);
         }
 
         [HttpGet]
         [Route("GetProduct/{strProductId}")]
-        public async Task<ActionResult<ProductDTO>> GetProduct(string strProductId)
+        public ActionResult<ProductDTO> GetProduct(string strProductId)
         {
-            var item = await _productRepository.GetProduct(strProductId);
+            var item = _productRepository.GetProduct(strProductId);
             if (item == null)
             {
                 _logger.LogError($"Item with id: {strProductId}, not found.");
@@ -41,9 +41,9 @@ namespace Product.API.Controllers
 
         [HttpGet]
         [Route("GetProductByCategory/{strCategory}")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByCategory(string strCategory)
+        public ActionResult<IEnumerable<ProductDTO>> GetProductByCategory(string strCategory)
         {
-            var items = await _productRepository.GetProductByCategory(strCategory);
+            var items = _productRepository.GetProductByCategory(strCategory);
             if (items == null)
             {
                 _logger.LogError($"Item with category: {strCategory}, not found.");
@@ -54,12 +54,25 @@ namespace Product.API.Controllers
 
         [HttpGet]
         [Route("GetProductByBrand/{strBrand}")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByBrand(string strBrand)
+        public ActionResult<IEnumerable<ProductDTO>> GetProductByBrand(string strBrand)
         {
-            var items = await _productRepository.GetProductByBrand(strBrand);
+            var items = _productRepository.GetProductByBrand(strBrand);
             if (items == null)
             {
                 _logger.LogError($"Item with brand: {strBrand}, not found.");
+                return NotFound();
+            }
+            return Ok(items);
+        }
+
+        [HttpGet]
+        [Route("Search/{strKeyWord}")]
+        public ActionResult<IEnumerable<ProductDTO>> Search(string strKeyWord)
+        {
+            var items = _productRepository.Search(strKeyWord);
+            if (items == null)
+            {
+                _logger.LogError($"Item with brand: {strKeyWord}, not found.");
                 return NotFound();
             }
             return Ok(items);
