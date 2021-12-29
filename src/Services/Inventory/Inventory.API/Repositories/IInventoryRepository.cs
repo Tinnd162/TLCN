@@ -20,7 +20,6 @@ namespace Inventory.API.Repositories
         ProductEventBO MapperEventRabbitMQ(AddProductDTO objAddProductDTO);
         Task<bool> UpdateDetailProduct(UpdateProductDTO objUpdateProductDTO);
         Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
-        Task<List<UpdateParamsNumberOfSale>> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams);
-        List<ProductDTO> Search(string strKeyword);
+        Task<bool> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams);
     }
 }

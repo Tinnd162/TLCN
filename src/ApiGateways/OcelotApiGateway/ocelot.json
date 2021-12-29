@@ -127,20 +127,6 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Inventory/AddProduct",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": "8003"
-        }
-      ],
-      "UpstreamPathTemplate": "/Inventory/AddProduct",
-      "UpstreamHttpMethod": [
-        "POST"
-      ]
-    },
-    {
       "DownstreamPathTemplate": "/api/v1/Inventory/UpdateNumberOfSaleAfterSO",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -208,20 +194,6 @@
       "UpstreamPathTemplate": "/Product/GetProductByBrand/{Brand}",
       "UpstreamHttpMethod": [
         "GET"
-      ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/v1/User/Authenticate",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": "8012"
-        }
-      ],
-      "UpstreamPathTemplate": "/User/Authenticate",
-      "UpstreamHttpMethod": [
-        "POST"
       ]
     }
   ],

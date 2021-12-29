@@ -41,13 +41,12 @@ namespace Ordering.API
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = Configuration["IdentitySettings:IdentityHost"];
+                    options.Authority = "https://localhost:5011";
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
                     };
-                    options.RequireHttpsMetadata = false;
                 });
             // adds an authorization policy to make sure the token is for scope 'api1'
             services.AddAuthorization(options =>
@@ -74,9 +73,9 @@ namespace Ordering.API
 
             app.UseRouting();
 
-            // app.UseAuthentication();
+            app.UseAuthentication();
 
-            // app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

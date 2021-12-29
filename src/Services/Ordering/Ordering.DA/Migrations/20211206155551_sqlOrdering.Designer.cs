@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ordering.DA.EF;
 
 namespace Ordering.DA.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    partial class OrderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211206155551_sqlOrdering")]
+    partial class sqlOrdering
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,9 +55,9 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            DeliveryID = "61b6f8cfbc9a67e61c8ddf2e",
+                            DeliveryID = "172899e9-aafd-422a-9ae9-700784893d51",
                             Address = "123 ABC",
-                            CustomerID = "61b6f8d80a134a9697bba97c",
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
                             Email = "asd@gmail.com",
                             FirstNameReceiver = "Viet",
                             LastNameReceiver = "Lam",
@@ -122,14 +124,14 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderID = "61b6f8e8a13fc9a1ba108bf3",
-                            CustomerID = "61b6f8d80a134a9697bba97c",
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
                             CustomerName = "Viet",
-                            DeliveryID = "61b6f8cfbc9a67e61c8ddf2e",
+                            DeliveryID = "172899e9-aafd-422a-9ae9-700784893d51",
                             Gender = 0,
                             IsDelete = false,
                             OrderDate = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PaymentID = "61b6f8c78909657b658f6887",
+                            PaymentID = "f8bff311-f0d8-400e-b34e-0aa801841a2f",
                             TotalAmount = 100000.0
                         });
                 });
@@ -138,9 +140,6 @@ namespace Ordering.DA.Migrations
                 {
                     b.Property<string>("OrderDetailID")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IMEI")
                         .HasColumnType("nvarchar(max)");
@@ -173,9 +172,9 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderDetailID = "3da3c057-db5b-439a-88e4-b06f23263d39",
+                            OrderDetailID = "dcdc9940-b56d-481e-8d4c-54c574a9667a",
                             IMEI = "312312321312",
-                            OrderID = "61b6f8e8a13fc9a1ba108bf3",
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
                             ProductName = "Itel 33",
                             Quantity = 1,
                             SalePrice = 50000.0,
@@ -183,8 +182,8 @@ namespace Ordering.DA.Migrations
                         },
                         new
                         {
-                            OrderDetailID = "39d5552f-6cf2-492d-be40-9f814236058d",
-                            OrderID = "61b6f8e8a13fc9a1ba108bf3",
+                            OrderDetailID = "f28c6161-116f-44c1-a08d-c9b3f9b72e3a",
+                            OrderID = "bc8e1e84-b0dd-44c3-b551-50c432df025d",
                             ProductName = "Tai nghe Sony",
                             Quantity = 1,
                             SalePrice = 50000.0,
@@ -228,11 +227,11 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            PaymentID = "61b6f8c78909657b658f6887",
+                            PaymentID = "f8bff311-f0d8-400e-b34e-0aa801841a2f",
                             CVV = "123",
                             CardName = "ABC",
                             CardNo = "1221313",
-                            CustomerID = "61b6f8d80a134a9697bba97c",
+                            CustomerID = "9c993247-4e9d-4f26-9bd0-52f3eb420d4c",
                             Expiration = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentMethod = ""
                         });

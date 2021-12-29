@@ -8,6 +8,6 @@ namespace Aggregator.Services
 {
     public interface IOrderService
     {
-        Task<string> InsertSaleOrder(OrderModel objSaleOrderBO, string strToken);
+        public Task<string> InsertSaleOrder(OrderModel objSaleOrderBO, string strToken);
     }
 }
