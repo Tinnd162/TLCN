@@ -79,6 +79,7 @@ namespace Inventory.API
                     {
                         ValidateAudience = false
                     };
+                    options.RequireHttpsMetadata = false;
                 });
             // adds an authorization policy to make sure the token is for scope 'api1'
             services.AddAuthorization(options =>
@@ -106,9 +107,9 @@ namespace Inventory.API
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            // app.UseAuthentication();
 
-            app.UseAuthorization();
+            // app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
