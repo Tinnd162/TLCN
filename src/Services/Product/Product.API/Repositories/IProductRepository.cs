@@ -7,10 +7,11 @@ namespace Product.API.Repositories
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<ProductDTO>> GetProducts();
-        Task<ProductDTO> GetProduct(string strId);
-        Task<IEnumerable<ProductDTO>> GetProductByCategory(string strcategoryName);
-        Task<IEnumerable<ProductDTO>> GetProductByBrand(string strbrandName);
+        IEnumerable<ProductDTO> GetProducts();
+        ProductDTO GetProduct(string strId);
+        IEnumerable<ProductDTO> GetProductByCategory(string strcategoryName);
+        IEnumerable<ProductDTO> GetProductByBrand(string strbrandName);
+        IEnumerable<ProductDTO> Search(string strKeyword);
         Task CreateProduct(ProductDTO objProduct);
         Task RemoveProduct(string strProductId);
         Task UpdateProduct(ProductDTO objProduct);
