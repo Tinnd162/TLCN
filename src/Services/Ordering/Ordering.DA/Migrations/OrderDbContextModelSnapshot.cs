@@ -55,7 +55,7 @@ namespace Ordering.DA.Migrations
                         {
                             DeliveryID = "61b6f8cfbc9a67e61c8ddf2e",
                             Address = "123 ABC",
-                            CustomerID = "61b6f8d80a134a9697bba97c",
+                            CustomerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8",
                             Email = "asd@gmail.com",
                             FirstNameReceiver = "Viet",
                             LastNameReceiver = "Lam",
@@ -123,7 +123,7 @@ namespace Ordering.DA.Migrations
                         new
                         {
                             OrderID = "61b6f8e8a13fc9a1ba108bf3",
-                            CustomerID = "61b6f8d80a134a9697bba97c",
+                            CustomerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8",
                             CustomerName = "Viet",
                             DeliveryID = "61b6f8cfbc9a67e61c8ddf2e",
                             Gender = 0,
@@ -173,7 +173,7 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderDetailID = "3da3c057-db5b-439a-88e4-b06f23263d39",
+                            OrderDetailID = "920d19dd-b683-4eac-a4b9-fd60043a33bf",
                             IMEI = "312312321312",
                             OrderID = "61b6f8e8a13fc9a1ba108bf3",
                             ProductName = "Itel 33",
@@ -183,7 +183,7 @@ namespace Ordering.DA.Migrations
                         },
                         new
                         {
-                            OrderDetailID = "39d5552f-6cf2-492d-be40-9f814236058d",
+                            OrderDetailID = "93feca24-18db-47c4-b450-cd4457b3c7c1",
                             OrderID = "61b6f8e8a13fc9a1ba108bf3",
                             ProductName = "Tai nghe Sony",
                             Quantity = 1,
@@ -232,7 +232,7 @@ namespace Ordering.DA.Migrations
                             CVV = "123",
                             CardName = "ABC",
                             CardNo = "1221313",
-                            CustomerID = "61b6f8d80a134a9697bba97c",
+                            CustomerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8",
                             Expiration = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentMethod = ""
                         });
