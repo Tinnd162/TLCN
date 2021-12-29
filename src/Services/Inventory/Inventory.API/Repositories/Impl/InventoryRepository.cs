@@ -314,5 +314,31 @@ namespace Inventory.API.Repositories.Impl
             return _mapper.Map<ProductEventBO>(objAddProductDTO);
         }
         #endregion
+
+        public List<ProductDetailDTO> Search(string strKeyword)
+        {
+            try
+            {
+                return _context.Products.Where(x => x.IsDelete == false
+                                                            && x.IsDiscontinued == false
+                                                            && x.IsStatus == false
+                                                            && x.ProductName.Contains(strKeyword))
+                                                            .Select(s => new ProductDetailDTO
+                                                            {
+                                                                Id = s.Id,
+                                                                Name = s.ProductName,
+                                                                Description = s.Description,
+                                                                Quantity = s.Quantity,
+                                                                SalePrice = s.PriceLogs
+                                                                .OrderByDescending(x => x.UpdateDate)
+                                                                .Select(x => x.SalePrice)
+                                                                .FirstOrDefault()
+                                                            }).ToList();
+            }
+            catch (Exception objExcep)
+            {
+                return null;
+            }
+        }
     }
 }

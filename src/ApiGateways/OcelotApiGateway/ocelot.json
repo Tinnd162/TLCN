@@ -141,6 +141,20 @@
       ]
     },
     {
+      "DownstreamPathTemplate": "/api/v1/Inventory/Search/{strKeyword}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/Search/{strKeyword}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/v1/Product/GetProducts",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

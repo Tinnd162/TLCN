@@ -112,7 +112,7 @@ namespace Inventory.API.Controllers
                 // var endPoint = await _bus.GetSendEndpoint(uri);
                 // await endPoint.Send(objProductEventBO);
                 // return Ok("Success");
-                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                //await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;
@@ -139,6 +139,16 @@ namespace Inventory.API.Controllers
                 return true;
             }
             return false;
+        }
+
+        [HttpGet]
+        [Route("Search/{strKeyword}")]
+        public List<ProductDetailDTO> Search(string strKeyword)
+        {
+            List<ProductDetailDTO> lstResult = _inventoryRepository.Search(strKeyword);
+            if (lstResult == null || lstResult.Count == 0)
+                return null;
+            return lstResult;
         }
     }
 }
