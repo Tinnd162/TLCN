@@ -39,5 +39,11 @@ namespace AspnetRunBasics.Services.Impl
             var response = await _client.GetAsync($"/Product/GetProduct/{strProductId}");
             return await response.ReadContentAs<CategoryModel>();
         }
+
+        public async Task<List<CategoryModel>> Search(string strKeyWord)
+        {
+            var response = await _client.GetAsync($"/Product/Search/{strKeyWord}");
+            return await response.ReadContentAs<List<CategoryModel>>();
+        }
     }
 }

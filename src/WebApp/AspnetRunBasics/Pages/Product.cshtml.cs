@@ -45,6 +45,23 @@ namespace AspnetRunBasics
             return Page();
         }
 
+        public async Task<IActionResult> OnGetProductBrandAsync(string category, string brand)
+        {
+            var productList = await _productService.GetProducts();
+            CategoryList = productList.Select(c => c.Category).Distinct();
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                ProductList = productList.Where(p => p.Category == category && p.Brand == brand);
+                SelectedCategory = category;
+            }
+            else
+            {
+                ProductList = productList;
+            }
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostAddToCartAsync(string productId)
         {
             var product = await _productService.GetProduct(productId);
