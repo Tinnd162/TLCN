@@ -3,7 +3,7 @@
 <div class="col-12 col-md-3">
     <div class="card">
         <div class="card-header bg-success text-white text-uppercase">
-            <i class="fa fa-heart"></i> Top product
+            <i class="fa fa-heart"></i> Ưu chuộng
         </div>
         <a asp-page="ProductDetail" asp-route-productId="@Model.Id"><img asp-append-version="true"
                 class="img-fluid border-0" src="@Model.ImageFile" alt="Card image cap"></a>
@@ -15,8 +15,8 @@
                     <p class="btn btn-danger btn-block">@Model.SalePrice $</p>
                 </div>
                 <div class="col">
-                    <a asp-page="ProductDetail" asp-route-productId="@Model.Id"
-                        class="btn btn-success btn-block">View</a>
+                    <a asp-page="ProductDetail" asp-route-productId="@Model.Id" class="btn btn-success btn-block">Xem
+                        chi tiết</a>
                 </div>
             </div>
         </div>
