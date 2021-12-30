@@ -10,5 +10,6 @@ namespace AspnetRunBasics.Services
         Task<IEnumerable<CategoryModel>> GetProductByCategory(string strCategory);
         Task<IEnumerable<CategoryModel>> GetProductByBrand(string strBrand);
         Task<CategoryModel> GetProduct(string id);
+        Task<List<CategoryModel>> Search(string strKeyWord);
     }
 }
