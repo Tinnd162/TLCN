@@ -35,17 +35,6 @@ namespace Inventory.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddMassTransit(x =>
-            // {
-            //     x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
-            //     {
-            //         config.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
-            //                             {
-            //                                 h.Username(RabbitMQConstants.UserName);
-            //                                 h.Password(RabbitMQConstants.Password);
-            //                             });
-            //     }));
-            // });
             services.AddMassTransit(config =>
             {
                 config.UsingRabbitMq((ctx, cfg) =>
