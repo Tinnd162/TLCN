@@ -8,8 +8,12 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="~/plugins/images/favicon.png">
     <!-- Custom CSS -->
-    <link href="~/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+    @* <link href="~/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet"> *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.css"
+        integrity="sha512-V0+DPzYyLzIiMiWCg3nNdY+NyIiK9bED/T1xNBj08CaIUyK3sXRpB26OUCIzujMevxY9TRJFHQIxTwgzb0jVLg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @* <link rel="stylesheet"
+        href="~/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css"> *@
 
     <link rel="stylesheet" href="~/css/style.min.css" />
     <!-- Bootstrap CSS -->
@@ -82,12 +86,12 @@
                         <li>
                             <a class="profile-pic" href="#">
                                 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-                                @{ 
+                                @{
                                     var username = HttpContextAccessor.HttpContext.Request.Cookies["username"];
-                                } 
+                                }
                                 <img src="plugins/images/users/varun.jpg" alt="user-img" width="36"
-                                     class="img-circle"><span class="text-white font-medium">@username</span>
-                                </a>
+                                    class="img-circle"><span class="text-white font-medium">@username</span>
+                            </a>
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -232,7 +236,10 @@
     <!-- Bootstrap tether Core JavaScript -->
     <script src="~/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/app-style-switcher.js"></script>
-    <script src="~/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+    @* <script src="~/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"
+        integrity="sha512-3PRVLmoBYuBDbCEojg5qdmd9UhkPiyoczSFYjnLhFb2KAFsWWEMlAPt0olX1Nv7zGhDfhGEVkXsu51a55nlYmw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--Wave Effects -->
     <script src="~/js/waves.js"></script>
     <!--Menu sidebar -->
@@ -241,8 +248,15 @@
     <script src="~/js/custom.js"></script>
     <!--This page JavaScript -->
     <!--chartis chart-->
-    <script src="~/plugins/bower_components/chartist/dist/chartist.min.js"></script>
-    <script src="~/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    @* <script src="~/plugins/bower_components/chartist/dist/chartist.min.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.js"
+        integrity="sha512-9rxMbTkN9JcgG5euudGbdIbhFZ7KGyAuVomdQDI9qXfPply9BJh0iqA7E/moLCatH2JD4xBGHwV6ezBkCpnjRQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @* <script src="~/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist-plugin-tooltip/0.0.11/chartist-plugin-tooltip.js"
+        integrity="sha512-BuKBs9rG452zZGqNg7QvRrgX/2zvxe09OeyE7e8bg9XPM7MU0nnu5YGeZDX91vMOTfE88eFIDQ0/OzGZaoecvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/pages/dashboards/dashboard1.js"></script>
 </body>
 
