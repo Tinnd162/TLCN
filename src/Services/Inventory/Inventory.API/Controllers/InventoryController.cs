@@ -40,7 +40,7 @@ namespace Inventory.API.Controllers
             return Ok(product);
         }
         [HttpDelete]
-        [Route("RemoveProduct")]
+        [Route("RemoveProduct/{strProductId}")]
         public async Task<ActionResult<bool>> RemoveProduct(string strProductId)
         {
             bool bolIsRemoveProduct = await _inventoryRepository.RemoveProduct(strProductId);
@@ -51,7 +51,7 @@ namespace Inventory.API.Controllers
             };
             if (bolIsRemoveProduct)
             {
-                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+               // await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;

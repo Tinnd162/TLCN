@@ -77,5 +77,15 @@ namespace AdminWebApp.Services
             var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             return JsonConvert.DeserializeObject<List<ProductDetailModel>>(dataAsString);
         }
+
+        public async Task<bool> RemoveProduct(string strProductId, string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _client.DeleteAsync($"/Inventory/RemoveProduct/{strProductId}");
+            var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (dataAsString == null)
+                return false;
+            return Convert.ToBoolean(dataAsString);
+        }
     }
 }
