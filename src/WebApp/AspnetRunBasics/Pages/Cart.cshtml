@@ -9,8 +9,8 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-page="Index">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                    <li class="breadcrumb-item"><a asp-page="Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
                 </ol>
             </nav>
         </div>
@@ -24,11 +24,11 @@
                     <thead>
                         <tr>
                             <th scope="col"> </th>
-                            <th scope="col">Product</th>
-                            <th scope="col">Available</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Color</th>
-                            <th scope="col" class="text-right">Price</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Tình trạng</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Màu sắc</th>
+                            <th scope="col" class="text-right">Giá</th>
                             <th> </th>
                         </tr>
                     </thead>
@@ -57,7 +57,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><strong>Total</strong></td>
+                            <td><strong>Tổng tiền</strong></td>
                             <td class="text-right"><strong>@Model.Cart.TotalAmount $</strong></td>
                         </tr>
                     </tbody>
@@ -67,12 +67,11 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <a asp-page="Product" class="btn btn-lg btn-block btn-success text-uppercase">Continue Shopping</a>
+                    <a asp-page="Product" class="btn btn-lg btn-block btn-success text-uppercase">Tiếp tục mua sắm</a>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <a asp-page="SelecteDelivery" class="btn btn-lg btn-block btn-danger text-uppercase">CheckOut</a>
+                    <a asp-page="SelecteDelivery" class="btn btn-lg btn-block btn-danger text-uppercase">Thanh toán</a>
                 </div>
-                @* <a asp-page="Cart" class="btn btn-primary btn-block">Delete cart</a> *@
             </div>
         </div>
     </div>

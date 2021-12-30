@@ -8,8 +8,8 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-page="Index">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Delivery address</li>
+                    <li class="breadcrumb-item"><a asp-page="Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Địa chỉ giao hàng</li>
                 </ol>
             </nav>
         </div>
@@ -23,10 +23,10 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
+                            <th scope="col">Họ tên</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Phone</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Số Điện thoại</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -41,7 +41,7 @@
                                 <td>@order.PhoneNo</td>
                                 <td>
                                     <form asp-page="CheckOut" method="get">
-                                        <button class="btn btn-primary">Choose</button>
+                                        <button class="btn btn-primary">Chọn</button>
                                         <input type="hidden" asp-for="@order.DeliveryID" name="deliveryID" />
                                         <input type="hidden" asp-for="@order.FirstNameReceiver" name="firstName" />
                                         <input type="hidden" asp-for="@order.LastNameReceiver" name="lastName" />
@@ -60,10 +60,10 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <a asp-page="Cart" class="btn btn-lg btn-block btn-success">Back</a>
+                    <a asp-page="Cart" class="btn btn-lg btn-block btn-success">Trở về</a>
                 </div>
                 <div class="col-sm-12  col-md-6">
-                    <a asp-page="CheckOut" class="btn btn-lg btn-block btn-primary">Add new Address</a>
+                    <a asp-page="CheckOut" class="btn btn-lg btn-block btn-primary">Thêm địa chỉ giao hàng mới</a>
                 </div>
             </div>
         </div>
