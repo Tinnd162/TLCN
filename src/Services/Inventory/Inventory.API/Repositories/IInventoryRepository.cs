@@ -21,6 +21,7 @@ namespace Inventory.API.Repositories
         Task<bool> UpdateDetailProduct(UpdateProductDTO objUpdateProductDTO);
         Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
         Task<List<UpdateParamsNumberOfSale>> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams);
-        List<ProductDTO> Search(string strKeyword);
+
+        List<ProductDetailDTO> Search(string strKeyword);
     }
 }

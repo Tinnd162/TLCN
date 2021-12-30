@@ -322,7 +322,7 @@ namespace Inventory.API.Repositories.Impl
             return _mapper.Map<ProductEventBO>(objAddProductDTO);
         }
         #endregion
-        public List<ProductDTO> Search(string strKeyword)
+        public List<ProductDetailDTO> Search(string strKeyword)
         {
             try
             {
@@ -330,11 +330,12 @@ namespace Inventory.API.Repositories.Impl
                                                             && x.IsDiscontinued == false
                                                             && x.IsStatus == false
                                                             && x.ProductName.Contains(strKeyword))
-                                                            .Select(s => new ProductDTO
+                                                            .Select(s => new ProductDetailDTO
                                                             {
                                                                 Id = s.Id,
                                                                 Name = s.ProductName,
-                                                                SalePrice = s.PriceLogs
+                                                                Description = s.Description,
+                                                                Quantity = s.Quantity,                                                                SalePrice = s.PriceLogs
                                                                 .OrderByDescending(x => x.UpdateDate)
                                                                 .Select(x => x.SalePrice)
                                                                 .FirstOrDefault()

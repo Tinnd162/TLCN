@@ -100,7 +100,7 @@ namespace Inventory.API.Controllers
 
             if (bolIsAddProduct)
             {
-                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                //await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;

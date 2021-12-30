@@ -9,36 +9,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdminWebApp.Pages
 {
-    public class ProductModel : PageModel
+    public class Product_DetailModel : PageModel
     {
+
         private readonly IInventoryService _inventoryService;
 
-        public ProductModel(IInventoryService inventoryService)
+        public Product_DetailModel(IInventoryService inventoryService)
         {
             IsSearch = false;
             _inventoryService = inventoryService ?? throw new ArgumentNullException(nameof(inventoryService));
         }
 
         private string Token { get; set; }
-        public List<ProductDetailModel> Products { get; set; }
+        public ProductDetailModel Product { get; set; }
         public bool IsSearch { get; set; }
 
-        public IActionResult OnGet()
-        {
-            if (Request != null)
-            {
-                Token = Request.Cookies["token"];
-                if (Token == null)
-                    return RedirectToPage("Login");
-                return Page();
-            }
-            else
-            {
-                return RedirectToPage("Login");
-            }
-        }
-
-        public async Task<IActionResult> OnPostSearch(string ProductName)
+        public async Task<ActionResult> OnGet(string ProductID)
         {
             if (Request != null)
             {
@@ -50,14 +36,13 @@ namespace AdminWebApp.Pages
             {
                 return RedirectToPage("Login");
             }
-            IsSearch = true;
-            if(ProductName == null || ProductName == "")
+            if (ProductID == null || ProductID == "")
             {
-                ViewData["Error"] = "Vui lòng nhập mã sản phẩm";
+                ViewData["Error"] = "Lỗi lấy mã sản phẩm";
                 return Page();
             }
-           var objProductList = await _inventoryService.Search(ProductName.Trim(), Token);          
-            Products = objProductList;
+            var objProduct = await _inventoryService.GetProductDetailById(ProductID.Trim(), Token);
+            Product = objProduct;
             return Page();
         }
     }
