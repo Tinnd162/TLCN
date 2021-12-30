@@ -79,7 +79,7 @@ namespace Aggregator.Controllers
                     foreach (var item in objSaleOrderBO.OrderDetails)
                     {
                         objProductInventory = await objIInventoryService.GetProductDetailById(item.ProductID, strToken);
-                        if (item.ProductName.Trim() != objProductInventory.Name/* && Convert.ToDecimal(item.SalePrice) != objProductInventory.Price*/)
+                        if (item.ProductName.Trim() != objProductInventory.Name)
                         {
                             return Ok(new { error = true, data = "Lỗi kiểm tra dữ liệu đầu vào!" });
                         }
@@ -100,7 +100,7 @@ namespace Aggregator.Controllers
 
                 return Ok(new { error = false, data = strSaleOrderId });
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 return NotFound();
             }

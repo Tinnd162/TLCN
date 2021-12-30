@@ -12,5 +12,7 @@ namespace Inventory.API.DTOs
         public decimal UnitPrice { get; set; }
         public decimal SalePrice { get; set; }
         public int Quantity { get; set; }
+        public string Brand { get; set; }
+        public string Category { get; set; }
     }
 }

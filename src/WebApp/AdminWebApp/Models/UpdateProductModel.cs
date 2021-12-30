@@ -14,8 +14,8 @@ namespace AdminWebApp.Models
         public int Quantity { get; set; }
         public bool IsDiscontinued { get; set; }
         public bool IsStatus { get; set; }
-        public BrandInfoModel BrandDTO { get; set; }
-        public BrandInfoModel CategoryDTO { get; set; }
+        public BrandInfoModel BrandDTO { get; set; } = new BrandInfoModel();
+        public BrandInfoModel CategoryDTO { get; set; } = new BrandInfoModel();
         public PriceLogModel PriceLogDTO { get; set; }
         public string UserUpdate { get; set; }
 

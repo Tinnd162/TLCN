@@ -34,24 +34,6 @@ namespace Product.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddMassTransit(x =>
-            // {
-            //     x.AddConsumer<AddProductConsumer>();
-            //     x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-            //     {
-            //         cfg.Host(new Uri(RabbitMQConstants.RabbitMqRootUri), h =>
-            //         {
-            //             h.Username(RabbitMQConstants.UserName);
-            //             h.Password(RabbitMQConstants.Password);
-            //         });
-            //         cfg.ReceiveEndpoint("productQueue", ep =>
-            //         {
-            //             ep.PrefetchCount = 16;
-            //             ep.UseMessageRetry(r => r.Interval(2, 100));
-            //             ep.ConfigureConsumer<AddProductConsumer>(provider);
-            //         });
-            //     }));
-            // });
             services.AddMassTransit(config =>
             {
 
