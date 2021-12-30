@@ -52,7 +52,7 @@ namespace AdminWebApp.Pages
             {
                 return RedirectToPage("Login");
             }
-            
+
             try
             {
                 var objProduct = await _inventoryService.GetProductDetailById(UpdateProductModel.Id.Trim(), Token);
@@ -60,6 +60,8 @@ namespace AdminWebApp.Pages
                 UpdateProductModel.LinkImage = objProduct.LinkImage;
                 UpdateProductModel.IsDiscontinued = false;
                 UpdateProductModel.IsStatus = false;
+                UpdateProductModel.BrandDTO.Name = objProduct.Brand;
+                UpdateProductModel.CategoryDTO.Name = objProduct.Category;
                 if (UpdateProductModel.Description == null || UpdateProductModel.Description == "")
                     UpdateProductModel.Description = objProduct.Description;
                 bool result = await _inventoryService.UpdateProduct(UpdateProductModel, Token);
@@ -69,7 +71,7 @@ namespace AdminWebApp.Pages
                 }
                 ViewData["Error"] = "Lỗi cập nhật dữ liệu sản phẩm";
             }
-            catch(Exception objEx)
+            catch (Exception objEx)
             {
                 ViewData["Error"] = "Lỗi cập nhật dữ liệu sản phẩm";
             }

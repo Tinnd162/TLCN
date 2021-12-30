@@ -114,6 +114,8 @@ namespace Inventory.API.Repositories.Impl
                                                                   {
                                                                       Id = s1.Id,
                                                                       Name = s1.ProductName,
+                                                                      Brand = s1.Brand.BrandName,
+                                                                      Category = s1.Category.CategoryName,
                                                                       Description = s1.Description,
                                                                       LinkImage = s1.LinkImage,
                                                                       Quantity = s1.Quantity,
@@ -335,7 +337,8 @@ namespace Inventory.API.Repositories.Impl
                                                                 Id = s.Id,
                                                                 Name = s.ProductName,
                                                                 Description = s.Description,
-                                                                Quantity = s.Quantity,                                                                SalePrice = s.PriceLogs
+                                                                Quantity = s.Quantity,
+                                                                SalePrice = s.PriceLogs
                                                                 .OrderByDescending(x => x.UpdateDate)
                                                                 .Select(x => x.SalePrice)
                                                                 .FirstOrDefault()

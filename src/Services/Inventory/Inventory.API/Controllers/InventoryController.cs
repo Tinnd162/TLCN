@@ -64,16 +64,16 @@ namespace Inventory.API.Controllers
             bool bolIsUpdateProduct = await _inventoryRepository.UpdateDetailProduct(objUpdateProductDTO);
             ProductEventBO objProductEventBO = new ProductEventBO()
             {
-               Id = objUpdateProductDTO.Id,
-               Name = objUpdateProductDTO.Name,
-               Description = objUpdateProductDTO.Description,
-               NumberOfSale = 0,
-               Image = objUpdateProductDTO.LinkImage,
-               Category = objUpdateProductDTO.CategoryDTO.Name,
-               Brand = objUpdateProductDTO.BrandDTO.Name,
-               SalePrice = objUpdateProductDTO.PriceLogDTO.SalePrice,
-               IsUpdate = true,
-               PurchaseDate = null,
+                Id = objUpdateProductDTO.Id,
+                Name = objUpdateProductDTO.Name,
+                Description = objUpdateProductDTO.Description,
+                NumberOfSale = 0,
+                Image = objUpdateProductDTO.LinkImage,
+                Category = objUpdateProductDTO.CategoryDTO.Name,
+                Brand = objUpdateProductDTO.BrandDTO.Name,
+                SalePrice = objUpdateProductDTO.PriceLogDTO.SalePrice,
+                IsUpdate = true,
+                PurchaseDate = null,
             };
             if (bolIsUpdateProduct)
             {
@@ -100,7 +100,7 @@ namespace Inventory.API.Controllers
 
             if (bolIsAddProduct)
             {
-                //await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;
@@ -129,9 +129,9 @@ namespace Inventory.API.Controllers
 
         [HttpGet]
         [Route("Search/{strKeyword}")]
-        public List<ProductDTO> Search(string strKeyword)
+        public List<ProductDetailDTO> Search(string strKeyword)
         {
-            List<ProductDTO> lstResult = _inventoryRepository.Search(strKeyword);
+            List<ProductDetailDTO> lstResult = _inventoryRepository.Search(strKeyword);
             if (lstResult == null || lstResult.Count == 0)
                 return null;
             return lstResult;
