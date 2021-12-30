@@ -9,8 +9,8 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-page="Index">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Order</li>
+                    <li class="breadcrumb-item"><a asp-page="Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Đơn hàng</li>
                 </ol>
             </nav>
         </div>
@@ -24,11 +24,11 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
+                            <th scope="col">Sản phẩm</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">TotalPrice</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col" class="text-center">Số điện thoại</th>
+                            <th scope="col" class="text-right">Giá</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -40,9 +40,9 @@
                                 <td>@order.DeliveryInfo.FirstNameReceiver @order.DeliveryInfo.LastNameReceiver</td>
                                 <td>@order.DeliveryInfo.Email</td>
                                 <td>@order.DeliveryInfo.Address</td>
-                                <td>@order.DeliveryInfo.PhoneNo</td>
-                                <td>@order.TotalAmount $</td>
-                                <td>
+                                <td  class="text-center">@order.DeliveryInfo.PhoneNo</td>
+                                <td class="text-right">@order.TotalAmount VNĐ</td>
+                                <td class="text-right">
                                     <form asp-page="SaleOrderDetail" method="get">
                                         <button class="btn btn-primary"><i class="fa fa-info"></i></button>
                                         <input type="hidden" asp-for="@order.CustomerID" name="customerId" />
@@ -58,7 +58,7 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <a asp-page="Product" class="btn btn-lg btn-block btn-success">Continue Shopping</a>
+                    <a asp-page="Product" class="btn btn-lg btn-block btn-success">Tiếp tục mua sắm</a>
                 </div>
             </div>
         </div>
