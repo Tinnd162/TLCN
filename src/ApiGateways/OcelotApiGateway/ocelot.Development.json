@@ -131,11 +131,25 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "inventory.api",
           "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/Inventory/AddProduct",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Inventory/UpdateProduct",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "inventory.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/UpdateProduct",
       "UpstreamHttpMethod": [
         "POST"
       ]
@@ -152,6 +166,20 @@
       "UpstreamPathTemplate": "/Inventory/UpdateNumberOfSaleAfterSO",
       "UpstreamHttpMethod": [
         "PUT"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Inventory/Search/{strKeyword}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "inventory.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/Search/{strKeyword}",
+      "UpstreamHttpMethod": [
+        "GET"
       ]
     },
     {

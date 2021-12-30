@@ -129,9 +129,9 @@ namespace Inventory.API.Controllers
 
         [HttpGet]
         [Route("Search/{strKeyword}")]
-        public List<ProductDetailDTO> Search(string strKeyword)
+        public async Task<List<ProductDetailDTO>> Search(string strKeyword)
         {
-            List<ProductDetailDTO> lstResult = _inventoryRepository.Search(strKeyword);
+            List<ProductDetailDTO> lstResult = await _inventoryRepository.Search(strKeyword);
             if (lstResult == null || lstResult.Count == 0)
                 return null;
             return lstResult;

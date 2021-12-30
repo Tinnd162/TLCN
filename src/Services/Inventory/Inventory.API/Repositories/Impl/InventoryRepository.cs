@@ -324,11 +324,11 @@ namespace Inventory.API.Repositories.Impl
             return _mapper.Map<ProductEventBO>(objAddProductDTO);
         }
         #endregion
-        public List<ProductDetailDTO> Search(string strKeyword)
+        public async Task<List<ProductDetailDTO>> Search(string strKeyword)
         {
             try
             {
-                return _context.Products.Where(x => x.IsDelete == false
+                return await _context.Products.Where(x => x.IsDelete == false
                                                             && x.IsDiscontinued == false
                                                             && x.IsStatus == false
                                                             && x.ProductName.Contains(strKeyword))
@@ -342,7 +342,7 @@ namespace Inventory.API.Repositories.Impl
                                                                 .OrderByDescending(x => x.UpdateDate)
                                                                 .Select(x => x.SalePrice)
                                                                 .FirstOrDefault()
-                                                            }).ToList();
+                                                            }).ToListAsync();
             }
             catch (Exception objExcep)
             {
