@@ -45,5 +45,30 @@ namespace AdminWebApp.Pages
             Product = objProduct;
             return Page();
         }
+
+        public async Task<IActionResult> OnGetDelete(string ProductID)
+        {
+            if (Request != null)
+            {
+                Token = Request.Cookies["token"];
+                if (Token == null)
+                    return RedirectToPage("Login");
+            }
+            else
+            {
+                return RedirectToPage("Login");
+            }
+            IsSearch = true;
+            if (ProductID == null || ProductID == "")
+            {
+                ViewData["Error"] = "Lỗi lấy mã sản phẩm";
+                return Page();
+            }
+            bool bolResult = await _inventoryService.RemoveProduct(ProductID, Token);
+            if (bolResult)
+                return RedirectToPage("Product");
+            ViewData["Error"] = "Lỗi xóa sản phẩm, thử lại";
+            return Page();
+        }
     }
 }
