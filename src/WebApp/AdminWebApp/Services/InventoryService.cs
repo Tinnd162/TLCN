@@ -69,5 +69,13 @@ namespace AdminWebApp.Services
                 return false;
             return Convert.ToBoolean(dataAsString);
         }
+
+        public async Task<List<ProductDetailModel>> Search(string strKeyword, string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _client.GetAsync($"/Inventory/Search/{strKeyword}");
+            var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return JsonConvert.DeserializeObject<List<ProductDetailModel>>(dataAsString);
+        }
     }
 }
