@@ -87,5 +87,13 @@ namespace AdminWebApp.Services
                 return false;
             return Convert.ToBoolean(dataAsString);
         }
+
+        public async Task<List<CategoryModel>> GetCategories(string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _client.GetAsync($"/Inventory/Categories");
+            var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return JsonConvert.DeserializeObject<List<CategoryModel>>(dataAsString);
+        }
     }
 }

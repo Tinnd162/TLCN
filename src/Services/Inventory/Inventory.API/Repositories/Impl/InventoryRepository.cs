@@ -61,23 +61,23 @@ namespace Inventory.API.Repositories.Impl
                 return null;
             }
         }
-        public async Task<IEnumerable<InfoDTO>> GetCategories()
-        {
-            try
-            {
-                List<InfoDTO> lstCategoryDTO = await _context.Categories
-                                                            .Select(s => new InfoDTO
-                                                            {
-                                                                Id = s.Id,
-                                                                Name = s.CategoryName
-                                                            }).ToListAsync();
-                return lstCategoryDTO;
-            }
-            catch (Exception objExcep)
-            {
-                return null;
-            }
-        }
+        //public async Task<IEnumerable<InfoDTO>> GetCategories()
+        //{
+        //    try
+        //    {
+        //        List<InfoDTO> lstCategoryDTO = await _context.Categories
+        //                                                    .Select(s => new InfoDTO
+        //                                                    {
+        //                                                        Id = s.Id,
+        //                                                        Name = s.CategoryName
+        //                                                    }).ToListAsync();
+        //        return lstCategoryDTO;
+        //    }
+        //    catch (Exception objExcep)
+        //    {
+        //        return null;
+        //    }
+        //}
         public async Task<IEnumerable<ProductDTO>> GetProductsByBrand(string strBrandId)
         {
             try
@@ -345,6 +345,21 @@ namespace Inventory.API.Repositories.Impl
                                                             }).ToListAsync();
             }
             catch (Exception objExcep)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<BrandWithCategoryDTO>> GetCategories()
+        {
+            try
+            {
+                return await _context.Categories.Select(x => new BrandWithCategoryDTO { 
+                                                                Name = x.CategoryName,
+                                                                lstBrandDTO = x.Brands.Select(b => new InfoDTO { Name =b.BrandName}).ToList()                                                              
+                                                            }).ToListAsync();
+            }
+            catch(Exception objEx)
             {
                 return null;
             }

@@ -10,7 +10,7 @@ namespace Inventory.API.Repositories
 {
     public interface IInventoryRepository
     {
-        Task<IEnumerable<InfoDTO>> GetCategories();
+        //Task<IEnumerable<InfoDTO>> GetCategories();
         Task<IEnumerable<InfoDTO>> GetSuppliers();
         Task<BrandWithCategoryDTO> GetBrandsWithByCategory(string strCategoryId);
         Task<IEnumerable<ProductDTO>> GetProductsByBrand(string strBrandId);
@@ -22,5 +22,6 @@ namespace Inventory.API.Repositories
         Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
         Task<List<UpdateParamsNumberOfSale>> UpdateNumberOfSaleAfterSO(List<UpdateParamsNumberOfSale> lstObjParams);
         Task<List<ProductDetailDTO>> Search(string strKeyword);
+        Task<List<BrandWithCategoryDTO>> GetCategories();
     }
 }
