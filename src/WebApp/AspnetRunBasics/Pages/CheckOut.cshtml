@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your cart</span>
+                <span class="text-muted">Giỏ hàng</span>
                 <span class="badge badge-secondary badge-pill">@Model.Cart.Items.Count</span>
             </h4>
             <ul class="list-group mb-3">
@@ -35,21 +35,21 @@
                             <small class="text-muted">@item.ProductName</small>
                         </div>
                         <span class="text-muted">@item.Quantity</span>
-                        <span class="text-muted">$@item.SalePrice</span>
+                        <span class="text-muted">@string.Format("{0:#,##0.00}", item.SalePrice)đ </span>
                     </li>
                 }
 
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Thành tiền (VNĐ)</span>
-                    <strong>@Model.Cart.TotalAmount</strong>
+                    <strong>@string.Format("{0:#,##0.00}", Model.Cart.TotalAmount)</strong>
                 </li>
             </ul>
 
             <form class="card p-2">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Promo code">
+                    <input type="text" class="form-control" placeholder="Mã giảm giá">
                     <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary">Redeem</button>
+                        <button type="submit" class="btn btn-secondary">Áp dụng</button>
                     </div>
                 </div>
             </form>
@@ -128,16 +128,16 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label asp-for="Order.PaymentInfo.CardName" for="cc-name">Name on card</label>
+                        <label asp-for="Order.PaymentInfo.CardName" for="cc-name">Tên trên thẻ</label>
                         <input asp-for="Order.PaymentInfo.CardName" type="text" class="form-control" id="cc-name"
                             placeholder="" required>
-                        <small class="text-muted">Full name as displayed on card</small>
+                        <small class="text-muted">Tên đầy đủ hiển thị trên thẻ</small>
                         <div class="invalid-feedback">
                             Thông tin không được để trống
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label asp-for="Order.PaymentInfo.CardNo" for="cc-number">Credit card number</label>
+                        <label asp-for="Order.PaymentInfo.CardNo" for="cc-number">Số thẻ</label>
                         <input asp-for="Order.PaymentInfo.CardNo" type="text" class="form-control" id="cc-number"
                             placeholder="" required>
                         <div class="invalid-feedback">
@@ -147,7 +147,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <label asp-for="Order.PaymentInfo.Expiration" for="cc-expiration">Expiration</label>
+                        <label asp-for="Order.PaymentInfo.Expiration" for="cc-expiration">Thời gian hết hạn</label>
                         <input asp-for="Order.PaymentInfo.Expiration" type="text" class="form-control"
                             id="cc-expiration" placeholder="" required value="/">
                         <div class="invalid-feedback">

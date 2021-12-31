@@ -36,7 +36,7 @@
                                 <td>@order.ProductName</td>
                                 <td>@order.Color</td>
                                 <td>@order.Quantity</td>
-                                <td>@order.SalePrice VNĐ</td>
+                                <td>@string.Format("{0:#,##0.00}", order.SalePrice) VNĐ</td>
                             </tr>
                         }
                     </tbody>

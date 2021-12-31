@@ -51,7 +51,7 @@ namespace Inventory.API.Controllers
             };
             if (bolIsRemoveProduct)
             {
-               // await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                 await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;
@@ -135,6 +135,14 @@ namespace Inventory.API.Controllers
             if (lstResult == null || lstResult.Count == 0)
                 return null;
             return lstResult;
+        }
+
+        [HttpGet]
+        [Route("Categories")]
+        public async Task<List<BrandWithCategoryDTO>> GetCatgories()
+        {
+            return await _inventoryRepository.GetCategories();
+
         }
     }
 }

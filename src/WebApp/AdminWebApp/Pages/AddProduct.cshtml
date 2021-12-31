@@ -14,10 +14,11 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="product_categorie">Loại sản phẩm</label>
         <div class="col-md-4">
-            <select asp-for="ProductModel.CategoryDTO.Id" class="form-control" required>
-                <option>Smartphone</option>
-                <option>Laptop</option>
-                <option>Tablet</option>
+            <select asp-for="ProductModel.CategoryDTO.Id" class="form-control" required">
+                @foreach (var cate in Model.Categories)
+                {
+                    <option>@cate.Name</option>
+                }
             </select>
         </div>
     </div>
@@ -25,9 +26,12 @@
         <label class="col-md-4 control-label" for="product_categorie">Hãng sản xuất</label>
         <div class="col-md-4">
             <select asp-for="ProductModel.BrandDTO.Id" class="form-control" required>
-                <option>Samsung</option>
-                <option>Sony</option>
-                <option>Apple</option>
+                @{
+                    @foreach (var brand in Model.CateSelected.lstBrandDTO)
+                    {
+                        <option>@brand.Name</option>
+                    }
+                }
             </select>
         </div>
     </div>

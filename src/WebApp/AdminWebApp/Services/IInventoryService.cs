@@ -13,6 +13,7 @@ namespace AdminWebApp.Services
         Task<bool> UpdateProduct(UpdateProductModel objUpdateProductDTO, string token);
         Task<List<ProductDetailModel>> Search(string strKeyword, string token);
         Task<bool> RemoveProduct(string strProductId, string token);
+        Task<List<CategoryModel>> GetCategories(string token);
 
     }
 }
