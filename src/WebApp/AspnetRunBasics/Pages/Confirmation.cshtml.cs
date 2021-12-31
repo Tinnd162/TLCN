@@ -13,7 +13,7 @@ namespace AspnetRunBasics
 
         public void OnGetOrderSubmitted(string Id)
         {
-            Message = "Your order" + Id + "submitted successfully.";
+            Message = "Đơn hàng tạo thành công, vui lòng chờ xác nhận";
         }
     }
 }

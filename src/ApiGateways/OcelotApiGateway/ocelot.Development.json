@@ -183,6 +183,34 @@
       ]
     },
     {
+      "DownstreamPathTemplate": "/api/v1/Inventory/RemoveProduct/{strProductId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "inventory.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/RemoveProduct/{strProductId}",
+      "UpstreamHttpMethod": [
+        "DELETE"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Inventory/Categories",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "inventory.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/Categories",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/v1/Product/GetProducts",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

@@ -33,7 +33,7 @@ namespace AdminWebApp.Pages
                 if (Token == null)
                     return RedirectToPage("Login");
                 Categories = await _inventoryService.GetCategories(Token);
-                CateSelected = Categories.First();
+                CateSelected = Categories.Where(x => x.Name == "Điện thoại").FirstOrDefault();
                 return Page();
             }
             else
