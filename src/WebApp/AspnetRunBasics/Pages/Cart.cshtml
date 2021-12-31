@@ -70,7 +70,14 @@
                     <a asp-page="Product" class="btn btn-lg btn-block btn-success text-uppercase">Tiếp tục mua sắm</a>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <a asp-page="SelecteDelivery" class="btn btn-lg btn-block btn-danger text-uppercase">Thanh toán</a>
+                    @if (Model.Cart.Items != null && Model.Cart.Items.Count > 0)
+                    {
+                        <a asp-page="SelecteDelivery" class="btn btn-lg btn-block btn-danger text-uppercase">Thanh toán</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-lg btn-block btn-danger text-uppercase">Thanh toán</a>
+                    }
                 </div>
             </div>
         </div>

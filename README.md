@@ -13,7 +13,7 @@
 #### Cài đặt
 1. Git clone repository: **https://github.com/Tinnd162/TLCN_Microservices.git**
 
-2. Khởi chạy app cùng docker với lệnh `docker-compose up -d`
+2. Mở `terminal` `cd` tới thư mục `./TLCN_Microservices/src` chạy app cùng docker với lệnh `docker-compose up -d`
 
 3. Host Microservice:
 

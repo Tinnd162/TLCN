@@ -54,12 +54,12 @@ namespace Ordering.DA.Migrations
                         new
                         {
                             DeliveryID = "61b6f8cfbc9a67e61c8ddf2e",
-                            Address = "123 ABC",
-                            CustomerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8",
-                            Email = "asd@gmail.com",
+                            Address = "số 1 Võ Văn Ngân",
+                            CustomerID = "61cea2f375e10dd236f9de06",
+                            Email = "181330@gmail.com",
                             FirstNameReceiver = "Viet",
                             LastNameReceiver = "Lam",
-                            PhoneNo = "0123213"
+                            PhoneNo = "0944329423"
                         });
                 });
 
@@ -123,7 +123,7 @@ namespace Ordering.DA.Migrations
                         new
                         {
                             OrderID = "61b6f8e8a13fc9a1ba108bf3",
-                            CustomerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8",
+                            CustomerID = "61cea2f375e10dd236f9de06",
                             CustomerName = "Viet",
                             DeliveryID = "61b6f8cfbc9a67e61c8ddf2e",
                             Gender = 0,
@@ -173,7 +173,7 @@ namespace Ordering.DA.Migrations
                     b.HasData(
                         new
                         {
-                            OrderDetailID = "920d19dd-b683-4eac-a4b9-fd60043a33bf",
+                            OrderDetailID = "96a0dd33-9771-4d77-b6fe-4219d75d79d7",
                             IMEI = "312312321312",
                             OrderID = "61b6f8e8a13fc9a1ba108bf3",
                             ProductName = "Itel 33",
@@ -183,7 +183,7 @@ namespace Ordering.DA.Migrations
                         },
                         new
                         {
-                            OrderDetailID = "93feca24-18db-47c4-b450-cd4457b3c7c1",
+                            OrderDetailID = "af11ae72-75f9-49d9-81e0-a9ea12417c01",
                             OrderID = "61b6f8e8a13fc9a1ba108bf3",
                             ProductName = "Tai nghe Sony",
                             Quantity = 1,
@@ -232,7 +232,7 @@ namespace Ordering.DA.Migrations
                             CVV = "123",
                             CardName = "ABC",
                             CardNo = "1221313",
-                            CustomerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8",
+                            CustomerID = "61cea2f375e10dd236f9de06",
                             Expiration = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PaymentMethod = ""
                         });

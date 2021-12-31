@@ -38,12 +38,12 @@ namespace IdentityService.Migrations
                     b.HasData(
                         new
                         {
-                            RoleID = "1b003b8b-85c9-413b-b616-e7590b8bab52",
+                            RoleID = "61cea2fbcb8af21f87c2eb0c",
                             RoleName = "admin"
                         },
                         new
                         {
-                            RoleID = "8a4022a5-2d63-4e4a-8c1d-9fc3ebfb5dc7",
+                            RoleID = "61cea30163e98302a5ec0a12",
                             RoleName = "customer"
                         });
                 });
@@ -80,14 +80,14 @@ namespace IdentityService.Migrations
                     b.HasData(
                         new
                         {
-                            UserID = "d86c7970-70cb-44fa-be01-78e73b976580",
-                            Password = "12345",
-                            UserName = "Viet"
+                            UserID = "61cea2f03d7ec05a7321745d",
+                            Password = "******",
+                            UserName = "Admin"
                         },
                         new
                         {
-                            UserID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8",
-                            Password = "12345",
+                            UserID = "61cea2f375e10dd236f9de06",
+                            Password = "*****",
                             UserName = "Customer"
                         });
                 });
@@ -109,13 +109,13 @@ namespace IdentityService.Migrations
                     b.HasData(
                         new
                         {
-                            UserID = "d86c7970-70cb-44fa-be01-78e73b976580",
-                            RoleID = "1b003b8b-85c9-413b-b616-e7590b8bab52"
+                            UserID = "61cea2f03d7ec05a7321745d",
+                            RoleID = "61cea2fbcb8af21f87c2eb0c"
                         },
                         new
                         {
-                            UserID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8",
-                            RoleID = "8a4022a5-2d63-4e4a-8c1d-9fc3ebfb5dc7"
+                            UserID = "61cea2f375e10dd236f9de06",
+                            RoleID = "61cea30163e98302a5ec0a12"
                         });
                 });
 

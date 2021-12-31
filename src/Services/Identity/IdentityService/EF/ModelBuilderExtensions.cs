@@ -11,22 +11,22 @@ namespace IdentityService.EF
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            string userID = Guid.NewGuid().ToString();
-            string customerID = Guid.NewGuid().ToString();
-            string roleID = Guid.NewGuid().ToString();
-            string roleCustomerID = Guid.NewGuid().ToString();
+            string userID = "61cea2f03d7ec05a7321745d";
+            string customerID = "61cea2f375e10dd236f9de06";
+            string roleID = "61cea2fbcb8af21f87c2eb0c";
+            string roleCustomerID = "61cea30163e98302a5ec0a12";
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
                    UserID = userID,
-                   UserName = "Viet",
-                   Password = "12345"
+                   UserName = "Admin",
+                   Password = "******"
                 },
                 new User
                 {
                    UserID = customerID,
                    UserName = "Customer",
-                   Password = "12345"
+                   Password = "*****"
                 }
             );
 
