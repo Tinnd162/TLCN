@@ -44,8 +44,8 @@
                 <div class="card-body">
                     <img asp-append-version="true" class="img-fluid"
                         src="@Model.ProductList.LastOrDefault().ImageFile" />
-                    <h5 class="card-title">@Model.ProductList.LastOrDefault().Name</h5>
-                    <p class="bloc_left_price">@string.Format("{0:#,##0}", Model.ProductList.LastOrDefault().SalePrice)đ</p>
+                    <h5 class="card-title">@Model.ProductList.OrderByDescending(x=>x.PurchaseDate).LastOrDefault().Name</h5>
+                    <p class="bloc_left_price">@string.Format("{0:#,##0}", Model.ProductList.OrderByDescending(x=>x.PurchaseDate).LastOrDefault().SalePrice)đ</p>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                     </div>
                 }
 
-                <div class="col-12">
+                @* <div class="col-12">
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li class="page-item disabled">
@@ -76,7 +76,7 @@
                             </li>
                         </ul>
                     </nav>
-                </div>
+                </div> *@
             </div>
         </div>
 
