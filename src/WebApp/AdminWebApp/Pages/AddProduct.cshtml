@@ -6,7 +6,7 @@
 
 <form asp-page-handler="AddProduct" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label class="col-md-4 control-label" >Tên sản phẩm</label>
+        <label class="col-md-4 control-label">Tên sản phẩm</label>
         <div class="col-md-4">
             <input class="form-control input-md" required type="text" asp-for="ProductModel.Name">
         </div>
@@ -15,9 +15,17 @@
         <label class="col-md-4 control-label" for="product_categorie">Loại sản phẩm</label>
         <div class="col-md-4">
             <select asp-for="ProductModel.CategoryDTO.Id" class="form-control" required>
-                <option>Smartphone</option>
-                <option>Laptop</option>
-                <option>Tablet</option>
+                @foreach (var cate in Model.Categories)
+                {
+                    if (cate.Name == "Điện thoại")
+                    {
+                        <option selected>@cate.Name</option>
+                    }
+                    else
+                    {
+                        <option>@cate.Name</option>
+                    }
+                }
             </select>
         </div>
     </div>
@@ -25,9 +33,12 @@
         <label class="col-md-4 control-label" for="product_categorie">Hãng sản xuất</label>
         <div class="col-md-4">
             <select asp-for="ProductModel.BrandDTO.Id" class="form-control" required>
-                <option>Samsung</option>
-                <option>Sony</option>
-                <option>Apple</option>
+                @{
+                    @foreach (var brand in Model.CateSelected.lstBrandDTO)
+                    {
+                        <option>@brand.Name</option>
+                    }
+                }
             </select>
         </div>
     </div>

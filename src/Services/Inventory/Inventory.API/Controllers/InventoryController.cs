@@ -136,5 +136,13 @@ namespace Inventory.API.Controllers
                 return null;
             return lstResult;
         }
+
+        [HttpGet]
+        [Route("Categories")]
+        public async Task<List<BrandWithCategoryDTO>> GetCatgories()
+        {
+            return await _inventoryRepository.GetCategories();
+
+        }
     }
 }

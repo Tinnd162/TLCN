@@ -41,7 +41,7 @@
                                 <td>In stock</td>
                                 <td>@cartItem.Quantity</td>
                                 <td>@cartItem.Color</td>
-                                <td class="text-right">@(cartItem.SalePrice * cartItem.Quantity) $</td>
+                                <td class="text-right">@string.Format("{0:#,##0.00}",(cartItem.SalePrice * cartItem.Quantity))đ</td>
                                 <td class="text-right">
                                     <form asp-page-handler="removetocart" method="post">
                                         <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
@@ -58,7 +58,7 @@
                             <td></td>
                             <td></td>
                             <td><strong>Tổng tiền</strong></td>
-                            <td class="text-right"><strong>@Model.Cart.TotalAmount $</strong></td>
+                            <td class="text-right"><strong>@string.Format("{0:#,##0}", Model.Cart.TotalAmount)đ</strong></td>
                         </tr>
                     </tbody>
                 </table>

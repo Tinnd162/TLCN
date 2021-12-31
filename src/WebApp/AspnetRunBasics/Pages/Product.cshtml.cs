@@ -30,19 +30,27 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnGetAsync(string category)
         {
-            var productList = await _productService.GetProducts();
-            CategoryList = productList.Select(c => c.Category).Distinct();
+            try
+            {
+                var productList = await _productService.GetProducts();
 
-            if (!string.IsNullOrWhiteSpace(category))
-            {
-                ProductList = productList.Where(p => p.Category == category);
-                SelectedCategory = category;
+                CategoryList = productList.Select(c => c.Category).Distinct();
+
+                if (!string.IsNullOrWhiteSpace(category))
+                {
+                    ProductList = productList.Where(p => p.Category == category);
+                    SelectedCategory = category;
+                }
+                else
+                {
+                    ProductList = productList;
+                }
+                return Page();
             }
-            else
+            catch
             {
-                ProductList = productList;
+                return RedirectToPage("Index");
             }
-            return Page();
         }
 
         public async Task<IActionResult> OnGetProductBrandAsync(string category, string brand)
@@ -99,14 +107,14 @@ namespace AspnetRunBasics
                 basket = new BasketModel();
             }
 
-            var itemTemp = basket.Items.FirstOrDefault(x => x.ProductID == productId && x.Color == "Black");
+            var itemTemp = basket.Items.FirstOrDefault(x => x.ProductID == productId && x.Color == "Đen");
             var basketTemp = basket;
 
             if (itemTemp != null)
             {
                 foreach (var item in basketTemp.Items)
                 {
-                    if (item.ProductID == productId && item.Color == "Black")
+                    if (item.ProductID == productId && item.Color == "Đen")
                     {
                         item.Quantity += 1;
                     }
@@ -120,7 +128,7 @@ namespace AspnetRunBasics
                     ProductName = product.Name,
                     SalePrice = product.SalePrice,
                     Quantity = 1,
-                    Color = "Black",
+                    Color = "Đen",
                     ImageFile = product.ImageFile
                 });
             }

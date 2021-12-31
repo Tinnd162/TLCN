@@ -66,14 +66,14 @@ namespace AspnetRunBasics.Pages
                 basket = new BasketModel();
             }
 
-            var itemTemp = basket.Items.FirstOrDefault(x => x.ProductID == productId && x.Color == "Black");
+            var itemTemp = basket.Items.FirstOrDefault(x => x.ProductID == productId && x.Color == "Đen");
             var basketTemp = basket;
 
             if (itemTemp != null)
             {
                 foreach (var item in basketTemp.Items)
                 {
-                    if (item.ProductID == productId && item.Color == "Black")
+                    if (item.ProductID == productId && item.Color == "Đen")
                     {
                         item.Quantity += 1;
                     }
@@ -87,7 +87,7 @@ namespace AspnetRunBasics.Pages
                     ProductName = product.Name,
                     SalePrice = product.SalePrice,
                     Quantity = 1,
-                    Color = "Black",
+                    Color = "Đen",
                     ImageFile = product.ImageFile
                 });
             }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AdminWebApp.Models;
 using AdminWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,15 +21,19 @@ namespace AdminWebApp.Pages
 
         [BindProperty]
         public Models.AddProductModel ProductModel { get; set; }
+        public List<CategoryModel> Categories { get; set; }
+        public CategoryModel CateSelected { get; set; }
 
         private string Token { get; set; }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (Request != null)
             {
                 Token = Request.Cookies["token"];
                 if (Token == null)
                     return RedirectToPage("Login");
+                Categories = await _inventoryService.GetCategories(Token);
+                CateSelected = Categories.Where(x => x.Name == "Điện thoại").FirstOrDefault();
                 return Page();
             }
             else

@@ -41,7 +41,7 @@
                                 <td>@order.DeliveryInfo.Email</td>
                                 <td>@order.DeliveryInfo.Address</td>
                                 <td  class="text-center">@order.DeliveryInfo.PhoneNo</td>
-                                <td class="text-right">@order.TotalAmount VNĐ</td>
+                                <td class="text-right">@string.Format("{0:#,##0.00}", order.TotalAmount) VNĐ</td>
                                 <td class="text-right">
                                     <form asp-page="SaleOrderDetail" method="get">
                                         <button class="btn btn-primary"><i class="fa fa-info"></i></button>
