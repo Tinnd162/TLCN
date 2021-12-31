@@ -51,7 +51,7 @@ namespace Inventory.API.Controllers
             };
             if (bolIsRemoveProduct)
             {
-                 await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
+                await _publishEndpoint.Publish<ProductEventBO>(objProductEventBO);
                 return true;
             }
             return false;

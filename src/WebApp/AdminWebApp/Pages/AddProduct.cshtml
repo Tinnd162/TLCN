@@ -6,7 +6,7 @@
 
 <form asp-page-handler="AddProduct" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label class="col-md-4 control-label" >Tên sản phẩm</label>
+        <label class="col-md-4 control-label">Tên sản phẩm</label>
         <div class="col-md-4">
             <input class="form-control input-md" required type="text" asp-for="ProductModel.Name">
         </div>
@@ -14,10 +14,17 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="product_categorie">Loại sản phẩm</label>
         <div class="col-md-4">
-            <select asp-for="ProductModel.CategoryDTO.Id" class="form-control" required">
+            <select asp-for="ProductModel.CategoryDTO.Id" class="form-control" required>
                 @foreach (var cate in Model.Categories)
                 {
-                    <option>@cate.Name</option>
+                    if (cate.Name == "Điện thoại")
+                    {
+                        <option selected>@cate.Name</option>
+                    }
+                    else
+                    {
+                        <option>@cate.Name</option>
+                    }
                 }
             </select>
         </div>

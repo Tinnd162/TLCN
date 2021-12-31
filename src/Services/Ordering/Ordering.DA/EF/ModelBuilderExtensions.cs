@@ -14,7 +14,7 @@ namespace Ordering.DA.EF
         {
             string paymentID = "61b6f8c78909657b658f6887";
             string deliveryID = "61b6f8cfbc9a67e61c8ddf2e";
-            string customerID = "7ad43d57-6657-45f8-a5ad-46545bc7c7f8";
+            string customerID = "61cea2f375e10dd236f9de06";
             string orderID = "61b6f8e8a13fc9a1ba108bf3";
             modelBuilder.Entity<Payment>().HasData(
                 new Payment
@@ -36,9 +36,9 @@ namespace Ordering.DA.EF
                         DeliveryID = deliveryID,
                         FirstNameReceiver = "Viet",
                         LastNameReceiver = "Lam",
-                        Address = "123 ABC",
-                        PhoneNo = "0123213",
-                        Email = "asd@gmail.com",
+                        Address = "số 1 Võ Văn Ngân",
+                        PhoneNo = "0944329423",
+                        Email = "181330@gmail.com",
                         CustomerID = customerID
                     }
             );
