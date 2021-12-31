@@ -39,6 +39,10 @@
 
 - `UI:`
   - `Admin`              ->  **http://localhost:8015**
+    + User    : `Admin`
+    + Password: `******`
   - `Client`             ->  **http://localhost:8006**
+    + User    : `Customer`
+    + Password: `*****`
 
 4. Để dừng app dùng lệnh `docker-compose down` hoặc `docker-compose down -v` để xóa volumes khi dừng app.
